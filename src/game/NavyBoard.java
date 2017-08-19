@@ -1,9 +1,9 @@
 package game;
 
-import game.submarines.Submarine;
+import game.ships.Ship;
 
 public class NavyBoard {
-    Submarine[][] board;
+    Ship[][] board;
 
     public void markHit() {
         /*
@@ -19,7 +19,7 @@ public class NavyBoard {
 
     public boolean isValid() {
         /*
-            return true when navyboard is valid, mean no submarines located near to each other.
+            return true when navyboard is valid, mean no ships located near to each other.
          */
         return true;
     }

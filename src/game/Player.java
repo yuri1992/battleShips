@@ -1,17 +1,25 @@
 package game;
 
 import game.engine.GameTurn;
-import game.submarines.Submarine;
+import game.ships.Ship;
 
+import javax.xml.bind.annotation.*;
+import java.util.List;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Player {
-    Submarine[] submarines;
+
+    @XmlElement(name = "ship")
+    protected List<Ship> ships;
+
     NavyBoard navyBoard;
     GameTurn[] turns;
 
-    public Player(String xml) {
+    public Player() {
         /*
             Build player  from xml file nmae
          */
+        this.navyBoard = null;
     }
 
     public PlayerStatistics getStatistics() {
@@ -26,7 +34,7 @@ public class Player {
 
     public boolean isLost() {
         /*
-            return true when all of player submarines been defeated
+            return true when all of player ships been defeated
          */
         return false;
     }

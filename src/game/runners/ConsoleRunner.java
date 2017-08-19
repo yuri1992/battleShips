@@ -1,15 +1,19 @@
 package game.runners;
 
+import game.engine.FileNotXmlFormat;
 import game.engine.GameManager;
+import game.engine.JAXBGameParser;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ConsoleRunner {
 
-    boolean isGameRunning;
-    ConsoleMenu currentChoose;
-    GameManager game;
+    private boolean isGameRunning;
+    private ConsoleMenu currentChoose;
+    private GameManager game;
     private static final Scanner in = new Scanner(System.in);
 
     public ConsoleRunner() {
@@ -26,8 +30,9 @@ public class ConsoleRunner {
     }
 
     private void handleMenuInput() {
-        int menuOption = ConsoleUtils.getIntegerByRange();
-        this.currentChoose = ConsoleMenu.values()[menuOption - 1];
+        ConsoleMenu[] values = ConsoleMenu.values();
+        int menuOption = ConsoleUtils.getIntegerByRange(1, values.length + 1);
+        this.currentChoose = values[menuOption - 1];
         this.handleMenuChoose();
     }
 
@@ -36,7 +41,7 @@ public class ConsoleRunner {
             case LOAD_GAME:
                 this.loadGame();
                 break;
-            
+
             case START_GAME:
                 this.startGame();
                 break;
@@ -61,32 +66,27 @@ public class ConsoleRunner {
     }
 
     private void loadGame() {
-        if (this.game.isRunning) {
+        if (this.game != null && this.game.isRunning) {
             System.out.println("Game is already running, we can't load xml settings during a game.");
             return;
         }
 
-
         // Todo: Move this code to more generic function.
         String fileName = ConsoleUtils.getString();
-        File f = new File(fileName);
 
-        if(!f.exists()) {
+        try {
+            this.game = JAXBGameParser.loadGameFromXML(fileName);
+            System.out.println("Xml File loaded successfully.");
+            return;
+        } catch (FileNotFoundException e) {
             System.out.println("Please verify that the file is exists.");
-            return;
+        } catch (FileNotXmlFormat fileNotXmlFormat) {
+            System.out.println("File must be a valid xml format.");
+        } catch (JAXBException e) {
+            e.printStackTrace();
         }
 
-        if (!f.isFile()) {
-            System.out.println("Please verify that the path you provide is a file.");
-            return;
-        }
-
-        if (!f.getPath().endsWith(".xml")) {
-            System.out.println("We are support only xml files.");
-        }
-
-
-
+        loadGame();
     }
 
     private void startGame() {
@@ -107,7 +107,7 @@ public class ConsoleRunner {
     private void printGameMenu() {
         System.out.println("Please Select Option by Pressing Option Number");
         for (ConsoleMenu option : ConsoleMenu.values()) {
-            System.out.println(option.ordinal() + "-" + option);
+            System.out.println(option.ordinal() + 1 + "-" + option);
         }
     }
 
