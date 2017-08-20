@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="BattleShipGame">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="GameType">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="BASIC"/>
+                            <xs:enumeration value="ADVANCE"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="boardSize" type="xs:int"/>
+                <xs:element name="shipTypes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="shipType" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="category">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="REGULAR"/>
+                                                    <xs:enumeration value="L_SHAPE"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="amount" type="xs:int"/>
+                                        <xs:element name="length" type="xs:int"/>
+                                        <xs:element name="score" type="xs:int"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="mine" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="amount" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="boards">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="board" minOccurs="2" maxOccurs="2">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="ship" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="shipTypeId" type="xs:string"/>
+                                                    <xs:element name="position">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="x" type="xs:int" use="required" />
+                                                            <xs:attribute name="y" type="xs:int" use="required" />
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                    <xs:element name="direction">
+                                                        <xs:simpleType>
+                                                            <xs:restriction base="xs:string">
+                                                                <xs:enumeration value="ROW"/>
+                                                                <xs:enumeration value="COLUMN"/>
+                                                                <xs:enumeration value="RIGHT_DOWN"/>
+                                                                <xs:enumeration value="RIGHT_UP"/>
+                                                                <xs:enumeration value="UP_RIGHT"/>
+                                                                <xs:enumeration value="DOWN_RIGHT"/>
+                                                            </xs:restriction>
+                                                        </xs:simpleType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

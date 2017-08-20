@@ -1,4 +1,4 @@
-package game;
+package game.players;
 
 public class PlayerStatistics {
 }

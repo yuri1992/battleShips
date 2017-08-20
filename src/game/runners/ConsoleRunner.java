@@ -1,11 +1,14 @@
 package game.runners;
 
+import descriptor.BattleShipGame;
+import game.players.Player;
 import game.engine.FileNotXmlFormat;
 import game.engine.GameManager;
 import game.engine.JAXBGameParser;
+import game.engine.ShipPoint;
+
 
 import javax.xml.bind.JAXBException;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -66,23 +69,25 @@ public class ConsoleRunner {
     }
 
     private void loadGame() {
-        if (this.game != null && this.game.isRunning) {
+        if (this.game != null && this.game.isRunning()) {
             System.out.println("Game is already running, we can't load xml settings during a game.");
             return;
         }
 
-        // Todo: Move this code to more generic function.
+        System.out.println("Please enter the path of the XML file.");
         String fileName = ConsoleUtils.getString();
 
         try {
-            this.game = JAXBGameParser.loadGameFromXML(fileName);
-            System.out.println("Xml File loaded successfully.");
+            BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromXML(fileName);
+            this.game = new GameManager(gameDescriptor);
+            System.out.println("XML File loaded successfully.");
             return;
         } catch (FileNotFoundException e) {
             System.out.println("Please verify that the file is exists.");
         } catch (FileNotXmlFormat fileNotXmlFormat) {
-            System.out.println("File must be a valid xml format.");
+            System.out.println("File must be a valid XML format.");
         } catch (JAXBException e) {
+            System.out.println("XML file is not valid, please make sure your xml file meet the xsd file.");
             e.printStackTrace();
         }
 
@@ -90,12 +95,66 @@ public class ConsoleRunner {
     }
 
     private void startGame() {
+        if (this.game != null && this.game.isRunning()) {
+            System.out.println("Game already started, you can't start it again.");
+            return;
+        }
+
+        if (this.game == null) {
+            System.out.println("You should load XML settings file first.");
+            return;
+        }
+
+        this.game.start();
+        this.showGameStatus();
+
     }
 
     private void showGameStatus() {
+        Player currentPlayer = this.game.getCurrentPlayer();
+
+        System.out.println("Hello Player " + currentPlayer.toString() + " Please play your turn.");
+
+        System.out.println("Your current score is " + currentPlayer.getScore());
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("You Ships board.");
+        System.out.println();
+        this.printBoard(currentPlayer.getShipsBoard().printBoard());
+        System.out.println();
+        System.out.println("You Attacking board.");
+        System.out.println();
+        this.printBoard(currentPlayer.getAttackBoard().printBoard());
+        System.out.println();
+        System.out.println("-----------------------------------------------------------------------------------");
+    }
+
+    private void printBoard(String[][] board) {
+        System.out.format("%-3s", "\\");
+        for (int y = 1; y < board.length; y++) {
+            System.out.format("%-3s", y);
+        }
+        System.out.println();
+
+        for (int i = 1; i < board.length; i++) {
+            System.out.format("%-3s", i);
+            for (int y = 1; y < board.length; y++) {
+                System.out.format("%-3s", board[i][y]);
+            }
+            System.out.println();
+        }
     }
 
     private void playTurn() {
+        System.out.println("Attack! Please select the cell location you want to attack.");
+
+        System.out.println("Please Enter the Column(X):");
+        int x = ConsoleUtils.getIntegerByRange(1, game.getBoardSize());
+        System.out.println("Please Enter the Row(Y):");
+        int y = ConsoleUtils.getIntegerByRange(1, game.getBoardSize());
+        ShipPoint fireToPoint = new ShipPoint(x, y);
+
+        // Making attack to the request point.
+        this.game.playAttack(fireToPoint);
     }
 
     private void showStatistics() {
