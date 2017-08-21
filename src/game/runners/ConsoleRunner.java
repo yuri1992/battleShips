@@ -1,23 +1,20 @@
 package game.runners;
 
 import descriptor.BattleShipGame;
-import game.players.Player;
 import game.engine.FileNotXmlFormat;
 import game.engine.GameManager;
 import game.engine.JAXBGameParser;
 import game.engine.ShipPoint;
-
+import game.players.Player;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class ConsoleRunner {
 
     private boolean isGameRunning;
     private ConsoleMenu currentChoose;
     private GameManager game;
-    private static final Scanner in = new Scanner(System.in);
 
     public ConsoleRunner() {
         this.isGameRunning = false;
@@ -195,6 +192,7 @@ public class ConsoleRunner {
 
     private void gameOver() {
         this.isGameRunning = false;
+        this.game.finishGame();
 
         this.printPlayerBoards(game.getCurrentPlayer());
         this.printPlayerBoards(game.getNextPlayer());

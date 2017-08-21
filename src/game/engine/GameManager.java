@@ -22,7 +22,7 @@ public class GameManager {
 
     public GameManager(BattleShipGame gameDescriptor) {
         mode = GameMode.valueOf(gameDescriptor.getGameType());
-        boardSize = gameDescriptor.getBoardSize();
+        setBoardSize(gameDescriptor.getBoardSize());
         this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
         this.setPlayerList(gameDescriptor.getBoards().getBoard());
     }
@@ -42,7 +42,7 @@ public class GameManager {
     }
 
     private void setShipTypeHashMap(List<ShipType> shipTypes) {
-        shipTypeHashMap = new HashMap<String, ShipType>();
+        shipTypeHashMap = new HashMap<>();
         for (ShipType shipType : shipTypes) {
             shipTypeHashMap.put(shipType.getId(), shipType);
         }
@@ -95,14 +95,12 @@ public class GameManager {
         return playerList.get(0) != this.getCurrentPlayer() ? playerList.get(0) : playerList.get(1);
     }
 
-    public void setPlayerList(List<Board> playerList) {
-        this.playerList = new ArrayList<Player>();
-        playerList.forEach((Board board) -> {
-            this.playerList.add(new Player(board.getShip(), this.getBoardSize(), this.getShipTypeHashMap()));
-        });
+    private void setPlayerList(List<Board> playerList) {
+        this.playerList = new ArrayList<>();
+        playerList.forEach((Board board) -> this.playerList.add(new Player(board.getShip(), this.getBoardSize(), this.getShipTypeHashMap())));
     }
 
-    public void setCurrentPlayer(Player currentPlayer) {
+    private void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
