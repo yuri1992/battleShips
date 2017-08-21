@@ -27,8 +27,12 @@ public class ConsoleRunner {
     public void start() {
         this.isGameRunning = true;
         while (this.isGameRunning) {
-            this.printGameMenu();
-            this.handleMenuInput();
+            if (this.game != null && this.game.isRunning() && this.game.isGameOver()) {
+                this.gameOver();
+            } else {
+                this.printGameMenu();
+                this.handleMenuInput();
+            }
         }
     }
 
@@ -112,16 +116,21 @@ public class ConsoleRunner {
 
     private void showGameStatus() {
         Player currentPlayer = this.game.getCurrentPlayer();
-
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("Hello Player " + currentPlayer.toString() + " Please play your turn.");
 
         System.out.println("Your current score is " + currentPlayer.getScore());
+        this.printPlayerBoards(currentPlayer);
+    }
+
+    private void printPlayerBoards(Player currentPlayer) {
         System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println("You Ships board.");
+        System.out.println("Your Ships board.");
         System.out.println();
         this.printBoard(currentPlayer.getShipsBoard().printBoard());
         System.out.println();
-        System.out.println("You Attacking board.");
+        System.out.println("Your Attacking board.");
         System.out.println();
         this.printBoard(currentPlayer.getAttackBoard().printBoard());
         System.out.println();
@@ -154,13 +163,47 @@ public class ConsoleRunner {
         ShipPoint fireToPoint = new ShipPoint(x, y);
 
         // Making attack to the request point.
-        this.game.playAttack(fireToPoint);
+        if (this.game.playAttack(fireToPoint)) {
+            System.out.println("NICE JOB! you successfully hit a ship.");
+        }
+
+        this.showGameStatus();
     }
 
     private void showStatistics() {
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("Statistics: ...");
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------");
     }
 
     private void resignGame() {
+        this.isGameRunning = false;
+        this.game.resignGame();
+
+        System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("Player " + this.game.getCurrentPlayer() + " Resign form the game.");
+        System.out.println("The Winner is " + this.game.getWinner() + " Congratulations");
+        System.out.println("Hope to see you soon.");
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
+
+        this.showStatistics();
+    }
+
+    private void gameOver() {
+        this.isGameRunning = false;
+
+        this.printPlayerBoards(game.getCurrentPlayer());
+        this.printPlayerBoards(game.getNextPlayer());
+        System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("The Winner is " + this.game.getWinner() + " Congratulations");
+        System.out.println("Hope to see you soon.");
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
     }
 
     private void printGameMenu() {

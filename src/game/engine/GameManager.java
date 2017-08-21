@@ -18,6 +18,7 @@ public class GameManager {
     private List<Player> playerList;
     private boolean isRunning;
     private Player currentPlayer = null;
+    private Player winner;
 
     public GameManager(BattleShipGame gameDescriptor) {
         mode = GameMode.valueOf(gameDescriptor.getGameType());
@@ -26,10 +27,18 @@ public class GameManager {
         this.setPlayerList(gameDescriptor.getBoards().getBoard());
     }
 
-
     public void start() {
         this.isRunning = true;
         this.currentPlayer = playerList.get(0);
+    }
+
+    public void finishGame() {
+        this.isRunning = false;
+    }
+
+    public void resignGame() {
+        this.isRunning = false;
+        this.setWinner(this.getNextPlayer());
     }
 
     private void setShipTypeHashMap(List<ShipType> shipTypes) {
@@ -37,6 +46,24 @@ public class GameManager {
         for (ShipType shipType : shipTypes) {
             shipTypeHashMap.put(shipType.getId(), shipType);
         }
+    }
+
+    /*
+        Return true, when game is over, meaning that one of the players was defeated.
+     */
+    public boolean isGameOver() {
+        for (Player p : playerList) {
+            if (p.isLost()) {
+                if (p != getCurrentPlayer()) {
+                    this.setWinner(getCurrentPlayer());
+                } else {
+                    this.setWinner(getNextPlayer());
+                }
+                return true;
+            }
+
+        }
+        return false;
     }
 
     /*
@@ -113,5 +140,13 @@ public class GameManager {
 
     public List<Player> getPlayerList() {
         return playerList;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 }

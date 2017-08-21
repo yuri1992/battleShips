@@ -12,9 +12,11 @@ public class Ship {
     private String shipId;
     private String direction;
     private ArrayList<ShipPoint> positions;
+    private ShipType meta;
 
 
     public Ship(String shipId, String direction, Position position, ShipType meta) {
+        this.meta = meta;
         this.shipId = shipId;
         this.direction = direction;
         this.setPositions(new ShipPoint(position));
@@ -45,10 +47,6 @@ public class Ship {
                 break;
         }
 
-    }
-
-    public void setMeta(GameManager.ShipType meta) {
-        this.meta = meta;
     }
 
     public boolean isHit(ShipPoint shipPoint) {

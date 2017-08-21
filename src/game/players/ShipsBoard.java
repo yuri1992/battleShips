@@ -21,7 +21,6 @@ public class ShipsBoard implements Board {
         Adding submarine to the board
      */
     public void setShip(ShipPoint pt, Ship ship) {
-
         board[pt.y][pt.x] = ship;
     }
 

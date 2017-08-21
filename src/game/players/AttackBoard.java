@@ -24,6 +24,7 @@ public class AttackBoard implements Board {
     }
 
     public void setShoot(ShipPoint pt, boolean attack) {
+        board[pt.y][pt.x] = new AttackBoardMove();
         board[pt.y][pt.x].setHit(attack);
     }
 
