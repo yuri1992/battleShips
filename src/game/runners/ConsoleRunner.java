@@ -9,6 +9,7 @@ import game.ships.ShipPoint;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 public class ConsoleRunner {
 
@@ -170,9 +171,24 @@ public class ConsoleRunner {
     }
 
     private void showStatistics() {
+        if (this.game == null) {
+            System.out.println("Statistics are available when game started.");
+            return;
+        }
+        GameStatistics statistics = this.game.getStatistics();
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println("Statistics: ...");
+        System.out.println("Total Turns Played " + statistics.getTurns());
+        System.out.println("Total Time " + ConsoleUtils.formatDateHM(statistics.getTotalTime()));
+        statistics.getPlayerStatistics().forEach(playerStatistic -> {
+            System.out.println("-----------------------------------------------------------------------------------");
+            System.out.println("Player Statistics ");
+            System.out.println("Number of Turns: " + playerStatistic.getTurns());
+            System.out.println("Number of Hits: " + playerStatistic.getHits());
+            System.out.println("Number of Misses: " + playerStatistic.getMisses());
+            System.out.println("Avg Turn Time: " + ConsoleUtils.formatDateHM(playerStatistic.getAvgTurnTime()));
+            System.out.println("-----------------------------------------------------------------------------------");
+        });
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("-----------------------------------------------------------------------------------");
     }

@@ -1,6 +1,7 @@
 package game.runners;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class ConsoleUtils {
     private static final Scanner in = new Scanner(System.in);
@@ -35,6 +36,12 @@ public class ConsoleUtils {
             n = getIntegerInput();
         }
         return n;
+    }
+
+    public static String formatDateHM(long time) {
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(time);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(time) - (minutes * 60);
+        return  minutes + ":" + seconds;
     }
 
     /*

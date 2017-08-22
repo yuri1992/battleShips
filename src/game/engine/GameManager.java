@@ -8,7 +8,11 @@ import game.players.Player;
 import game.players.ShipsLocatedTooClose;
 import game.ships.ShipPoint;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.time.DateTimeException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +26,7 @@ public class GameManager {
     private boolean isRunning;
     private Player currentPlayer = null;
     private Player winner;
+    private Date startAt = null;
 
     public GameManager(BattleShipGame gameDescriptor) throws ShipsLocatedTooClose, BoardSizeIsTooBig, NotEnoughShipsLocated {
         mode = GameMode.valueOf(gameDescriptor.getGameType());
@@ -39,7 +44,8 @@ public class GameManager {
 
     public void start() {
         this.isRunning = true;
-        this.currentPlayer = playerList.get(0);
+        this.startAt = new Date();
+        this.setCurrentPlayer(playerList.get(0));
     }
 
     public void finishGame() {
@@ -49,6 +55,10 @@ public class GameManager {
     public void resignGame() {
         this.isRunning = false;
         this.setWinner(this.getNextPlayer());
+    }
+
+    public GameStatistics getStatistics() {
+        return new GameStatistics(this.startAt, this.playerList);
     }
 
     private void setShipTypeHashMap(List<ShipType> shipTypes) {
@@ -91,10 +101,14 @@ public class GameManager {
         if (nextPlayer.hit(pt)) {
             // Player hit a ship.
             currentPlayer.logAttack(pt, true);
+            currentPlayer.endTurn();
+            this.setCurrentPlayer(currentPlayer);
             return true;
         }
 
+
         currentPlayer.logAttack(pt, false);
+        currentPlayer.endTurn();
         this.setCurrentPlayer(nextPlayer);
         return false;
 
@@ -114,6 +128,7 @@ public class GameManager {
 
     private void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+        this.currentPlayer.startTurn();
     }
 
     public boolean isRunning() {

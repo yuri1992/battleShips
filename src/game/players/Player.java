@@ -2,8 +2,8 @@ package game.players;
 
 import descriptor.ShipType;
 import game.engine.GameTurn;
-import game.ships.ShipPoint;
 import game.ships.Ship;
+import game.ships.ShipPoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ public class Player {
 
     private List<Ship> ships;
     private List<GameTurn> turns;
+    private GameTurn currentTurn;
     private AttackBoard attackBoard;
     private ShipsBoard shipsBoard;
 
@@ -46,10 +47,11 @@ public class Player {
      */
     public void logAttack(ShipPoint pt, boolean b) {
         attackBoard.setShoot(pt, b);
+        currentTurn.setHit(b);
     }
 
     public PlayerStatistics getStatistics() {
-        return new PlayerStatistics();
+        return new PlayerStatistics(this);
     }
 
     public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws NotEnoughShipsLocated {
@@ -88,5 +90,21 @@ public class Player {
 
     public void setShipsBoard(ShipsBoard shipsBoard) {
         this.shipsBoard = shipsBoard;
+    }
+
+    public List<GameTurn> getTurns() {
+        return turns;
+    }
+
+    public void startTurn() {
+        if (this.currentTurn == null) {
+            this.currentTurn = new GameTurn();
+        }
+    }
+
+    public void endTurn() {
+        this.currentTurn.setEndAt();
+        this.turns.add(this.currentTurn);
+        this.currentTurn = null;
     }
 }
