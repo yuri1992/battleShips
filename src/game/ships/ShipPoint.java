@@ -1,4 +1,4 @@
-package game.engine;
+package game.ships;
 
 import descriptor.Position;
 
@@ -33,5 +33,10 @@ public class ShipPoint extends java.awt.Point {
 
     public boolean isHit() {
         return isHit;
+    }
+
+    @Override
+    public String toString() {
+        return "Point[x=" + this.x + ", y=" + this.y + "]";
     }
 }

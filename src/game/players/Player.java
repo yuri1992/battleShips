@@ -2,7 +2,7 @@ package game.players;
 
 import descriptor.ShipType;
 import game.engine.GameTurn;
-import game.engine.ShipPoint;
+import game.ships.ShipPoint;
 import game.ships.Ship;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class Player {
     private AttackBoard attackBoard;
     private ShipsBoard shipsBoard;
 
-    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) {
+    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws ShipsLocatedTooClose, NotEnoughShipsLocated {
         this.setShips(ships, shipTypeHashMap);
         shipsBoard = new ShipsBoard(this.ships, boardSize + 1);
         attackBoard = new AttackBoard(boardSize + 1, boardSize + 1);
@@ -52,11 +52,22 @@ public class Player {
         return new PlayerStatistics();
     }
 
-    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) {
+    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws NotEnoughShipsLocated {
         this.ships = new ArrayList<>();
+        HashMap<String, Integer> shipsByType = new HashMap<String, Integer>();
+
         ships.forEach(item -> {
-            this.ships.add(new Ship(item.getShipTypeId(), item.getDirection(), item.getPosition(), shipTypeHashMap.get(item.getShipTypeId())));
+            String shipTypeId = item.getShipTypeId();
+            shipsByType.put(shipTypeId, shipsByType.getOrDefault(shipTypeId, 0) + 1);
+            this.ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
         });
+
+        // Validation of number of ships per type.
+        for (HashMap.Entry<String, Integer> entry : shipsByType.entrySet()) {
+            int amount = shipTypeHashMap.get(entry.getKey()).getAmount();
+            if (amount != entry.getValue())
+                throw new NotEnoughShipsLocated("Ship typeId " + entry.getKey() + " must be located " + amount + " times only.");
+        }
     }
 
     public AttackBoard getAttackBoard() {

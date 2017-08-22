@@ -2,8 +2,6 @@ package game.ships;
 
 import descriptor.Position;
 import descriptor.ShipType;
-import game.engine.GameManager;
-import game.engine.ShipPoint;
 
 import java.util.ArrayList;
 

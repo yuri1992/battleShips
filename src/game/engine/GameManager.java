@@ -3,7 +3,10 @@ package game.engine;
 import descriptor.BattleShipGame;
 import descriptor.Board;
 import descriptor.ShipType;
+import game.players.NotEnoughShipsLocated;
 import game.players.Player;
+import game.players.ShipsLocatedTooClose;
+import game.ships.ShipPoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,9 +23,16 @@ public class GameManager {
     private Player currentPlayer = null;
     private Player winner;
 
-    public GameManager(BattleShipGame gameDescriptor) {
+    public GameManager(BattleShipGame gameDescriptor) throws ShipsLocatedTooClose, BoardSizeIsTooBig, NotEnoughShipsLocated {
         mode = GameMode.valueOf(gameDescriptor.getGameType());
-        setBoardSize(gameDescriptor.getBoardSize());
+
+        int boardSize = gameDescriptor.getBoardSize();
+        if (boardSize > 20 || boardSize < 5) {
+            throw new BoardSizeIsTooBig("Board size must be between 5 to 20");
+        }
+        this.boardSize = boardSize;
+
+
         this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
         this.setPlayerList(gameDescriptor.getBoards().getBoard());
     }
@@ -95,9 +105,11 @@ public class GameManager {
         return playerList.get(0) != this.getCurrentPlayer() ? playerList.get(0) : playerList.get(1);
     }
 
-    private void setPlayerList(List<Board> playerList) {
+    private void setPlayerList(List<Board> playerList) throws ShipsLocatedTooClose, NotEnoughShipsLocated {
         this.playerList = new ArrayList<>();
-        playerList.forEach((Board board) -> this.playerList.add(new Player(board.getShip(), this.getBoardSize(), this.getShipTypeHashMap())));
+        for (Board board : playerList) {
+            this.playerList.add(new Player(board.getShip(), this.getBoardSize(), this.getShipTypeHashMap()));
+        }
     }
 
     private void setCurrentPlayer(Player currentPlayer) {
@@ -114,10 +126,6 @@ public class GameManager {
 
     public int getBoardSize() {
         return boardSize;
-    }
-
-    public void setBoardSize(int boardSize) {
-        this.boardSize = boardSize;
     }
 
     public Player getCurrentPlayer() {

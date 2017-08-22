@@ -1,6 +1,6 @@
 package game.players;
 
-import game.engine.ShipPoint;
+import game.ships.ShipPoint;
 
 public class AttackBoard implements Board {
     AttackBoardMove[][] board;

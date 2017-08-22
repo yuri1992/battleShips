@@ -1,14 +1,15 @@
 package game.players;
 
-import game.engine.ShipPoint;
+import game.ships.ShipPoint;
 import game.ships.Ship;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShipsBoard implements Board {
     Ship[][] board;
 
-    public ShipsBoard(List<Ship> ships, int boardSize) {
+    public ShipsBoard(List<Ship> ships, int boardSize) throws ShipsLocatedTooClose {
         board = new Ship[boardSize][boardSize];
         for (Ship ship : ships) {
             for (ShipPoint pt : ship.getPositions()) {
@@ -20,16 +21,42 @@ public class ShipsBoard implements Board {
     /*
         Adding submarine to the board
      */
-    public void setShip(ShipPoint pt, Ship ship) {
+    public void setShip(ShipPoint pt, Ship ship) throws ShipsLocatedTooClose {
+        ArrayList<ShipPoint> l1 = getProhibitedShipPoints(pt);
+
+        for (ShipPoint p : l1) {
+            Ship shipByPoint = getShipByPoint(p);
+            if (shipByPoint != null && shipByPoint != ship) {
+                throw new ShipsLocatedTooClose("Ships " + ship.getType() + " and  " + shipByPoint.getType() + " located too close to each other at point " + p);
+            }
+        }
+
         board[pt.y][pt.x] = ship;
     }
 
     /*
-        return true when navy board is valid, mean no ships located near to each other.
+     Return list of Prohibited ShipPoints near to @pt.
      */
-    public boolean isValid() {
+    private ArrayList<ShipPoint> getProhibitedShipPoints(ShipPoint pt) {
+        ArrayList<ShipPoint> l = new ArrayList<>();
+        l.add(new ShipPoint(pt.x, pt.y + 1));
+        l.add(new ShipPoint(pt.x, pt.y));
+        l.add(new ShipPoint(pt.x, pt.y - 1));
+        l.add(new ShipPoint(pt.x + 1, pt.y + 1));
+        l.add(new ShipPoint(pt.x + 1, pt.y));
+        l.add(new ShipPoint(pt.x + 1, pt.y - 1));
+        l.add(new ShipPoint(pt.x - 1, pt.y + 1));
+        l.add(new ShipPoint(pt.x - 1, pt.y));
+        l.add(new ShipPoint(pt.x - 1, pt.y - 1));
+        return l;
+    }
 
-        return true;
+
+    public Ship getShipByPoint(ShipPoint pt) {
+        if (pt.y < 0 || pt.x < 0 || pt.x > board.length || pt.y > board.length)
+            return null;
+
+        return board[pt.y][pt.x];
     }
 
     @Override
