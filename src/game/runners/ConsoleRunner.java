@@ -116,12 +116,13 @@ public class ConsoleRunner {
 
     private void showGameStatus() {
         Player currentPlayer = this.game.getCurrentPlayer();
-        System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println("Hello Player " + currentPlayer.toString() + " Please play your turn.");
-
-        System.out.println("Your current score is " + currentPlayer.getScore());
-        this.printPlayerBoards(currentPlayer);
+        if (currentPlayer != null) {
+            System.out.println("-----------------------------------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------------------------");
+            System.out.println("Hello Player " + currentPlayer.toString() + " Please play your turn.");
+            System.out.println("Your current score is " + currentPlayer.getScore());
+            this.printPlayerBoards(currentPlayer);
+        }
     }
 
     private void printPlayerBoards(Player currentPlayer) {
@@ -204,7 +205,6 @@ public class ConsoleRunner {
         System.out.println("Hope to see you soon.");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
-
         this.showStatistics();
     }
 
@@ -220,6 +220,7 @@ public class ConsoleRunner {
         System.out.println("Hope to see you soon.");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
+        this.showStatistics();
     }
 
     private void printGameMenu() {
