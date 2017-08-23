@@ -6,7 +6,8 @@ public enum ConsoleMenu {
     SHOW_GAME_STATUS("Show Game Status"),
     PLAY_TURN("Play Turn"),
     SHOW_STATISTICS("Show Statistics"),
-    RESIGN_GAME("Resign Game");
+    RESIGN_GAME("Resign Game"),
+    END_GAME("End Game");
 
 
     private final String text;

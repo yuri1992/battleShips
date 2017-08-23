@@ -67,6 +67,10 @@ public class ConsoleRunner {
                 this.resignGame();
                 break;
 
+            case END_GAME:
+                this.endGame();
+                break;
+
         }
     }
 
@@ -155,6 +159,15 @@ public class ConsoleRunner {
     }
 
     private void playTurn() {
+        if (game == null) {
+            System.out.println("You must to initial the game by providing XML file.");
+            return;
+        }
+        if (!game.isRunning()) {
+            System.out.println("Game is not running.");
+            return;
+        }
+
         System.out.println("Attack! Please select the cell location you want to attack.");
 
         System.out.println("Please Enter the Column(X):");
@@ -195,7 +208,7 @@ public class ConsoleRunner {
     }
 
     private void resignGame() {
-        this.isGameRunning = false;
+        this.isGameRunning = true;
         this.game.resignGame();
 
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
@@ -206,6 +219,8 @@ public class ConsoleRunner {
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
         this.showStatistics();
+
+        this.game = null;
     }
 
     private void gameOver() {
@@ -217,10 +232,16 @@ public class ConsoleRunner {
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("The Winner is " + this.game.getWinner() + " Congratulations");
-        System.out.println("Hope to see you soon.");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
         this.showStatistics();
+    }
+
+    private void endGame() {
+        this.isGameRunning = false;
+        if (this.game != null && this.game.isRunning())
+            this.game.finishGame();
+        System.out.println("You decided to exited the game, hope to see you soon.");
     }
 
     private void printGameMenu() {
