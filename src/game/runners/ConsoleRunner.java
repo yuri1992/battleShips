@@ -97,6 +97,8 @@ public class ConsoleRunner {
             //            e.printStackTrace();
         } catch (NotEnoughShipsLocated | BoardSizeIsTooBig | ShipsLocatedTooClose e) {
             System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
+        } finally {
+            System.out.println();
         }
 
         loadGame();
@@ -222,7 +224,7 @@ public class ConsoleRunner {
 
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
         System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println("Player " + this.game.getCurrentPlayer() + " Resign form the game.");
+        System.out.println("Player " + this.game.getCurrentPlayer() + " resigned from the game.");
         System.out.println("The Winner is " + this.game.getWinner() + " Congratulations");
         System.out.println("Hope to see you soon.");
         System.out.println("-----------------------------------------------------------------------------------");
