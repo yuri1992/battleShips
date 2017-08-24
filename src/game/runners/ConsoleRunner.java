@@ -213,7 +213,11 @@ public class ConsoleRunner {
     }
 
     private void resignGame() {
-        this.isGameRunning = true;
+        if (game == null || this.isGameRunning == false) {
+            System.out.println("Player can't resign if a game is not in progress...\n");
+            return;
+        }
+
         this.game.resignGame();
 
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
@@ -223,6 +227,7 @@ public class ConsoleRunner {
         System.out.println("Hope to see you soon.");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
+        System.out.println();
         this.showStatistics();
 
         this.game = null;
