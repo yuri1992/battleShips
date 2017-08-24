@@ -196,7 +196,8 @@ public class ConsoleRunner {
         System.out.println("Total Time " + ConsoleUtils.formatDateHM(statistics.getTotalTime()));
         statistics.getPlayerStatistics().forEach(playerStatistic -> {
             System.out.println("-----------------------------------------------------------------------------------");
-            System.out.println("Player Statistics ");
+            System.out.println(playerStatistic.getName() + " Statistics:");
+            System.out.println(playerStatistic.getScore() + " points");
             System.out.println("Number of Turns: " + playerStatistic.getTurns());
             System.out.println("Number of Hits: " + playerStatistic.getHits());
             System.out.println("Number of Misses: " + playerStatistic.getMisses());

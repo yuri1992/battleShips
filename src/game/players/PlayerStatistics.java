@@ -8,12 +8,16 @@ import game.engine.GameTurn;
         - Average Time of each turn.
  */
 public class PlayerStatistics {
+    private String name;
+    private int score;
     private int hits;
     private int misses;
     private int turns;
     private long avgTurnTime;
 
     public PlayerStatistics(Player player) {
+        name = player.toString();
+        score = player.getScore();
         turns = player.getTurns().size();
         avgTurnTime = 0;
         misses = 0;
@@ -31,6 +35,14 @@ public class PlayerStatistics {
         if (turns > 0)
             avgTurnTime /= turns;
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public int getHits() {
