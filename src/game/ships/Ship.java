@@ -84,6 +84,10 @@ public class Ship {
         return shipId;
     }
 
+    public int getPoints() {
+        return meta.getScore();
+    }
+
     public ArrayList<ShipPoint> getPositions() {
         return positions;
     }

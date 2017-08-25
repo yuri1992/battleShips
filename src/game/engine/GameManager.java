@@ -6,6 +6,7 @@ import descriptor.ShipType;
 import game.players.NotEnoughShipsLocated;
 import game.players.Player;
 import game.players.ShipsLocatedTooClose;
+import game.ships.Ship;
 import game.ships.ShipPoint;
 
 import java.sql.Time;
@@ -97,21 +98,21 @@ public class GameManager {
         if (currentPlayer.getAttackBoard().isAttacked(pt))
             return false;
 
+        // Did player hit a ship
+        boolean didHit = nextPlayer.hit(pt);
+        currentPlayer.logAttack(pt, didHit);
+        currentPlayer.endTurn();
 
-        if (nextPlayer.hit(pt)) {
-            // Player hit a ship.
-            currentPlayer.logAttack(pt, true);
-            currentPlayer.endTurn();
-            this.setCurrentPlayer(currentPlayer);
-            return true;
+        // Check if ship is hit and drowned
+        if (didHit) {
+            Ship s = nextPlayer.getShipsBoard().getShipByPoint(pt);
+            if (s.isDrowned()) {
+                currentPlayer.updateScore(s.getPoints());
+            }
         }
 
-
-        currentPlayer.logAttack(pt, false);
-        currentPlayer.endTurn();
-        this.setCurrentPlayer(nextPlayer);
-        return false;
-
+        this.setCurrentPlayer(didHit ? currentPlayer : nextPlayer);
+        return didHit;
     }
 
     public Player getNextPlayer() {

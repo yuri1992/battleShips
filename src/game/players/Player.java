@@ -16,6 +16,7 @@ public class Player {
     private GameTurn currentTurn;
     private AttackBoard attackBoard;
     private ShipsBoard shipsBoard;
+    private int score = 0;
 
     public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws ShipsLocatedTooClose, NotEnoughShipsLocated {
         this.setShips(ships, shipTypeHashMap);
@@ -77,7 +78,15 @@ public class Player {
     }
 
     public int getScore() {
-        return 0;
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void updateScore(int points) {
+        this.score += points;
     }
 
     public void setAttackBoard(AttackBoard attackBoard) {
