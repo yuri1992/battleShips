@@ -253,7 +253,6 @@ public class ConsoleRunner {
     }
 
     private void gameOver() {
-        this.isGameRunning = false;
         this.game.finishGame();
 
         this.printPlayerBoards(game.getCurrentPlayer());
@@ -264,6 +263,8 @@ public class ConsoleRunner {
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
         this.showStatistics();
+
+        this.game = null;
     }
 
     private void endGame() {
