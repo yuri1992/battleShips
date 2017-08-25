@@ -233,6 +233,16 @@ public class ConsoleRunner {
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("Player " + this.game.getCurrentPlayer() + " resigned from the game.");
         System.out.println("The Winner is " + this.game.getWinner() + " Congratulations");
+
+        for (Player p : game.getPlayerList()) {
+            System.out.println("-----------------------------------------------------------------------------------");
+            System.out.println(p.toString() + "'s board:");
+            System.out.println();
+            this.printBoard(p.getShipsBoard().printBoard());
+            System.out.println();
+        }
+
+        System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("Hope to see you soon.");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
