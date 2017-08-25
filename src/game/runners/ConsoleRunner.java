@@ -122,7 +122,8 @@ public class ConsoleRunner {
 
     private void showGameStatus() {
         if (game == null) {
-            System.out.println("Game status is not available before starting the game\n");
+            System.out.println("Game status is not available before starting the game");
+            System.out.println();
             return;
         }
 
@@ -167,11 +168,13 @@ public class ConsoleRunner {
 
     private void playTurn() {
         if (game == null) {
-            System.out.println("You must to initialize the game by providing XML file.\n");
+            System.out.println("You must to initialize the game by providing XML file.");
+            System.out.println();
             return;
         }
         if (!game.isRunning()) {
-            System.out.println("Game is not running.\n");
+            System.out.println("Game is not running.");
+            System.out.println();
             return;
         }
 
@@ -185,7 +188,8 @@ public class ConsoleRunner {
 
         // Making attack to the request point.
         if (this.game.playAttack(fireToPoint)) {
-            System.out.println("NICE JOB! you successfully hit a ship.\n");
+            System.out.println("NICE JOB! you successfully hit a ship.");
+            System.out.println();
         }
 
         this.showGameStatus();
@@ -193,7 +197,8 @@ public class ConsoleRunner {
 
     private void showStatistics() {
         if (this.game == null) {
-            System.out.println("Statistics are available when game started.\n");
+            System.out.println("Statistics are available when game started.");
+            System.out.println();
             return;
         }
         GameStatistics statistics = this.game.getStatistics();
@@ -217,7 +222,8 @@ public class ConsoleRunner {
 
     private void resignGame() {
         if (game == null || this.isGameRunning == false) {
-            System.out.println("Player can't resign if a game is not in progress...\n");
+            System.out.println("Player can't resign if a game is not in progress...");
+            System.out.println();
             return;
         }
 
