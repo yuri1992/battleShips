@@ -97,6 +97,8 @@ public class ConsoleRunner {
             //            e.printStackTrace();
         } catch (NotEnoughShipsLocated | BoardSizeIsTooBig | ShipsLocatedTooClose e) {
             System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
+        } finally {
+            System.out.println();
         }
 
         loadGame();
@@ -119,6 +121,11 @@ public class ConsoleRunner {
     }
 
     private void showGameStatus() {
+        if (game == null) {
+            System.out.println("Game status is not available before starting the game\n");
+            return;
+        }
+
         Player currentPlayer = this.game.getCurrentPlayer();
         if (currentPlayer != null) {
             System.out.println("-----------------------------------------------------------------------------------");
@@ -160,11 +167,11 @@ public class ConsoleRunner {
 
     private void playTurn() {
         if (game == null) {
-            System.out.println("You must to initial the game by providing XML file.");
+            System.out.println("You must to initialize the game by providing XML file.\n");
             return;
         }
         if (!game.isRunning()) {
-            System.out.println("Game is not running.");
+            System.out.println("Game is not running.\n");
             return;
         }
 
@@ -178,7 +185,7 @@ public class ConsoleRunner {
 
         // Making attack to the request point.
         if (this.game.playAttack(fireToPoint)) {
-            System.out.println("NICE JOB! you successfully hit a ship.");
+            System.out.println("NICE JOB! you successfully hit a ship.\n");
         }
 
         this.showGameStatus();
@@ -186,7 +193,7 @@ public class ConsoleRunner {
 
     private void showStatistics() {
         if (this.game == null) {
-            System.out.println("Statistics are available when game started.");
+            System.out.println("Statistics are available when game started.\n");
             return;
         }
         GameStatistics statistics = this.game.getStatistics();
@@ -208,16 +215,21 @@ public class ConsoleRunner {
     }
 
     private void resignGame() {
-        this.isGameRunning = true;
+        if (game == null || this.isGameRunning == false) {
+            System.out.println("Player can't resign if a game is not in progress...\n");
+            return;
+        }
+
         this.game.resignGame();
 
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
         System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println("Player " + this.game.getCurrentPlayer() + " Resign form the game.");
+        System.out.println("Player " + this.game.getCurrentPlayer() + " resigned from the game.");
         System.out.println("The Winner is " + this.game.getWinner() + " Congratulations");
         System.out.println("Hope to see you soon.");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
+        System.out.println();
         this.showStatistics();
 
         this.game = null;
