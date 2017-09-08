@@ -13,6 +13,11 @@ public class Player {
 
     private List<Ship> ships;
     private List<GameTurn> turns;
+
+    public GameTurn getCurrentTurn() {
+        return currentTurn;
+    }
+
     private GameTurn currentTurn;
     private AttackBoard attackBoard;
     private ShipsBoard shipsBoard;
