@@ -13,8 +13,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    @FXML
-    private Text actiontarget;
+    @FXML private Text actiontarget;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
 
