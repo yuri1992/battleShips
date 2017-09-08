@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="751.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.runners.javafx.controllers.PlayerScreenController">
+   <children>
+      <Button fx:id="quit" layoutX="775.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Quit" />
+      <Label layoutX="453.0" layoutY="53.0" text="My Attacks Log">
+         <font>
+            <Font name="Arial" size="26.0" />
+         </font>
+      </Label>
+      <ScrollPane hbarPolicy="ALWAYS" layoutX="28.0" layoutY="83.0" prefHeight="341.0" prefWidth="400.0" vbarPolicy="ALWAYS">
+         <content>
+          <AnchorPane fx:id="ships_board" prefHeight="342.0" prefWidth="400.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="28.0" layoutY="52.0" text="My Ships Borad">
+         <font>
+            <Font name="Arial" size="26.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="453.0" layoutY="86.0" prefHeight="335.0" prefWidth="400.0">
+         <content>
+            <AnchorPane fx:id="attack_board" minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="439.0" />
+         </content>
+      </ScrollPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="28.0" layoutY="465.0" prefHeight="246.0" prefWidth="400.0">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="292.0" prefWidth="237.0">
+               <children>
+                  <Label layoutX="21.0" layoutY="23.0" prefHeight="31.0" prefWidth="99.0" text="Turn Number" />
+                  <Label layoutX="21.0" layoutY="66.0" prefHeight="31.0" prefWidth="99.0" text="Hits" />
+                  <Label layoutX="21.0" layoutY="115.0" prefHeight="31.0" prefWidth="99.0" text="Misses" />
+                  <Label layoutX="21.0" layoutY="161.0" prefHeight="31.0" prefWidth="99.0" text="Time" />
+                  <TextField fx:id="stat_turns" layoutX="125.0" layoutY="26.0" prefHeight="26.0" prefWidth="96.0" />
+                  <TextField fx:id="stat_hits" layoutX="125.0" layoutY="69.0" prefHeight="26.0" prefWidth="96.0" />
+                  <TextField fx:id="stat_miss" layoutX="125.0" layoutY="118.0" prefHeight="26.0" prefWidth="96.0" />
+                  <TextField fx:id="stat_time" layoutX="125.0" layoutY="163.0" prefHeight="26.0" prefWidth="96.0" />
+                  <Label layoutX="232.0" layoutY="24.0" prefHeight="31.0" prefWidth="99.0" text="Score" />
+                  <TextField fx:id="stat_score" layoutX="288.0" layoutY="26.0" prefHeight="26.0" prefWidth="96.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <Label layoutX="28.0" layoutY="434.0" text="Statistics">
+         <font>
+            <Font name="Arial" size="26.0" />
+         </font>
+      </Label>
+      <Button fx:id="place_mine" layoutX="327.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleOnPlaceMine" text="Place A Mine" />
+      <ScrollPane fx:id="moveListScrollPane" layoutX="453.0" layoutY="465.0" prefHeight="246.0" prefWidth="400.0">
+         <content>
+            <AnchorPane fx:id="moveListAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="232.0" prefWidth="393.0">
+               <children>
+                  <ListView fx:id="list_moves" layoutX="9.0" layoutY="-1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="237.0" prefWidth="400.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <Label layoutX="453.0" layoutY="434.0" text="History">
+         <font>
+            <Font name="Arial" size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="player_name" layoutX="28.0" layoutY="14.0" text="Welcome Player ...">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
