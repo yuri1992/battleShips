@@ -13,10 +13,21 @@ public class JAXBGameParser {
 
     public static BattleShipGame loadGameFromXML(String fileName) throws FileNotFoundException, FileNotXmlFormat, JAXBException {
         File f = new File(fileName);
-        return loadGameFormFile(f);
+        if (f != null) {
+            return loadGameFromFile(f);
+        }
+        return null;
     }
 
-    public static void validateFile(File f) throws FileNotFoundException, FileNotXmlFormat {
+    public static BattleShipGame loadGameFromFile(File file) throws FileNotFoundException, FileNotXmlFormat, JAXBException {
+        validateFile(file);
+        JAXBContext jaxbContext = JAXBContext.newInstance(BattleShipGame.class);
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        BattleShipGame game = (BattleShipGame) jaxbUnmarshaller.unmarshal(file);
+        return game;
+    }
+
+    private static void validateFile(File f) throws FileNotFoundException, FileNotXmlFormat {
         if (!f.exists()) {
             throw new FileNotFoundException(f.getName() + " Not Found.");
         }
@@ -26,12 +37,5 @@ public class JAXBGameParser {
         }
     }
 
-    public static BattleShipGame loadGameFormFile(File file) throws FileNotFoundException, FileNotXmlFormat, JAXBException {
-        validateFile(file);
-        JAXBContext jaxbContext = JAXBContext.newInstance(BattleShipGame.class);
-        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        BattleShipGame game = (BattleShipGame) jaxbUnmarshaller.unmarshal(file);
-        return game;
-    }
 }
 
