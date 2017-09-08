@@ -1,4 +1,4 @@
-package game.runners;
+package game.runners.console;
 
 import descriptor.BattleShipGame;
 import game.engine.*;
@@ -9,7 +9,6 @@ import game.ships.ShipPoint;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
-import java.util.concurrent.TimeUnit;
 
 public class ConsoleRunner {
 

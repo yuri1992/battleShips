@@ -1,6 +1,6 @@
 package com.company;
 
-import game.runners.ConsoleRunner;
+import game.runners.console.ConsoleRunner;
 
 public class Main {
     public static void main(String[] args) {
