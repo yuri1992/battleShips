@@ -9,9 +9,6 @@ import game.players.ShipsLocatedTooClose;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +25,11 @@ public class GameManager {
     private Player currentPlayer = null;
     private Player winner;
     private Date startAt = null;
+    private boolean isInitialize = false;
+
+    public GameManager() {
+
+    }
 
     public GameManager(BattleShipGame gameDescriptor) throws ShipsLocatedTooClose, BoardSizeIsTooBig, NotEnoughShipsLocated {
         mode = GameMode.valueOf(gameDescriptor.getGameType());
@@ -41,6 +43,7 @@ public class GameManager {
 
         this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
         this.setPlayerList(gameDescriptor.getBoards().getBoard());
+        this.isInitialize = true;
     }
 
     public void start() {
@@ -101,6 +104,7 @@ public class GameManager {
         // Did player hit a ship
         boolean didHit = nextPlayer.hit(pt);
         currentPlayer.logAttack(pt, didHit);
+        currentPlayer.getCurrentTurn().setPoint(pt);
         currentPlayer.endTurn();
 
         // Check if ship is hit and drowned
