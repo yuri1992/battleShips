@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShipsBoard implements Board {
-    Ship[][] board;
+    private Ship[][] board;
+
+    public Ship[][] getBoard() {
+        return board;
+    }
 
     public ShipsBoard(List<Ship> ships, int boardSize) throws ShipsLocatedTooClose {
         board = new Ship[boardSize][boardSize];
