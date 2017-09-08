@@ -25,6 +25,8 @@ public class PlayerScreenController extends BaseController {
     @FXML // fx:id="quit"
     private Button quit; // Value injected by FXMLLoader
 
+    private Button start_new; // Value injected by FXMLLoader
+
     @FXML // fx:id="ships_board"
     private AnchorPane ships_board; // Value injected by FXMLLoader
 
@@ -90,42 +92,82 @@ public class PlayerScreenController extends BaseController {
         alert.showAndWait();
     }
 
-    public void render() {
-        this.player_name.setText(game.getCurrentPlayer().toString());
-
+    private void renderShipsBoard() {
         String[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
         this.ships_board.getChildren().clear();
         for (int y = 1; y < board.length; y++) {
             for (int x = 1; x < board.length; x++) {
                 Button n = new Button();
-                n.minWidth(10);
-                n.minHeight(10);
-                n.setLayoutX(x * 35);
-                n.setLayoutY(y * 35);
+                n.minWidth(15);
+                n.minHeight(15);
+                n.setLayoutX(x * 35 - 35);
+                n.setLayoutY(y * 35 - 35);
                 n.setText(board[y][x]);
-                n.setDisable(true);
+                //n.setDisable(true);
 
                 if (board[y][x] == "~")
-                    n.setStyle("empty-cell");
+                    n.getStyleClass().add("empty-cell");
                 else if (board[y][x] == "@")
-                    n.setStyle("ship-cell");
+                    n.getStyleClass().add("ship-cell");
                 else
-                    n.setStyle("ship-hit");
+                    n.getStyleClass().add("ship-hit");
 
                 this.ships_board.getChildren().add(n);
             }
         }
+    }
 
+
+    public void render() {
+        this.player_name.setText(game.getCurrentPlayer().toString());
+        this.renderShipsBoard();
+        this.renderAttackBoard();
+        this.renderHistoryMoves();
+        this.renderStatistics();
+
+
+    }
+
+    private void renderStatistics() {
+        PlayerStatistics p = game.getCurrentPlayer().getStatistics();
+        stat_score.setText(String.valueOf(p.getScore()));
+        stat_score.setEditable(false);
+        stat_turns.setText(String.valueOf(p.getTurns()));
+        stat_turns.setEditable(false);
+        stat_hits.setText(String.valueOf(p.getHits()));
+        stat_hits.setEditable(false);
+        stat_miss.setText(String.valueOf(p.getMisses()));
+        stat_miss.setEditable(false);
+        stat_time.setText(ConsoleUtils.formatDateHM(p.getAvgTurnTime()));
+        stat_time.setEditable(false);
+    }
+
+    private void renderHistoryMoves() {
+        this.list_moves.getItems().clear();
+        for (GameTurn turn : game.getCurrentPlayer().getTurns()) {
+            this.list_moves.getItems().add(turn.toString());
+        }
+    }
+
+    private void renderAttackBoard() {
         this.attack_board.getChildren().clear();
-        board = game.getCurrentPlayer().getAttackBoard().printBoard();
+        String[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
         for (int y = 1; y < board.length; y++) {
             for (int x = 1; x < board.length; x++) {
                 Button n = new Button();
-                n.minWidth(10);
-                n.minHeight(10);
-                n.setLayoutX(x * 35);
-                n.setLayoutY(y * 35);
+                n.minWidth(15);
+                n.minHeight(15);
+                n.setLayoutX(x * 35 - 35);
+                n.setLayoutY(y * 35 - 35);
                 n.setText(board[y][x]);
+
+                if (board[y][x] == "~")
+                    n.getStyleClass().add("empty-cell");
+                else if (board[y][x] == "*")
+                    n.getStyleClass().add("ship-hit");
+                else
+                    n.getStyleClass().add("miss-cell");
+
                 int finalX = x;
                 int finalY = y;
                 n.setOnAction((event) -> {
@@ -139,24 +181,6 @@ public class PlayerScreenController extends BaseController {
                 this.attack_board.getChildren().add(n);
             }
         }
-
-        this.list_moves.getItems().clear();
-        for (GameTurn turn : game.getCurrentPlayer().getTurns()) {
-            this.list_moves.getItems().add(turn.toString());
-        }
-
-        PlayerStatistics p = game.getCurrentPlayer().getStatistics();
-        stat_score.setText(String.valueOf(p.getScore()));
-        stat_score.setEditable(false);
-        stat_turns.setText(String.valueOf(p.getTurns()));
-        stat_turns.setEditable(false);
-        stat_hits.setText(String.valueOf(p.getHits()));
-        stat_hits.setEditable(false);
-        stat_miss.setText(String.valueOf(p.getMisses()));
-        stat_miss.setEditable(false);
-        stat_time.setText(ConsoleUtils.formatDateHM(p.getAvgTurnTime()));
-        stat_time.setEditable(false);
-
     }
 
 }

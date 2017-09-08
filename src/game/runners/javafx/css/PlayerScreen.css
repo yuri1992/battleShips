@@ -1,0 +1,23 @@
+.empty-cell {
+    -fx-background-color: transparent;
+    -fx-background-image: url(sea.png);
+    -fx-background-size: 30px 30px;
+}
+
+.ship-cell {
+    -fx-background-color: transparent;
+    -fx-background-image: url(ship.png);
+    -fx-background-size: 30px 30px;
+}
+
+.ship-hit {
+    -fx-background-color: transparent;
+    -fx-background-image: url(fire.png);
+    -fx-background-size: 30px 30px;
+}
+
+.miss-cell {
+    -fx-background-color: transparent;
+    -fx-background-image: url(miss.png);
+    -fx-background-size: 30px 30px;
+}
