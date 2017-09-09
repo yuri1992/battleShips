@@ -172,7 +172,7 @@ public class GameManager {
 
         int boardSize = gameDescriptor.getBoardSize();
         if (boardSize > 20 || boardSize < 5) {
-            throw new BoardSizeIsTooBig("Board size must be between 5 to 20");
+            throw new InvalidBoardSizeException("Board size must be between 5 to 20");
         }
 
         // Validating Each player have all necessary ships
@@ -200,7 +200,5 @@ public class GameManager {
                 }
             }
         }
-
-
     }
 }

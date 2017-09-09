@@ -2,7 +2,7 @@ package game.engine;
 
 
 import descriptor.BattleShipGame;
-import game.exceptions.FileNotXmlFormat;
+import game.exceptions.InvalidFileFormatException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -12,22 +12,22 @@ import java.io.FileNotFoundException;
 
 public class JAXBGameParser {
 
-    public static BattleShipGame loadGameFromXML(String fileName) throws FileNotFoundException, FileNotXmlFormat, JAXBException {
+    public static BattleShipGame loadGameFromXML(String fileName) throws FileNotFoundException, InvalidFileFormatException, JAXBException {
         File f = new File(fileName);
         return loadGameFormFile(f);
     }
 
-    public static void validateFile(File f) throws FileNotFoundException, FileNotXmlFormat {
+    public static void validateFile(File f) throws FileNotFoundException, InvalidFileFormatException {
         if (!f.exists()) {
             throw new FileNotFoundException(f.getName() + " Not Found.");
         }
 
         if (!f.isFile() || !f.getPath().endsWith(".xml")) {
-            throw new FileNotXmlFormat();
+            throw new InvalidFileFormatException();
         }
     }
 
-    public static BattleShipGame loadGameFormFile(File file) throws FileNotFoundException, FileNotXmlFormat, JAXBException {
+    public static BattleShipGame loadGameFormFile(File file) throws FileNotFoundException, InvalidFileFormatException, JAXBException {
         validateFile(file);
         JAXBContext jaxbContext = JAXBContext.newInstance(BattleShipGame.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();

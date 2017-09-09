@@ -4,7 +4,7 @@ import descriptor.BattleShipGame;
 import game.engine.GameManager;
 import game.engine.GameStatistics;
 import game.engine.JAXBGameParser;
-import game.exceptions.FileNotXmlFormat;
+import game.exceptions.InvalidFileFormatException;
 import game.exceptions.GameSettingsInitializationException;
 import game.players.Player;
 import game.ships.ShipPoint;
@@ -91,7 +91,7 @@ public class ConsoleRunner {
             return;
         } catch (FileNotFoundException e) {
             System.out.println("Please verify that the file is exists.");
-        } catch (FileNotXmlFormat fileNotXmlFormat) {
+        } catch (InvalidFileFormatException fileNotXmlFormat) {
             System.out.println("File must be a valid XML format.");
         } catch (JAXBException e) {
             System.out.println("XML file is not valid, please make sure your xml file meet the xsd file.");
