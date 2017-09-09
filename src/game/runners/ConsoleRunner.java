@@ -7,6 +7,7 @@ import game.engine.JAXBGameParser;
 import game.exceptions.InvalidFileFormatException;
 import game.exceptions.GameSettingsInitializationException;
 import game.players.Player;
+import game.players.PlayerStatistics;
 import game.ships.ShipPoint;
 
 import javax.xml.bind.JAXBException;
@@ -133,7 +134,7 @@ public class ConsoleRunner {
             System.out.println("-----------------------------------------------------------------------------------");
             System.out.println("-----------------------------------------------------------------------------------");
             System.out.println("Hello Player " + currentPlayer.toString() + " Please play your turn.");
-            System.out.println("Your current score is " + currentPlayer.getScore());
+            System.out.println("Your current score is " + new PlayerStatistics(currentPlayer).getHits());
             this.printPlayerBoards(currentPlayer);
         }
     }
