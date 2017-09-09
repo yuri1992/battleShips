@@ -53,7 +53,7 @@ public class ShipsBoard implements Board {
 
 
     public Ship getShipByPoint(ShipPoint pt) {
-        if (pt.y < 0 || pt.x < 0 || pt.x > board.length || pt.y > board.length)
+        if (pt.y < 0 || pt.x < 0 || pt.x >= board.length || pt.y >= board.length)
             return null;
 
         return board[pt.x][pt.y];
