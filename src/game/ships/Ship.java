@@ -27,12 +27,12 @@ public class Ship {
         switch (direction) {
             case "ROW":
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x + i, position.y));
+                    positions.add(new ShipPoint(position.x, position.y + i));
                 }
                 break;
             case "COLUMN":
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x, position.y + i));
+                    positions.add(new ShipPoint(position.x + i, position.y));
                 }
                 break;
             case "RIGHT_DOWN":

@@ -31,7 +31,7 @@ public class ShipsBoard implements Board {
             }
         }
 
-        board[pt.y][pt.x] = ship;
+        board[pt.x][pt.y] = ship;
     }
 
     /*
@@ -56,7 +56,7 @@ public class ShipsBoard implements Board {
         if (pt.y < 0 || pt.x < 0 || pt.x > board.length || pt.y > board.length)
             return null;
 
-        return board[pt.y][pt.x];
+        return board[pt.x][pt.y];
     }
 
     @Override
@@ -65,12 +65,12 @@ public class ShipsBoard implements Board {
 
         for (int y = 1; y < board.length; y++) {
             for (int x = 1; x < board.length; x++) {
-                if (board[y][x] == null)
-                    res[y][x] = "~";
-                else if (board[y][x].isHit(new ShipPoint(x, y)))
-                    res[y][x] = "%";
+                if (board[x][y] == null)
+                    res[x][y] = "~";
+                else if (board[x][y].isHit(new ShipPoint(x, y)))
+                    res[x][y] = "%";
                 else
-                    res[y][x] = "@";
+                    res[x][y] = "@";
             }
         }
 
@@ -78,7 +78,7 @@ public class ShipsBoard implements Board {
     }
 
     public boolean hit(ShipPoint pt) {
-        Ship ship = board[pt.y][pt.x];
+        Ship ship = board[pt.x][pt.y];
         if (ship != null) {
             ship.hit(pt.x, pt.y);
             return true;
