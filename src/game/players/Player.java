@@ -3,9 +3,6 @@ package game.players;
 import descriptor.ShipType;
 import game.engine.GameTurn;
 import game.exceptions.GameSettingsInitializationException;
-import game.exceptions.NotEnoughShipsLocated;
-import game.exceptions.NotRecognizedShipType;
-import game.exceptions.ShipTypeNotDeclared;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
@@ -62,29 +59,10 @@ public class Player {
 
     public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws GameSettingsInitializationException {
         this.ships = new ArrayList<>();
-        HashMap<String, Integer> countShipsByType = new HashMap<String, Integer>();
-
-        for (HashMap.Entry<String, ShipType> e : shipTypeHashMap.entrySet())
-            countShipsByType.put(e.getKey(), e.getValue().getAmount());
 
         for (descriptor.Ship item : ships) {
             String shipTypeId = item.getShipTypeId();
-            Integer count = countShipsByType.get(shipTypeId);
-            if (count == null)
-                throw new NotRecognizedShipType("Ship Type: " + shipTypeId + " is not recognized");
-
-            countShipsByType.put(shipTypeId, count - 1);
             this.ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
-        }
-
-
-        for (HashMap.Entry<String, ShipType> e : shipTypeHashMap.entrySet()) {
-
-            if (countShipsByType.get(e.getKey()) == e.getValue().getAmount())
-                throw new ShipTypeNotDeclared("Ship typeId " + e.getKey() + " not declared for player " + this.toString());
-
-            if (countShipsByType.get(e.getKey()) != 0)
-                throw new NotEnoughShipsLocated("Ship typeId " + e.getKey() + " must be located " + e.getValue().getAmount() + " times only.");
         }
     }
 

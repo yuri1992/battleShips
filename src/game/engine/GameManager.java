@@ -3,18 +3,12 @@ package game.engine;
 import descriptor.BattleShipGame;
 import descriptor.Board;
 import descriptor.ShipType;
-import game.exceptions.BoardBuilderException;
-import game.exceptions.BoardSizeIsTooBig;
-import game.exceptions.DuplicatedShipTypesDecleared;
-import game.exceptions.GameSettingsInitializationException;
+import game.exceptions.*;
 import game.players.Player;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 public class GameManager {
@@ -29,14 +23,11 @@ public class GameManager {
     private Date startAt = null;
 
     public GameManager(BattleShipGame gameDescriptor) throws GameSettingsInitializationException {
-        mode = GameMode.valueOf(gameDescriptor.getGameType());
+        this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
         validateConfiguraionProperties(gameDescriptor);
 
         mode = GameMode.valueOf(gameDescriptor.getGameType());
         boardSize = gameDescriptor.getBoardSize();
-
-
-        this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
         this.setPlayerList(gameDescriptor.getBoards().getBoard());
     }
 
@@ -171,7 +162,7 @@ public class GameManager {
         return winner;
     }
 
-    private void validateConfiguraionProperties(BattleShipGame gameDescriptor) throws BoardSizeIsTooBig, BoardBuilderException {
+    private void validateConfiguraionProperties(BattleShipGame gameDescriptor) throws GameSettingsInitializationException {
 
         try {
             GameMode.valueOf(gameDescriptor.getGameType());
@@ -182,6 +173,32 @@ public class GameManager {
         int boardSize = gameDescriptor.getBoardSize();
         if (boardSize > 20 || boardSize < 5) {
             throw new BoardSizeIsTooBig("Board size must be between 5 to 20");
+        }
+
+        // Validating Each player have all necessary ships
+        for (Board board : gameDescriptor.getBoards().getBoard()) {
+            Map<String, Integer> shipTypeCount = new HashMap<>();
+
+            for (String key : shipTypeHashMap.keySet()) {
+                shipTypeCount.put(key, shipTypeHashMap.get(key).getAmount());
+            }
+
+            for (descriptor.Ship ship : board.getShip()) {
+                Integer count = shipTypeCount.get(ship.getShipTypeId());
+                if (count == null)
+                    throw new NotRecognizedShipType(ship.getShipTypeId() + " Unrecognized ship type.");
+
+                shipTypeCount.put(ship.getShipTypeId(), count - 1);
+            }
+
+            for (Map.Entry<String, Integer> e : shipTypeCount.entrySet()) {
+                if (e.getValue() < 0) {
+                    throw new NotEnoughShipsLocated(e.getKey() + " Declared too many times it should be " + shipTypeHashMap.get(e.getKey()).getAmount() + " Times in each player.");
+                }
+                if (e.getValue() != 0) {
+                    throw new NotEnoughShipsLocated(e.getKey() + " Should be declared exactly " + shipTypeHashMap.get(e.getKey()).getAmount() + " Times in each player.");
+                }
+            }
         }
 
 
