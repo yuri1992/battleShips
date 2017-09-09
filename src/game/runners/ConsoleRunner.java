@@ -154,15 +154,15 @@ public class ConsoleRunner {
 
     private void printBoard(String[][] board) {
         System.out.format("%-3s", "\\");
-        for (int y = 1; y < board.length; y++) {
-            System.out.format("%-3s", y);
+        for (int col = 1; col < board.length; col++) {
+            System.out.format("%-3s", col);
         }
         System.out.println();
 
-        for (int i = 1; i < board.length; i++) {
-            System.out.format("%-3s", i);
-            for (int y = 1; y < board.length; y++) {
-                System.out.format("%-3s", board[i][y]);
+        for (int row = 1; row < board.length; row++) {
+            System.out.format("%-3s", row);
+            for (int col = 1; col < board.length; col++) {
+                System.out.format("%-3s", board[row][col]);
             }
             System.out.println();
         }
@@ -182,9 +182,9 @@ public class ConsoleRunner {
 
         System.out.println("Attack! Please select the cell location you want to attack.");
 
-        System.out.println("Please Enter the Column(X):");
+        System.out.println("Please Enter the Row:");
         int x = ConsoleUtils.getIntegerByRange(1, game.getBoardSize());
-        System.out.println("Please Enter the Row(Y):");
+        System.out.println("Please Enter the Column:");
         int y = ConsoleUtils.getIntegerByRange(1, game.getBoardSize());
         ShipPoint fireToPoint = new ShipPoint(x, y);
 
