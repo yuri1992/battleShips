@@ -2,6 +2,10 @@ package game.players;
 
 import descriptor.ShipType;
 import game.engine.GameTurn;
+import game.exceptions.GameSettingsInitializationException;
+import game.exceptions.NotEnoughShipsLocated;
+import game.exceptions.NotRecognizedShipType;
+import game.exceptions.ShipTypeNotDeclared;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
@@ -19,7 +23,7 @@ public class Player {
     private int score = 0;
 
     public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws
-            BoardBuilderException, NotEnoughShipsLocated {
+            GameSettingsInitializationException {
         this.setShips(ships, shipTypeHashMap);
         shipsBoard = new ShipsBoard(this.ships, boardSize + 1);
         attackBoard = new AttackBoard(boardSize + 1, boardSize + 1);
@@ -56,21 +60,31 @@ public class Player {
         return new PlayerStatistics(this);
     }
 
-    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws NotEnoughShipsLocated {
+    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws GameSettingsInitializationException {
         this.ships = new ArrayList<>();
-        HashMap<String, Integer> shipsByType = new HashMap<String, Integer>();
+        HashMap<String, Integer> countShipsByType = new HashMap<String, Integer>();
 
-        ships.forEach(item -> {
+        for (HashMap.Entry<String, ShipType> e : shipTypeHashMap.entrySet())
+            countShipsByType.put(e.getKey(), e.getValue().getAmount());
+
+        for (descriptor.Ship item : ships) {
             String shipTypeId = item.getShipTypeId();
-            shipsByType.put(shipTypeId, shipsByType.getOrDefault(shipTypeId, 0) + 1);
-            this.ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
-        });
+            Integer count = countShipsByType.get(shipTypeId);
+            if (count == null)
+                throw new NotRecognizedShipType("Ship Type: " + shipTypeId + " is not recognized");
 
-        // Validation of number of ships per type.
-        for (HashMap.Entry<String, Integer> entry : shipsByType.entrySet()) {
-            int amount = shipTypeHashMap.get(entry.getKey()).getAmount();
-            if (amount != entry.getValue())
-                throw new NotEnoughShipsLocated("Ship typeId " + entry.getKey() + " must be located " + amount + " times only.");
+            countShipsByType.put(shipTypeId, count - 1);
+            this.ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
+        }
+
+
+        for (HashMap.Entry<String, ShipType> e : shipTypeHashMap.entrySet()) {
+
+            if (countShipsByType.get(e.getKey()) == e.getValue().getAmount())
+                throw new ShipTypeNotDeclared("Ship typeId " + e.getKey() + " not declared for player " + this.toString());
+
+            if (countShipsByType.get(e.getKey()) != 0)
+                throw new NotEnoughShipsLocated("Ship typeId " + e.getKey() + " must be located " + e.getValue().getAmount() + " times only.");
         }
     }
 

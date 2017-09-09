@@ -1,7 +1,10 @@
 package game.players;
 
-import game.ships.ShipPoint;
+import game.exceptions.BoardBuilderException;
+import game.exceptions.ShipsLocatedTooClose;
+import game.exceptions.ShipsOffBoardException;
 import game.ships.Ship;
+import game.ships.ShipPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ public class ShipsBoard implements Board {
         for (ShipPoint p : l1) {
             Ship shipByPoint = getShipByPoint(p);
             if (shipByPoint != null && shipByPoint != ship) {
-                throw new ShipsLocatedTooClose("Ships " + ship.getType() + " and  " + shipByPoint.getType() + " located too close to each other at point " + p);
+                throw new ShipsLocatedTooClose("Ships " + ship.getType() + " and  " + shipByPoint.getType() + " located too close to each other at point " + ship.getPositions().get(0));
             }
         }
 

@@ -1,16 +1,16 @@
 package game.runners;
 
 import descriptor.BattleShipGame;
-import game.engine.*;
-import game.players.BoardBuilderException;
-import game.players.NotEnoughShipsLocated;
+import game.engine.GameManager;
+import game.engine.GameStatistics;
+import game.engine.JAXBGameParser;
+import game.exceptions.FileNotXmlFormat;
+import game.exceptions.GameSettingsInitializationException;
 import game.players.Player;
-import game.players.ShipsLocatedTooClose;
 import game.ships.ShipPoint;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
-import java.util.concurrent.TimeUnit;
 
 public class ConsoleRunner {
 
@@ -96,7 +96,7 @@ public class ConsoleRunner {
         } catch (JAXBException e) {
             System.out.println("XML file is not valid, please make sure your xml file meet the xsd file.");
             //            e.printStackTrace();
-        } catch (NotEnoughShipsLocated | BoardSizeIsTooBig | BoardBuilderException e) {
+        } catch (GameSettingsInitializationException e) {
             System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
         } finally {
             System.out.println();

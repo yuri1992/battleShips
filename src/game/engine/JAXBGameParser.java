@@ -4,11 +4,11 @@ package game.engine;
 import descriptor.BattleShipGame;
 import game.exceptions.FileNotXmlFormat;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class JAXBGameParser {
 

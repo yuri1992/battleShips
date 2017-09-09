@@ -41,7 +41,7 @@ public class ConsoleUtils {
     public static String formatDateHM(long time) {
         long minutes = TimeUnit.MILLISECONDS.toMinutes(time);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(time) - (minutes * 60);
-        return  minutes + ":" + seconds;
+        return minutes + ":" + seconds;
     }
 
     /*

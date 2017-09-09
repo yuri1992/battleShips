@@ -3,14 +3,11 @@ package game.engine;
 import descriptor.BattleShipGame;
 import descriptor.Board;
 import descriptor.ShipType;
-import game.exceptions.*;
-import game.players.*;
-
-import descriptor.ShipTypes;
-import game.players.BoardBuilderException;
-import game.players.NotEnoughShipsLocated;
+import game.exceptions.BoardBuilderException;
+import game.exceptions.BoardSizeIsTooBig;
+import game.exceptions.DuplicatedShipTypesDecleared;
+import game.exceptions.GameSettingsInitializationException;
 import game.players.Player;
-import game.players.ShipsLocatedTooClose;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
