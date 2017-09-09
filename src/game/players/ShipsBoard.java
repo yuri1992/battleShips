@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShipsBoard implements Board {
-    Ship[][] board;
+    private Ship[][] board;
+    private int boardSize;
 
-    public ShipsBoard(List<Ship> ships, int boardSize) throws ShipsLocatedTooClose {
-        board = new Ship[boardSize][boardSize];
+    public ShipsBoard(List<Ship> ships, int boardSize) throws BoardBuilderException {
+        this.board = new Ship[boardSize][boardSize];
+        this.boardSize = boardSize;
         for (Ship ship : ships) {
+            validateShipLocation(ship.getPositions());
             for (ShipPoint pt : ship.getPositions()) {
                 setShip(pt, ship);
             }
@@ -21,7 +24,7 @@ public class ShipsBoard implements Board {
     /*
         Adding submarine to the board
      */
-    public void setShip(ShipPoint pt, Ship ship) throws ShipsLocatedTooClose {
+    private void setShip(ShipPoint pt, Ship ship) throws ShipsLocatedTooClose {
         ArrayList<ShipPoint> l1 = getProhibitedShipPoints(pt);
 
         for (ShipPoint p : l1) {
@@ -32,6 +35,18 @@ public class ShipsBoard implements Board {
         }
 
         board[pt.x][pt.y] = ship;
+    }
+
+    /*
+        Verify ship is not off board
+     */
+    private boolean validateShipLocation(ArrayList<ShipPoint> positions) throws ShipsOffBoardException {
+        for (ShipPoint pt : positions) {
+            if (pt.x < 1 || pt.x >= boardSize || pt.y < 1 || pt.y >= boardSize) {
+                throw new ShipsOffBoardException("Ship is positioned out of board boandaries at point " + pt);
+            }
+        }
+        return true;
     }
 
     /*

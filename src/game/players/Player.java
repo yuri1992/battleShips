@@ -18,7 +18,8 @@ public class Player {
     private ShipsBoard shipsBoard;
     private int score = 0;
 
-    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws ShipsLocatedTooClose, NotEnoughShipsLocated {
+    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws
+            BoardBuilderException, NotEnoughShipsLocated {
         this.setShips(ships, shipTypeHashMap);
         shipsBoard = new ShipsBoard(this.ships, boardSize + 1);
         attackBoard = new AttackBoard(boardSize + 1, boardSize + 1);
