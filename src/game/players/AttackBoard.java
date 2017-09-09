@@ -13,7 +13,7 @@ public class AttackBoard implements Board {
             for (int x = 1; x < board.length; x++) {
                 if (board[x][y] == null)
                     res[x][y] = "~";
-                else if (board[y][x].isHit())
+                else if (board[x][y].isHit())
                     res[x][y] = "*";
                 else
                     res[x][y] = "^";
