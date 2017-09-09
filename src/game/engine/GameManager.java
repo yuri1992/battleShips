@@ -33,7 +33,7 @@ public class GameManager {
         validateConfiguraionProperties(gameDescriptor);
 
         mode = GameMode.valueOf(gameDescriptor.getGameType());
-        boardSize = boardSize;
+        boardSize = gameDescriptor.getBoardSize();
 
 
         this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
