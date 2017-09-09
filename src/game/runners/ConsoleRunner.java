@@ -180,6 +180,7 @@ public class ConsoleRunner {
             return;
         }
 
+        game.getCurrentPlayer().startTurn();
         System.out.println("Attack! Please select the cell location you want to attack.");
 
         System.out.println("Please Enter the Row:");

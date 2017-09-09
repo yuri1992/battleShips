@@ -119,7 +119,6 @@ public class GameManager {
 
     private void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
-        this.currentPlayer.startTurn();
     }
 
     public boolean isRunning() {
