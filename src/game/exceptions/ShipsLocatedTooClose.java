@@ -1,7 +1,7 @@
-package game.players;
+package game.exceptions;
 
 public class ShipsLocatedTooClose extends BoardBuilderException {
-    ShipsLocatedTooClose(String errorMessage) {
+    public ShipsLocatedTooClose(String errorMessage) {
         super(errorMessage);
     }
 }

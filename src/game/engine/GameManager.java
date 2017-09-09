@@ -3,16 +3,11 @@ package game.engine;
 import descriptor.BattleShipGame;
 import descriptor.Board;
 import descriptor.ShipType;
-import game.players.BoardBuilderException;
-import game.players.NotEnoughShipsLocated;
-import game.players.Player;
-import game.players.ShipsLocatedTooClose;
+import game.exceptions.*;
+import game.players.*;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +25,7 @@ public class GameManager {
     private Player winner;
     private Date startAt = null;
 
-    public GameManager(BattleShipGame gameDescriptor) throws BoardBuilderException, BoardSizeIsTooBig, NotEnoughShipsLocated {
+    public GameManager(BattleShipGame gameDescriptor) throws GameSettingsInitializationException {
         mode = GameMode.valueOf(gameDescriptor.getGameType());
 
         int boardSize = gameDescriptor.getBoardSize();
@@ -63,9 +58,11 @@ public class GameManager {
         return new GameStatistics(this.startAt, this.playerList);
     }
 
-    private void setShipTypeHashMap(List<ShipType> shipTypes) {
+    private void setShipTypeHashMap(List<ShipType> shipTypes) throws DuplicatedShipTypesDecleared {
         shipTypeHashMap = new HashMap<>();
         for (ShipType shipType : shipTypes) {
+            if (shipTypeHashMap.containsKey(shipType.getId()))
+                throw new DuplicatedShipTypesDecleared(shipType.getId() + " Already Declared.");
             shipTypeHashMap.put(shipType.getId(), shipType);
         }
     }
@@ -121,7 +118,7 @@ public class GameManager {
         return playerList.get(0) != this.getCurrentPlayer() ? playerList.get(0) : playerList.get(1);
     }
 
-    private void setPlayerList(List<Board> playerList) throws BoardBuilderException, NotEnoughShipsLocated {
+    private void setPlayerList(List<Board> playerList) throws GameSettingsInitializationException {
         this.playerList = new ArrayList<>();
         for (Board board : playerList) {
             this.playerList.add(new Player(board.getShip(), this.getBoardSize(), this.getShipTypeHashMap()));

@@ -2,6 +2,7 @@ package game.engine;
 
 
 import descriptor.BattleShipGame;
+import game.exceptions.FileNotXmlFormat;
 
 import java.io.File;
 import java.io.FileNotFoundException;
