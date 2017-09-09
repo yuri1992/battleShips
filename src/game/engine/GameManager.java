@@ -3,6 +3,7 @@ package game.engine;
 import descriptor.BattleShipGame;
 import descriptor.Board;
 import descriptor.ShipType;
+import descriptor.ShipTypes;
 import game.players.BoardBuilderException;
 import game.players.NotEnoughShipsLocated;
 import game.players.Player;
@@ -31,13 +32,10 @@ public class GameManager {
     private Date startAt = null;
 
     public GameManager(BattleShipGame gameDescriptor) throws BoardBuilderException, BoardSizeIsTooBig, NotEnoughShipsLocated {
-        mode = GameMode.valueOf(gameDescriptor.getGameType());
+        validateConfiguraionProperties(gameDescriptor);
 
-        int boardSize = gameDescriptor.getBoardSize();
-        if (boardSize > 20 || boardSize < 5) {
-            throw new BoardSizeIsTooBig("Board size must be between 5 to 20");
-        }
-        this.boardSize = boardSize;
+        mode = GameMode.valueOf(gameDescriptor.getGameType());
+        boardSize = boardSize;
 
 
         this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
@@ -171,5 +169,21 @@ public class GameManager {
 
     public Player getWinner() {
         return winner;
+    }
+
+    private void validateConfiguraionProperties(BattleShipGame gameDescriptor) throws BoardSizeIsTooBig, BoardBuilderException {
+
+        try {
+            GameMode.valueOf(gameDescriptor.getGameType());
+        } catch (IllegalArgumentException e) {
+            throw new BoardBuilderException("Illegal game type provided");
+        }
+
+        int boardSize = gameDescriptor.getBoardSize();
+        if (boardSize > 20 || boardSize < 5) {
+            throw new BoardSizeIsTooBig("Board size must be between 5 to 20");
+        }
+
+
     }
 }
