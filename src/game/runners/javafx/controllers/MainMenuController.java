@@ -5,8 +5,10 @@ import game.engine.GameManager;
 import game.engine.JAXBGameParser;
 import game.exceptions.GameSettingsInitializationException;
 import game.exceptions.InvalidFileFormatException;
+import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -28,7 +30,15 @@ public class MainMenuController {
     protected GameManager game = null;
 
     public MainMenuController(Stage window) {
+
         this.window = window;
+        this.window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                event.consume();
+                closeProgram();
+            }
+        });
     }
 
     public GameManager handleLoadXmlButtonPressed() {
@@ -66,8 +76,7 @@ public class MainMenuController {
     }
 
     public void handleQuitGamePressed() {
-        System.out.println("handleQuitGamePressed");
-//        closeProgram();
+        closeProgram();
     }
 
 
@@ -104,20 +113,20 @@ public class MainMenuController {
         } catch (GameSettingsInitializationException e) {
             System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
         }
-
     }
 
     private boolean isGameInProgress() {
         return (this.game != null && this.game.isRunning());
     }
 
-//    /// TODO: Amir: Decide where to hold this exit + handler for stage.setOnCloseRequest
-//    protected void closeProgram() {
-//        System.out.println("close program called");
-//        if (this.game != null && this.game.isRunning())
-//            this.game.finishGame();
-//
-//        Stage stage = (Stage) anchorPane.getScene().getWindow();
-//        stage.close();
-//    }
+    private void closeProgram() {
+        boolean res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to exit the " +
+                "program?");
+        if (res) {
+            if (this.game != null && this.game.isRunning())
+                this.game.finishGame();
+
+            window.close();
+        }
+    }
 }
