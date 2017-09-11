@@ -1,6 +1,10 @@
 package game.runners.javafx.controllers;
 
+import descriptor.BattleShipGame;
 import game.engine.GameManager;
+import game.engine.JAXBGameParser;
+import game.exceptions.GameSettingsInitializationException;
+import game.exceptions.InvalidFileFormatException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -8,7 +12,9 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Created by amirshavit on 9/11/17.
@@ -23,27 +29,55 @@ public class MainMenuController {
     private Stage window;
     private File selectedXml = null;
 
-    private GameManager game = null;
+    protected GameManager game = null;
 
     public MainMenuController(Stage window) {
         this.window = window;
     }
 
-    public void handleLoadXmlButtonPressed() {
-        System.out.println("here");
+    public GameManager handleLoadXmlButtonPressed() {
+        System.out.println("handleLoadXmlButtonPressed");
+        if (isGameInProgress()) {
+            /// TODO: Amir: Add alert box instead of print log
+            System.out.println("Game already in progress, you can't load another.");
+            return game;
+        }
 
+        if (window != null) {
+            File xml = getFileChooser().showOpenDialog(window);
+            if (xml != null) {
+                System.out.println("selected " + xml.toString());
+                loadGame(xml);
+            }
+        }
+        return game;
     }
 
     public void handleStartGameButtonPressed() {
+        System.out.println("handleStartGameButtonPressed");
+        if (isGameInProgress()) {
+            /// TODO: Amir: Add alert box instead of print log
+            System.out.println("Game already started, you can't start it again.");
+            return;
+        }
+        if (this.game == null) {
+            /// TODO: Amir: Add alert box instead of print log
+            System.out.println("You should load XML settings file first.");
+//            btStartGame.setDisable(true);
+            return;
+        }
 
+        this.game.start();
     }
 
     public void handleResignGamePressed() {
+        System.out.println("handleResignGamePressed");
 
     }
 
     public void handleQuitGamePressed() {
-
+        System.out.println("handleQuitGamePressed");
+//        closeProgram();
     }
 
 
@@ -61,78 +95,35 @@ public class MainMenuController {
         return fileChooser;
     }
 
-//    @FXML private void handleLoadXmlButtonPressed(MouseEvent event) {
-//        System.out.println("Pressed Load XML!");
-//        if (isGameInProgress()) {
-//            System.out.println("Game already in progress, you can't load another.");
-//            return;
-//        }
-//
-//        Stage stage = (Stage) anchorPane.getScene().getWindow();
-//
-//        File xml = fileChooser.showOpenDialog(stage);
-//        if (xml != null) {
-//            System.out.println("selected " + xml.toString());
-//            loadGame(xml);
-//        }
-//    }
-//
-//    @FXML private void handleStartGameButtonPressed(MouseEvent event) {
-//        System.out.println("Pressed Start!");
-//        if (isGameInProgress()) {
-//            System.out.println("Game already started, you can't start it again.");
-//            return;
-//        }
-//        if (this.game == null) {
-//            System.out.println("You should load XML settings file first.");
-//            btStartGame.setDisable(true);
-//            return;
-//        }
-//
-//        this.game.start();
-//    }
-//
-//    @FXML private void handleQuitGameButtonPressed(MouseEvent event) {
-//        closeProgram();
-//    }
-//
-//    private void loadGame(File xml) {
+
+    private void loadGame(File xml) {
 //        enableAllButton(false);
-//
-//        try {
-//            BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromFile(xml);
-//            this.game = new GameManager(gameDescriptor);
-//            this.selectedXml = xml;
-//            System.out.println("XML File loaded successfully.");
+
+        try {
+            BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromFile(xml);
+            this.game = new GameManager(gameDescriptor);
+            this.selectedXml = xml;
+            System.out.println("XML File loaded successfully.");
 //            enableAllButton(true);
-//
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Please verify that the file is exists.");
-//
-//        } catch (FileNotXmlFormat fileNotXmlFormat) {
-//            System.out.println("File must be a valid XML format.");
-//
-//        } catch (JAXBException e) {
-//            System.out.println("XML file is not valid, please make sure your xml file meet the xsd file.");
-//        } catch (NotEnoughShipsLocated | BoardSizeIsTooBig | ShipsLocatedTooClose e) {
-//            System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
-//        } finally {
-//            System.out.println();
-//        }
-//
-//    }
-//
-//    private void enableAllButton(boolean isEnabled) {
-//        System.out.println("All button " + (isEnabled ? "enabled" : "disabled"));
-//        btLoadXml.setDisable(!isEnabled);
-//        btQuit.setDisable(!isEnabled);
-//        btStartGame.setDisable(!isEnabled || game == null);
-//    }
-//
-//    private boolean isGameInProgress() {
-//        return (this.game != null && this.game.isRunning());
-//    }
-//
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Please verify that the file is exists.");
+
+        } catch (InvalidFileFormatException fileNotXmlFormat) {
+            System.out.println("File must be a valid XML format.");
+
+        } catch (JAXBException e) {
+            System.out.println("XML file is not valid, please make sure your xml file meet the xsd file.");
+        } catch (GameSettingsInitializationException e) {
+            System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
+        }
+
+    }
+
+    private boolean isGameInProgress() {
+        return (this.game != null && this.game.isRunning());
+    }
+
 //    /// TODO: Amir: Decide where to hold this exit + handler for stage.setOnCloseRequest
 //    protected void closeProgram() {
 //        System.out.println("close program called");

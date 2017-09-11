@@ -105,11 +105,11 @@
             <Menu fx:id="menuFile" mnemonicParsing="false" text="_File">
                 <items>
                     <MenuItem fx:id="menuFile_StartGame" disable="true" mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Start Game" />
-                    <MenuItem mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Load XML..." />
+                    <MenuItem fx:id="menuFile_LoadXML" mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Load XML..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem disable="true" mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Resign Game..." />
+                    <MenuItem fx:id="menuFile_ResignGame" disable="true" mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Resign Game..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Exit" />
+                    <MenuItem fx:id="menuFile_Quit" mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Exit" />
                 </items>
             </Menu>
             <Menu fx:id="menuGame" mnemonicParsing="false" text="Game">

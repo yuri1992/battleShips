@@ -33,16 +33,11 @@ public class BattleShips extends Application {
         Parent root = fxmlLoader.load(url.openStream());
 
         PlayerScreenController playerScreenController = fxmlLoader.getController();
+        playerScreenController.init(primaryStage);
         MainModel model = new MainModel();
         playerScreenController.setModel(model);
 
-        Scene scene = new Scene(root, 300, 275);
-
-        /*Button singInButton = (Button) scene.lookup("#signInButton");
-        final Text actionTarget = (Text)scene.lookup("#actiontarget");
-        singInButton.setOnAction(e -> {
-            actionTarget.setText("Sign in button pressed!");
-        });*/
+        Scene scene = new Scene(root, 900, 800);
 
         primaryStage.setScene(scene);
         primaryStage.show();

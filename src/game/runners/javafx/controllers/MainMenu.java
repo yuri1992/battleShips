@@ -1,12 +1,10 @@
 package game.runners.javafx.controllers;
 
 import descriptor.BattleShipGame;
-import game.engine.BoardSizeIsTooBig;
-import game.engine.FileNotXmlFormat;
 import game.engine.GameManager;
 import game.engine.JAXBGameParser;
-import game.players.NotEnoughShipsLocated;
-import game.players.ShipsLocatedTooClose;
+import game.exceptions.GameSettingsInitializationException;
+import game.exceptions.InvalidFileFormatException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -96,12 +94,13 @@ public class MainMenu extends BaseController {
         } catch (FileNotFoundException e) {
             System.out.println("Please verify that the file is exists.");
 
-        } catch (FileNotXmlFormat fileNotXmlFormat) {
+        } catch (InvalidFileFormatException fileNotXmlFormat) {
             System.out.println("File must be a valid XML format.");
 
         } catch (JAXBException e) {
             System.out.println("XML file is not valid, please make sure your xml file meet the xsd file.");
-        } catch (NotEnoughShipsLocated | BoardSizeIsTooBig | ShipsLocatedTooClose e) {
+
+        } catch (GameSettingsInitializationException e) {
             System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
         } finally {
             System.out.println();

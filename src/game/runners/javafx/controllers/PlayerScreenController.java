@@ -12,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import javax.naming.event.NamingEvent;
+import javax.naming.event.NamingExceptionEvent;
+import javax.naming.event.ObjectChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -84,15 +87,18 @@ public class PlayerScreenController extends BaseController {
 
     @FXML
     private void handleFileMenuItemPressed(ActionEvent event) {
-        if (event.getSource() == menuFile_StartGame)
-                menuController.handleStartGameButtonPressed();
-        else if (event.getSource() == menuFile_LoadXML)
-                menuController.handleLoadXmlButtonPressed();
-        else if (event.getSource() == menuFile_ResignGame)
-                menuController.handleResignGamePressed();
-        else if (event.getSource() == menuFile_Quit)
-                menuController.handleQuitGamePressed();
-        else // TODO: Amir: throw exception??
+        if (event.getSource() == menuFile_StartGame) {
+            menuController.handleStartGameButtonPressed();
+            if (game != null) {
+                this.render();
+            }
+        } else if (event.getSource() == menuFile_LoadXML) {
+            setGame(menuController.handleLoadXmlButtonPressed());
+        } else if (event.getSource() == menuFile_ResignGame) {
+            menuController.handleResignGamePressed();
+        } else if (event.getSource() == menuFile_Quit) {
+            menuController.handleQuitGamePressed();
+        } else // TODO: Amir: throw exception??
             System.out.println("unkonw");
 
     }
@@ -118,12 +124,25 @@ public class PlayerScreenController extends BaseController {
     private GameManager game;
 
 
-    public void init(Stage window, GameManager game) {
+    public void init(Stage window) {
         this.window = window;
-        this.game = game;
-        this.menuController = new MainMenuController(null);
-        this.render();
+        this.menuController = new MainMenuController(window);
     }
+
+    //region Setters / Getters
+
+    public void setGame(GameManager game) {
+        this.game = game;
+        enableGameRelatedMenuItems(game != null);
+    }
+
+    //endregion
+
+    private void enableGameRelatedMenuItems(boolean isEnabled) {
+        menuFile_StartGame.setDisable(!isEnabled || game == null);
+        menuFile_ResignGame.setDisable(!isEnabled || game == null);
+    }
+
 
     private void renderDialogSuccessTurn() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -132,7 +151,6 @@ public class PlayerScreenController extends BaseController {
         alert.setContentText("I have a great message for you!");
         alert.showAndWait();
     }
-
 
     private void renderDialogFailedTurn() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
