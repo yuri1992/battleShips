@@ -2,6 +2,7 @@ package game.players;
 
 import descriptor.ShipType;
 import game.engine.GameTurn;
+import game.exceptions.GameSettingsInitializationException;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
@@ -23,7 +24,8 @@ public class Player {
     private ShipsBoard shipsBoard;
     private int score = 0;
 
-    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws ShipsLocatedTooClose, NotEnoughShipsLocated {
+    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws
+            GameSettingsInitializationException {
         this.setShips(ships, shipTypeHashMap);
         shipsBoard = new ShipsBoard(this.ships, boardSize + 1);
         attackBoard = new AttackBoard(boardSize + 1, boardSize + 1);
@@ -60,21 +62,12 @@ public class Player {
         return new PlayerStatistics(this);
     }
 
-    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws NotEnoughShipsLocated {
+    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws GameSettingsInitializationException {
         this.ships = new ArrayList<>();
-        HashMap<String, Integer> shipsByType = new HashMap<String, Integer>();
 
-        ships.forEach(item -> {
+        for (descriptor.Ship item : ships) {
             String shipTypeId = item.getShipTypeId();
-            shipsByType.put(shipTypeId, shipsByType.getOrDefault(shipTypeId, 0) + 1);
             this.ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
-        });
-
-        // Validation of number of ships per type.
-        for (HashMap.Entry<String, Integer> entry : shipsByType.entrySet()) {
-            int amount = shipTypeHashMap.get(entry.getKey()).getAmount();
-            if (amount != entry.getValue())
-                throw new NotEnoughShipsLocated("Ship typeId " + entry.getKey() + " must be located " + amount + " times only.");
         }
     }
 

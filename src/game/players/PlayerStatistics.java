@@ -42,7 +42,7 @@ public class PlayerStatistics {
     }
 
     public int getScore() {
-        return score;
+        return getHits();
     }
 
     public int getHits() {

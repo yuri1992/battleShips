@@ -11,12 +11,12 @@ public class AttackBoard implements Board {
 
         for (int y = 1; y < board.length; y++) {
             for (int x = 1; x < board.length; x++) {
-                if (board[y][x] == null)
-                    res[y][x] = "~";
-                else if (board[y][x].isHit())
-                    res[y][x] = "*";
+                if (board[x][y] == null)
+                    res[x][y] = "~";
+                else if (board[x][y].isHit())
+                    res[x][y] = "*";
                 else
-                    res[y][x] = "^";
+                    res[x][y] = "^";
             }
         }
 
@@ -24,8 +24,8 @@ public class AttackBoard implements Board {
     }
 
     public void setShoot(ShipPoint pt, boolean attack) {
-        board[pt.y][pt.x] = new AttackBoardMove();
-        board[pt.y][pt.x].setHit(attack);
+        board[pt.x][pt.y] = new AttackBoardMove();
+        board[pt.x][pt.y].setHit(attack);
     }
 
     public AttackBoard(int rows, int cols) {
@@ -41,7 +41,7 @@ public class AttackBoard implements Board {
     }
 
     public boolean isAttacked(ShipPoint pt) {
-        return board[pt.y][pt.x] != null;
+        return board[pt.x][pt.y] != null;
     }
 }
 
