@@ -1,6 +1,7 @@
 package com.company;
 
 import game.runners.javafx.controllers.MainController;
+import game.runners.javafx.controllers.PlayerScreenController;
 import game.runners.javafx.models.MainModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,13 +28,13 @@ public class BattleShips extends Application {
 
         //if you want to load the FXML and get access to its controller
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("BattleShips.fxml");
+        URL url = getClass().getResource("/game/runners/javafx/fxml/PlayerScreen.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(url.openStream());
 
-        MainController mainController = fxmlLoader.getController();
+        PlayerScreenController playerScreenController = fxmlLoader.getController();
         MainModel model = new MainModel();
-        mainController.setModel(model);
+        playerScreenController.setModel(model);
 
         Scene scene = new Scene(root, 300, 275);
 

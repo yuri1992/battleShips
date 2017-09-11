@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -57,6 +58,53 @@ public class PlayerScreenController extends BaseController {
     @FXML // fx:id="player_name"
     private Label player_name; // Value injected by FXMLLoader
 
+    @FXML
+    private Menu menuFile;
+
+    @FXML
+    private MenuItem menuFile_StartGame;
+
+    @FXML
+    private MenuItem menuFile_LoadXML;
+
+    @FXML
+    private MenuItem menuFile_ResignGame;
+
+    @FXML
+    private MenuItem menuFile_Quit;
+
+    @FXML
+    private Menu menuGame;
+
+    @FXML
+    private Menu menuHelp;
+
+    private MainMenuController menuController;
+    private Stage window;
+
+    @FXML
+    private void handleFileMenuItemPressed(ActionEvent event) {
+        if (event.getSource() == menuFile_StartGame)
+                menuController.handleStartGameButtonPressed();
+        else if (event.getSource() == menuFile_LoadXML)
+                menuController.handleLoadXmlButtonPressed();
+        else if (event.getSource() == menuFile_ResignGame)
+                menuController.handleResignGamePressed();
+        else if (event.getSource() == menuFile_Quit)
+                menuController.handleQuitGamePressed();
+        else // TODO: Amir: throw exception??
+            System.out.println("unkonw");
+
+    }
+
+    @FXML
+    private void handleGameMenuItemPressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void handleHelpMenuItemPressed(ActionEvent event) {
+    }
 
     @FXML
     void handleOnPlaceMine(ActionEvent event) {
@@ -70,8 +118,10 @@ public class PlayerScreenController extends BaseController {
     private GameManager game;
 
 
-    public void init(GameManager game) {
+    public void init(Stage window, GameManager game) {
+        this.window = window;
         this.game = game;
+        this.menuController = new MainMenuController(null);
         this.render();
     }
 
