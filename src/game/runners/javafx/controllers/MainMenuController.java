@@ -5,10 +5,6 @@ import game.engine.GameManager;
 import game.engine.JAXBGameParser;
 import game.exceptions.GameSettingsInitializationException;
 import game.exceptions.InvalidFileFormatException;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -36,10 +32,8 @@ public class MainMenuController {
     }
 
     public GameManager handleLoadXmlButtonPressed() {
-        System.out.println("handleLoadXmlButtonPressed");
         if (isGameInProgress()) {
-            /// TODO: Amir: Add alert box instead of print log
-            System.out.println("Game already in progress, you can't load another.");
+            AlertBoxController.displayAlert("Illegal Action", "Game already in progress, you can't load another.");
             return game;
         }
 
@@ -54,16 +48,12 @@ public class MainMenuController {
     }
 
     public void handleStartGameButtonPressed() {
-        System.out.println("handleStartGameButtonPressed");
         if (isGameInProgress()) {
-            /// TODO: Amir: Add alert box instead of print log
-            System.out.println("Game already started, you can't start it again.");
+            AlertBoxController.displayAlert("Illegal Action", "Game already started, you can't start it again.");
             return;
         }
         if (this.game == null) {
-            /// TODO: Amir: Add alert box instead of print log
-            System.out.println("You should load XML settings file first.");
-//            btStartGame.setDisable(true);
+            AlertBoxController.displayAlert("Illegal Action", "You should load XML settings file first.");
             return;
         }
 
@@ -97,14 +87,11 @@ public class MainMenuController {
 
 
     private void loadGame(File xml) {
-//        enableAllButton(false);
-
         try {
             BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromFile(xml);
             this.game = new GameManager(gameDescriptor);
             this.selectedXml = xml;
             System.out.println("XML File loaded successfully.");
-//            enableAllButton(true);
 
         } catch (FileNotFoundException e) {
             System.out.println("Please verify that the file is exists.");
