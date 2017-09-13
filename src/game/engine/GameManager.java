@@ -149,12 +149,12 @@ public class GameManager {
         return currentPlayer;
     }
 
-    public void setShipTypeHashMap(HashMap<String, ShipType> shipTypeHashMap) {
-        this.shipTypeHashMap = shipTypeHashMap;
-    }
-
     public GameMode getMode() {
         return mode;
+    }
+
+    public void setShipTypeHashMap(HashMap<String, ShipType> shipTypeHashMap) {
+        this.shipTypeHashMap = shipTypeHashMap;
     }
 
     public HashMap<String, ShipType> getShipTypeHashMap() {
