@@ -1,4 +1,4 @@
-package game.runners.javafx.controllers;
+package runners.javafx.controllers;
 
 import descriptor.BattleShipGame;
 import game.engine.GameManager;

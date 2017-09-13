@@ -1,7 +1,7 @@
-package game.runners.javafx.controllers;
+package runners.javafx.controllers;
 
-import game.runners.javafx.models.BaseModel;
-import game.runners.javafx.models.MainModel;
+import runners.javafx.models.BaseModel;
+import runners.javafx.models.MainModel;
 import javafx.fxml.Initializable;
 
 import java.net.URL;

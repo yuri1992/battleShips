@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Player {
 
+    private int playerId;
     private List<Ship> ships;
     private List<GameTurn> turns;
 
@@ -24,8 +25,9 @@ public class Player {
     private ShipsBoard shipsBoard;
     private int score = 0;
 
-    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap) throws
+    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap, int playerId) throws
             GameSettingsInitializationException {
+        this.playerId = playerId;
         this.setShips(ships, shipTypeHashMap);
         shipsBoard = new ShipsBoard(this.ships, boardSize + 1);
         attackBoard = new AttackBoard(boardSize + 1, boardSize + 1);
@@ -113,5 +115,10 @@ public class Player {
         this.currentTurn.setEndAt();
         this.turns.add(this.currentTurn);
         this.currentTurn = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Player " +playerId;
     }
 }

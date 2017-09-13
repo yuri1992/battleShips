@@ -1,4 +1,4 @@
-package game.runners.javafx.controllers;
+package runners.javafx.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +44,7 @@ public class AlertBoxController implements Initializable {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = AlertBoxController.class.getResource("/game/runners/javafx/fxml/AlertBox.fxml");
+            URL url = AlertBoxController.class.getResource("/runners/javafx/fxml/AlertBox.fxml");
             fxmlLoader.setLocation(url);
             Parent root = fxmlLoader.load(url.openStream());
 

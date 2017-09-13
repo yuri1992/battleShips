@@ -1,4 +1,4 @@
-package game.runners.console;
+package runners.console;
 
 public enum ConsoleMenu {
     LOAD_GAME("Load Game Settings (from Xml)"),

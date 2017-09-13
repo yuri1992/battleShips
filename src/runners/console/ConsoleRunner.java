@@ -1,4 +1,4 @@
-package game.runners.console;
+package runners.console;
 
 import descriptor.BattleShipGame;
 import game.engine.GameManager;

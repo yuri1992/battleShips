@@ -1,9 +1,9 @@
-package game.runners.javafx.controllers;
+package runners.javafx.controllers;
 
 import game.engine.GameManager;
 import game.engine.GameTurn;
 import game.players.PlayerStatistics;
-import game.runners.console.ConsoleUtils;
+import runners.console.ConsoleUtils;
 import game.ships.ShipPoint;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import javax.naming.event.NamingEvent;
-import javax.naming.event.NamingExceptionEvent;
-import javax.naming.event.ObjectChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 

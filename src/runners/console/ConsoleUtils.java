@@ -1,4 +1,4 @@
-package game.runners.console;
+package runners.console;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;

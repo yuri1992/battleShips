@@ -119,9 +119,8 @@ public class GameManager {
 
     private void setPlayerList(List<Board> playerList) throws GameSettingsInitializationException {
         this.playerList = new ArrayList<>();
-        for (Board board : playerList) {
-            this.playerList.add(new Player(board.getShip(), this.getBoardSize(), this.getShipTypeHashMap()));
-        }
+        this.playerList.add(new Player(playerList.get(0).getShip(), this.getBoardSize(), this.getShipTypeHashMap(), 1));
+        this.playerList.add(new Player(playerList.get(1).getShip(), this.getBoardSize(), this.getShipTypeHashMap(), 2));
     }
 
     private void setCurrentPlayer(Player currentPlayer) {

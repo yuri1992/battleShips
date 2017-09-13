@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="140.0" maxWidth="220.0" minHeight="140.0" minWidth="220.0" spacing="40.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.runners.javafx.controllers.ConfirmBoxController">
+<VBox alignment="CENTER" maxHeight="140.0" maxWidth="220.0" minHeight="140.0" minWidth="220.0" spacing="40.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runners.javafx.controllers.ConfirmBoxController">
    <children>
       <Label fx:id="message" text="Label" textAlignment="CENTER" wrapText="true" />
       <HBox alignment="TOP_CENTER" spacing="50.0">

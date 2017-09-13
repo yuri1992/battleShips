@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.runners.javafx.controllers.PlayerScreenController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runners.javafx.controllers.PlayerScreenController">
    <center>
       <AnchorPane prefHeight="751.0" prefWidth="894.0" stylesheets="@../css/PlayerScreen.css">
          <children>

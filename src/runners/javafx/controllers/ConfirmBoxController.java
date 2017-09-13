@@ -1,4 +1,4 @@
-package game.runners.javafx.controllers;
+package runners.javafx.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created by amirshavit on 9/12/17.
@@ -49,7 +48,7 @@ public class ConfirmBoxController {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = ConfirmBoxController.class.getResource("/game/runners/javafx/fxml/ConfirmBox.fxml");
+            URL url = ConfirmBoxController.class.getResource("/runners/javafx/fxml/ConfirmBox.fxml");
             fxmlLoader.setLocation(url);
             Parent root = fxmlLoader.load(url.openStream());
 

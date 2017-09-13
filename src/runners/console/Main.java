@@ -1,6 +1,4 @@
-package com.company;
-
-import game.runners.console.ConsoleRunner;
+package runners.console;
 
 public class Main {
     public static void main(String[] args) {

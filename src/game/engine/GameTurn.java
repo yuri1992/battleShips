@@ -1,6 +1,6 @@
 package game.engine;
 
-import game.runners.console.ConsoleUtils;
+import runners.console.ConsoleUtils;
 import game.ships.ShipPoint;
 
 import java.util.Date;
