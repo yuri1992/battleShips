@@ -4,6 +4,7 @@ import descriptor.BattleShipGame;
 import game.engine.GameManager;
 import game.engine.GameStatistics;
 import game.engine.JAXBGameParser;
+import game.engine.TurnType;
 import game.exceptions.InvalidFileFormatException;
 import game.exceptions.GameSettingsInitializationException;
 import game.players.Player;
@@ -190,7 +191,7 @@ public class ConsoleRunner {
         ShipPoint fireToPoint = new ShipPoint(x, y);
 
         // Making attack to the request point.
-        if (this.game.playAttack(fireToPoint)) {
+        if (this.game.playAttack(fireToPoint) == TurnType.HIT) {
             System.out.println("NICE JOB! you successfully hit a ship.");
             System.out.println();
         }
@@ -224,7 +225,7 @@ public class ConsoleRunner {
     }
 
     private void resignGame() {
-        if (game == null || this.isGameRunning == false) {
+        if (game == null || !this.isGameRunning) {
             System.out.println("Player can't resign if a game is not in progress...");
             System.out.println();
             return;
