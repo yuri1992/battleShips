@@ -2,8 +2,8 @@ package runners.javafx.controllers;
 
 import game.engine.GameManager;
 import game.engine.GameTurn;
+import game.engine.TurnType;
 import game.players.PlayerStatistics;
-import runners.console.ConsoleUtils;
 import game.ships.ShipPoint;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import runners.console.ConsoleUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,9 +23,6 @@ public class PlayerScreenController extends BaseController {
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
-
-    @FXML // fx:id="quit"
-    private Button quit; // Value injected by FXMLLoader
 
     private Button start_new; // Value injected by FXMLLoader
 
@@ -59,6 +57,9 @@ public class PlayerScreenController extends BaseController {
     private Label player_name; // Value injected by FXMLLoader
 
     @FXML
+    private Label msg;
+
+    @FXML
     private Menu menuFile;
 
     @FXML
@@ -84,6 +85,8 @@ public class PlayerScreenController extends BaseController {
 
     private MainMenuController menuController;
     private Stage window;
+    private GameManager game;
+
 
     @FXML
     private void handleFileMenuItemPressed(ActionEvent event) {
@@ -124,9 +127,6 @@ public class PlayerScreenController extends BaseController {
         place_mine.setDisable(true);
     }
 
-    private GameManager game;
-
-
     public void init(Stage window) {
         this.window = window;
         this.menuController = new MainMenuController(window);
@@ -163,29 +163,56 @@ public class PlayerScreenController extends BaseController {
         alert.showAndWait();
     }
 
+
+    private void renderDialogAlreadyAttacked() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Point Already Attacked");
+        alert.setHeaderText(null);
+        alert.setContentText("You already attcked this Point");
+        alert.showAndWait();
+    }
+
+
     private void renderShipsBoard() {
         String[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
         this.ships_board.getChildren().clear();
-        for (int y = 1; y < board.length; y++) {
-            for (int x = 1; x < board.length; x++) {
+        for (int x = 1; x < board.length; x++) {
+            for (int y = 1; y < board.length; y++) {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(x * 35 - 35);
-                n.setLayoutY(y * 35 - 35);
-                n.setText(board[y][x]);
+                n.setLayoutX(y * 35 - 35);
+                n.setLayoutY(x * 35 - 35);
+                n.setText(board[x][y]);
                 //n.setDisable(true);
 
-                if (board[y][x] == "~")
+                if (board[x][y] == "~")
                     n.getStyleClass().add("empty-cell");
-                else if (board[y][x] == "@")
+                else if (board[x][y] == "@")
                     n.getStyleClass().add("ship-cell");
                 else
                     n.getStyleClass().add("ship-hit");
 
+                int finalX = x;
+                int finalY = y;
+                n.setOnAction((event) -> {
+                    if (game.placeMine(new ShipPoint(finalX, finalY))) {
+                        this.renderPlaceMineSeccsffully();
+                    } else {
+                        this.renderPlaceMineFailed();
+                    }
+                    this.render();
+                });
+
                 this.ships_board.getChildren().add(n);
             }
         }
+    }
+
+    private void renderPlaceMineFailed() {
+    }
+
+    private void renderPlaceMineSeccsffully() {
     }
 
 
@@ -195,8 +222,6 @@ public class PlayerScreenController extends BaseController {
         this.renderAttackBoard();
         this.renderHistoryMoves();
         this.renderStatistics();
-
-
     }
 
     private void renderStatistics() {
@@ -223,18 +248,18 @@ public class PlayerScreenController extends BaseController {
     private void renderAttackBoard() {
         this.attack_board.getChildren().clear();
         String[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
-        for (int y = 1; y < board.length; y++) {
-            for (int x = 1; x < board.length; x++) {
+        for (int x = 1; x < board.length; x++) {
+            for (int y = 1; y < board.length; y++) {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(x * 35 - 35);
-                n.setLayoutY(y * 35 - 35);
-                n.setText(board[y][x]);
+                n.setLayoutX(y * 35 - 35);
+                n.setLayoutY(x * 35 - 35);
+                n.setText(board[x][y]);
 
-                if (board[y][x] == "~")
+                if (board[x][y] == "~")
                     n.getStyleClass().add("empty-cell");
-                else if (board[y][x] == "*")
+                else if (board[x][y] == "*")
                     n.getStyleClass().add("ship-hit");
                 else
                     n.getStyleClass().add("miss-cell");
@@ -242,10 +267,13 @@ public class PlayerScreenController extends BaseController {
                 int finalX = x;
                 int finalY = y;
                 n.setOnAction((event) -> {
-                    if (game.playAttack(new ShipPoint(finalX, finalY))) {
+                    TurnType turnType = game.playAttack(new ShipPoint(finalX, finalY));
+                    if (turnType == TurnType.HIT) {
                         this.renderDialogSuccessTurn();
-                    } else {
+                    } else if (turnType == TurnType.MISS) {
                         this.renderDialogFailedTurn();
+                    } else {
+                        this.renderDialogAlreadyAttacked();
                     }
                     this.render();
                 });
@@ -253,5 +281,6 @@ public class PlayerScreenController extends BaseController {
             }
         }
     }
+
 
 }

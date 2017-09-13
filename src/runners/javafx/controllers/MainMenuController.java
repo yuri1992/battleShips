@@ -30,7 +30,6 @@ public class MainMenuController {
     protected GameManager game = null;
 
     public MainMenuController(Stage window) {
-
         this.window = window;
         this.window.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

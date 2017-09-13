@@ -87,12 +87,12 @@ public class ShipsBoard implements Board {
 
         for (int y = 1; y < board.length; y++) {
             for (int x = 1; x < board.length; x++) {
-                if (board[x][y] == null)
-                    res[x][y] = "~";
-                else if (board[x][y].isHit(new ShipPoint(x, y)))
-                    res[x][y] = "%";
+                if (board[y][x] == null)
+                    res[y][x] = "~";
+                else if (board[y][x].isHit(new ShipPoint(x, y)))
+                    res[y][x] = "%";
                 else
-                    res[x][y] = "@";
+                    res[y][x] = "@";
             }
         }
 

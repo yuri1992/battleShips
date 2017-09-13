@@ -1,7 +1,7 @@
 package game.engine;
 
-import runners.console.ConsoleUtils;
 import game.ships.ShipPoint;
+import runners.console.ConsoleUtils;
 
 import java.util.Date;
 
@@ -36,6 +36,8 @@ public class GameTurn {
     }
 
     public String toString() {
-        return String.format((isHit ? "Hit" : "Miss") + " on " + point.toString() + " took " + ConsoleUtils.formatDateHM(getTurnTime()));
+        if (point == null)
+            return "Not Used Turn";
+        return (isHit ? "Hit" : "Miss") + " on " + point + " took " + ConsoleUtils.formatDateHM(getTurnTime());
     }
 }

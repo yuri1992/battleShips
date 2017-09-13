@@ -41,6 +41,7 @@ public class GameManager {
         this.isRunning = true;
         this.startAt = new Date();
         this.setCurrentPlayer(playerList.get(0));
+        this.prepareNextTurn();
     }
 
     public void finishGame() {
@@ -87,12 +88,12 @@ public class GameManager {
         Shooting the the @pt requests by the current player, if player did hit a ship, will have another turn,
         otherwise will switch the turn.
      */
-    public boolean playAttack(ShipPoint pt) {
+    public TurnType playAttack(ShipPoint pt) {
         Player currentPlayer = this.getCurrentPlayer();
         Player nextPlayer = this.getNextPlayer();
 
         if (currentPlayer.getAttackBoard().isAttacked(pt))
-            return false;
+            return TurnType.NOT_EMPTY;
 
         // Did player hit a ship
         boolean didHit = nextPlayer.hit(pt);
@@ -109,7 +110,12 @@ public class GameManager {
         }
 
         this.setCurrentPlayer(didHit ? currentPlayer : nextPlayer);
-        return didHit;
+        this.prepareNextTurn();
+        return didHit ? TurnType.HIT : TurnType.MISS;
+    }
+
+    public void prepareNextTurn() {
+        this.getCurrentPlayer().startTurn();
     }
 
     public Player getNextPlayer() {
@@ -205,5 +211,9 @@ public class GameManager {
                 }
             }
         }
+    }
+
+    public boolean placeMine(ShipPoint shipPoint) {
+        return false;
     }
 }

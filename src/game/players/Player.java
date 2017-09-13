@@ -2,6 +2,7 @@ package game.players;
 
 import descriptor.ShipType;
 import game.engine.GameTurn;
+import game.engine.TurnType;
 import game.exceptions.GameSettingsInitializationException;
 import game.ships.Ship;
 import game.ships.ShipPoint;
