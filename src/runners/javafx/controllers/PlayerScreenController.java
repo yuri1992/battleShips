@@ -79,6 +79,9 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private Menu menuHelp;
 
+    @FXML
+    private MenuItem menuHelp_About;
+
     private MainMenuController menuController;
     private Stage window;
 
@@ -109,6 +112,7 @@ public class PlayerScreenController extends BaseController {
 
     @FXML
     private void handleHelpMenuItemPressed(ActionEvent event) {
+        menuController.handleAboutButtonPressed();
     }
 
     @FXML

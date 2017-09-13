@@ -97,6 +97,11 @@ public class MainMenuController {
         closeProgram();
     }
 
+    public void handleAboutButtonPressed() {
+        AlertBoxController.displayAlert("About this game", "This game was developed for\n" +
+                "MTA's Java class by:\n" +
+                "Yuri Ritvin and Amir Shavit");
+    }
 
     private static FileChooser getFileChooser() {
         if (fileChooser == null) {
@@ -111,7 +116,6 @@ public class MainMenuController {
         }
         return fileChooser;
     }
-
 
     private void loadGame(File xml) {
         try {
@@ -147,4 +151,5 @@ public class MainMenuController {
             window.close();
         }
     }
+
 }
