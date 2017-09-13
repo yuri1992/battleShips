@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<BattleShipGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BattleShipGame.xsd">
+    <GameType>ADVANCE</GameType>
+    <boardSize>5</boardSize>
+    <shipTypes>
+        <shipType id="shipTypeA">
+            <category>L_SHAPE</category>
+            <amount>1</amount>
+            <length>3</length>
+            <score>10</score>
+        </shipType>
+        <shipType id="shipTypeB">
+            <category>REGULAR</category>
+            <amount>1</amount>
+            <length>2</length>
+            <score>5</score>
+        </shipType>
+    </shipTypes>
+    <mine>
+        <amount>0</amount>
+    </mine>
+    <boards>
+        <board>
+            <ship>
+                <shipTypeId>shipTypeA</shipTypeId>
+                <position x="2" y="2" />
+                <direction>UP_RIGHT</direction>
+            </ship>
+            <ship>
+                <shipTypeId>shipTypeB</shipTypeId>
+                <position x="4" y="4" />
+                <direction>COLUMN</direction>
+            </ship>
+        </board>
+        <board>
+            <ship>
+                <shipTypeId>shipTypeA</shipTypeId>
+                <position x="1" y="1" />
+                <direction>UP_RIGHT</direction>
+            </ship>
+            <ship>
+                <shipTypeId>shipTypeB</shipTypeId>
+                <position x="4" y="4" />
+                <direction>COLUMN</direction>
+            </ship>
+        </board>
+    </boards>
+</BattleShipGame>
