@@ -92,7 +92,9 @@ public class PlayerScreenController extends BaseController {
         } else if (event.getSource() == menuFile_LoadXML) {
             setGame(menuController.handleLoadXmlButtonPressed());
         } else if (event.getSource() == menuFile_ResignGame) {
-            menuController.handleResignGamePressed();
+            if (menuController.handleResignGamePressed()) {
+                this.game = null;
+            }
         } else if (event.getSource() == menuFile_Quit) {
             menuController.handleQuitGamePressed();
         } else // TODO: Amir: throw exception??

@@ -70,9 +70,27 @@ public class MainMenuController {
         this.game.start();
     }
 
-    public void handleResignGamePressed() {
-        System.out.println("handleResignGamePressed");
+    public boolean handleResignGamePressed() {
+        if (!isGameInProgress()) {
+            AlertBoxController.displayAlert("Illegal Action", "Player can't resign if a game is not in progress...");
+            return false;
+        }
 
+        boolean res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to\n" +
+                        "resign from the game?");
+        if (res) {
+
+            this.game.resignGame();
+
+            AlertBoxController.displayAlert("Game Over!", this.game.getCurrentPlayer() + " resigned from " +
+                    "the game.\n" +
+                    "The Winner is " + this.game.getWinner() + "!\n" +
+                    "Congratulations!!");
+
+            this.game = null;
+            return true;
+        }
+        return false;
     }
 
     public void handleQuitGamePressed() {
