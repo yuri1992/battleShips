@@ -42,11 +42,4 @@ public class Main extends Application {
 
     }
 
-    public FXMLLoader loadBattleShipFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("BattleShips.fxml");
-        fxmlLoader.setLocation(url);
-        return fxmlLoader;
-
-    }
 }

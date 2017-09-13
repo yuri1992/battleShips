@@ -49,7 +49,6 @@ public class MainMenuController {
         if (window != null) {
             File xml = getFileChooser().showOpenDialog(window);
             if (xml != null) {
-                System.out.println("selected " + xml.toString());
                 loadGame(xml);
             }
         }
@@ -69,15 +68,38 @@ public class MainMenuController {
         this.game.start();
     }
 
-    public void handleResignGamePressed() {
-        System.out.println("handleResignGamePressed");
+    public boolean handleResignGamePressed() {
+        if (!isGameInProgress()) {
+            AlertBoxController.displayAlert("Illegal Action", "Player can't resign if a game is not in progress...");
+            return false;
+        }
 
+        boolean res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to\n" +
+                        "resign from the game?");
+        if (res) {
+
+            this.game.resignGame();
+
+            AlertBoxController.displayAlert("Game Over!", this.game.getCurrentPlayer() + " resigned from " +
+                    "the game.\n" +
+                    "The Winner is " + this.game.getWinner() + "!\n" +
+                    "Congratulations!!");
+
+            this.game = null;
+            return true;
+        }
+        return false;
     }
 
     public void handleQuitGamePressed() {
         closeProgram();
     }
 
+    public void handleAboutButtonPressed() {
+        AlertBoxController.displayAlert("About this game", "This game was developed for\n" +
+                "MTA's Java class by:\n" +
+                "Yuri Ritvin and Amir Shavit");
+    }
 
     private static FileChooser getFileChooser() {
         if (fileChooser == null) {
@@ -93,24 +115,22 @@ public class MainMenuController {
         return fileChooser;
     }
 
-
     private void loadGame(File xml) {
         try {
             BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromFile(xml);
             this.game = new GameManager(gameDescriptor);
             this.selectedXml = xml;
-            System.out.println("XML File loaded successfully.");
+            AlertBoxController.displayAlert("Game loaded", "Configuration file loaded successfully.");
 
         } catch (FileNotFoundException e) {
-            System.out.println("Please verify that the file is exists.");
+            AlertBoxController.displayAlert("Could not load file", "Please verify that the file is exists.");
 
         } catch (InvalidFileFormatException fileNotXmlFormat) {
-            System.out.println("File must be a valid XML format.");
+            AlertBoxController.displayAlert("Could not load file", "File must be a valid XML format.");
 
-        } catch (JAXBException e) {
-            System.out.println("XML file is not valid, please make sure your xml file meet the xsd file.");
-        } catch (GameSettingsInitializationException e) {
-            System.out.println("ERROR PARSING XML FILE: " + e.getMessage());
+        } catch (JAXBException | GameSettingsInitializationException e) {
+            AlertBoxController.displayAlert("Could not load file", "XML file is not valid, please make sure your xml" +
+                    " file meet the xsd file.");
         }
     }
 
@@ -128,4 +148,5 @@ public class MainMenuController {
             window.close();
         }
     }
+
 }

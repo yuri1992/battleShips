@@ -80,6 +80,9 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private Menu menuHelp;
 
+    @FXML
+    private MenuItem menuHelp_About;
+
     private MainMenuController menuController;
     private Stage window;
     private GameManager game;
@@ -95,7 +98,9 @@ public class PlayerScreenController extends BaseController {
         } else if (event.getSource() == menuFile_LoadXML) {
             setGame(menuController.handleLoadXmlButtonPressed());
         } else if (event.getSource() == menuFile_ResignGame) {
-            menuController.handleResignGamePressed();
+            if (menuController.handleResignGamePressed()) {
+                this.game = null;
+            }
         } else if (event.getSource() == menuFile_Quit) {
             menuController.handleQuitGamePressed();
         } else // TODO: Amir: throw exception??
@@ -110,6 +115,7 @@ public class PlayerScreenController extends BaseController {
 
     @FXML
     private void handleHelpMenuItemPressed(ActionEvent event) {
+        menuController.handleAboutButtonPressed();
     }
 
     @FXML
