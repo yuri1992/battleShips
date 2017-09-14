@@ -105,7 +105,6 @@ public class ShipsBoard implements Board {
     @Override
     public BoardType[][] printBoard() {
         BoardType[][] res = new BoardType[board.length][board.length];
-
         for (int y = 1; y < board.length; y++) {
             for (int x = 1; x < board.length; x++) {
                 if (board[y][x] == null)

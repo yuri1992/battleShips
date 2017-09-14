@@ -187,12 +187,12 @@ public class PlayerScreenController extends BaseController {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(y * 35 - 35);
-                n.setLayoutY(x * 35 - 35);
+                n.setLayoutX(x * 35 - 35);
+                n.setLayoutY(y * 35 - 35);
                 n.setText(" ");
                 //n.setDisable(true);
 
-                switch (board[y][x]) {
+                switch (board[x][y]) {
                     case MINE:
                         n.getStyleClass().add("mine");
                         break;
@@ -272,8 +272,8 @@ public class PlayerScreenController extends BaseController {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(y * 35 - 35);
-                n.setLayoutY(x * 35 - 35);
+                n.setLayoutX(x * 35 - 35);
+                n.setLayoutY(y * 35 - 35);
                 n.setText(" ");
 
                 switch (board[y][x]) {
@@ -291,7 +291,7 @@ public class PlayerScreenController extends BaseController {
                 int finalX = x;
                 int finalY = y;
                 n.setOnAction((event) -> {
-                    TurnType turnType = game.playAttack(new GridPoint(finalX, finalY));
+                    TurnType turnType = game.playAttack(new GridPoint(finalY, finalX));
                     if (turnType == TurnType.HIT) {
                         this.renderDialogSuccessTurn();
                     } else if (turnType == TurnType.MISS) {
