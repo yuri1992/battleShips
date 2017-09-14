@@ -36,12 +36,28 @@ public class Ship implements GridEntity {
                 }
                 break;
             case "RIGHT_DOWN":
+                for (int i = 1; i < meta.getLength(); i++) {
+                    positions.add(new ShipPoint(position.x, position.y - i)); // go left
+                    positions.add(new ShipPoint(position.x + i, position.y)); // go down
+                }
                 break;
             case "RIGHT_UP":
+                for (int i = 1; i < meta.getLength(); i++) {
+                    positions.add(new ShipPoint(position.x, position.y - i)); // go left
+                    positions.add(new ShipPoint(position.x - i, position.y)); // go up
+                }
                 break;
             case "UP_RIGHT":
+                for (int i = 1; i < meta.getLength(); i++) {
+                    positions.add(new ShipPoint(position.x + i, position.y)); // go down
+                    positions.add(new ShipPoint(position.x, position.y + i)); // go right
+                }
                 break;
             case "DOWN_RIGHT":
+                for (int i = 1; i < meta.getLength(); i++) {
+                    positions.add(new ShipPoint(position.x - i, position.y)); // go up
+                    positions.add(new ShipPoint(position.x, position.y + i)); // go right
+                }
                 break;
         }
 
