@@ -1,10 +1,6 @@
 package runners.console;
 
-import descriptor.BattleShipGame;
-import game.engine.GameManager;
-import game.engine.GameStatistics;
-import game.engine.JAXBGameParser;
-import game.engine.TurnType;
+import game.engine.*;
 import game.exceptions.InvalidFileFormatException;
 import game.exceptions.GameSettingsInitializationException;
 import game.players.Player;
@@ -86,8 +82,7 @@ public class ConsoleRunner {
         String fileName = ConsoleUtils.getString();
 
         try {
-            BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromXML(fileName);
-            this.game = new GameManager(gameDescriptor);
+            this.game = GameManagerFactory.loadGameManager(fileName);
             System.out.println("XML File loaded successfully.");
             return;
         } catch (FileNotFoundException e) {

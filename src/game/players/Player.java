@@ -1,14 +1,12 @@
 package game.players;
 
-import descriptor.ShipType;
 import game.engine.GameTurn;
 import game.engine.TurnType;
-import game.exceptions.GameSettingsInitializationException;
+import game.exceptions.BoardBuilderException;
 import game.ships.Ship;
 import game.ships.ShipPoint;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Player {
@@ -26,10 +24,9 @@ public class Player {
     private ShipsBoard shipsBoard;
     private int score = 0;
 
-    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap, int playerId) throws
-            GameSettingsInitializationException {
+    public Player(List<Ship> ships, int boardSize, int playerId) throws BoardBuilderException {
         this.playerId = playerId;
-        this.setShips(ships, shipTypeHashMap);
+        this.ships = ships;
         shipsBoard = new ShipsBoard(this.ships, boardSize + 1);
         attackBoard = new AttackBoard(boardSize + 1, boardSize + 1);
         turns = new ArrayList<>();
@@ -65,15 +62,6 @@ public class Player {
         return new PlayerStatistics(this);
     }
 
-    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws GameSettingsInitializationException {
-        this.ships = new ArrayList<>();
-
-        for (descriptor.Ship item : ships) {
-            String shipTypeId = item.getShipTypeId();
-            this.ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
-        }
-    }
-
     public AttackBoard getAttackBoard() {
         return attackBoard;
     }
@@ -102,6 +90,10 @@ public class Player {
         this.shipsBoard = shipsBoard;
     }
 
+    public List<Ship> getShips() {
+        return ships;
+    }
+
     public List<GameTurn> getTurns() {
         return turns;
     }
@@ -120,6 +112,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player " +playerId;
+        return "Player " + playerId;
     }
 }

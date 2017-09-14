@@ -1,8 +1,7 @@
 package runners.javafx.controllers;
 
-import descriptor.BattleShipGame;
 import game.engine.GameManager;
-import game.engine.JAXBGameParser;
+import game.engine.GameManagerFactory;
 import game.exceptions.GameSettingsInitializationException;
 import game.exceptions.InvalidFileFormatException;
 import javafx.event.EventHandler;
@@ -117,8 +116,7 @@ public class MainMenuController {
 
     private void loadGame(File xml) {
         try {
-            BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromFile(xml);
-            this.game = new GameManager(gameDescriptor);
+            this.game = GameManagerFactory.loadGameManager(xml);
             this.selectedXml = xml;
             AlertBoxController.displayAlert("Game loaded", "Configuration file loaded successfully.");
 

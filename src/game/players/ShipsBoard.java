@@ -37,7 +37,8 @@ public class ShipsBoard implements Board {
         for (ShipPoint p : l1) {
             Ship shipByPoint = getShipByPoint(p);
             if (shipByPoint != null && shipByPoint != ship) {
-                throw new ShipsLocatedTooClose("Ships " + ship.getType() + " and  " + shipByPoint.getType() + " located too close to each other at point " + ship.getPositions().get(0));
+                throw new ShipsLocatedTooClose("Ships " + ship.getShipType() + " and  " + shipByPoint.getShipType() + " " +
+                        "located too close to each other at point " + ship.getPositions().get(0));
             }
         }
 

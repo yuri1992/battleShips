@@ -1,22 +1,23 @@
 package game.ships;
 
 import descriptor.Position;
-import descriptor.ShipType;
 
 import java.util.ArrayList;
 
 public class Ship {
 
-    private String shipId;
-    private String direction;
+    private String shipTypeId;
+    private ShipDirection direction;
+    private Position markerPosition;
     private ArrayList<ShipPoint> positions;
     private ShipType meta;
 
 
-    public Ship(String shipId, String direction, Position position, ShipType meta) {
+    public Ship(String shipTypeId, String direction, Position position, ShipType meta) {
+        this.shipTypeId = shipTypeId;
+        this.direction = ShipDirection.valueOf(direction);
+        this.markerPosition = position;
         this.meta = meta;
-        this.shipId = shipId;
-        this.direction = direction;
         this.setPositions(new ShipPoint(position));
     }
 
@@ -25,35 +26,35 @@ public class Ship {
         positions.add(position);
 
         switch (direction) {
-            case "ROW":
+            case ROW:
                 for (int i = 1; i < meta.getLength(); i++) {
                     positions.add(new ShipPoint(position.x, position.y + i));
                 }
                 break;
-            case "COLUMN":
+            case COLUMN:
                 for (int i = 1; i < meta.getLength(); i++) {
                     positions.add(new ShipPoint(position.x + i, position.y));
                 }
                 break;
-            case "RIGHT_DOWN":
+            case RIGHT_DOWN:
                 for (int i = 1; i < meta.getLength(); i++) {
                     positions.add(new ShipPoint(position.x, position.y - i)); // go left
                     positions.add(new ShipPoint(position.x + i, position.y)); // go down
                 }
                 break;
-            case "RIGHT_UP":
+            case RIGHT_UP:
                 for (int i = 1; i < meta.getLength(); i++) {
                     positions.add(new ShipPoint(position.x, position.y - i)); // go left
                     positions.add(new ShipPoint(position.x - i, position.y)); // go up
                 }
                 break;
-            case "UP_RIGHT":
+            case UP_RIGHT:
                 for (int i = 1; i < meta.getLength(); i++) {
                     positions.add(new ShipPoint(position.x + i, position.y)); // go down
                     positions.add(new ShipPoint(position.x, position.y + i)); // go right
                 }
                 break;
-            case "DOWN_RIGHT":
+            case DOWN_RIGHT:
                 for (int i = 1; i < meta.getLength(); i++) {
                     positions.add(new ShipPoint(position.x - i, position.y)); // go up
                     positions.add(new ShipPoint(position.x, position.y + i)); // go right
@@ -96,8 +97,14 @@ public class Ship {
         return false;
     }
 
-    public String getType() {
-        return shipId;
+    //region Setters / Getters
+
+    public String getShipType() {
+        return shipTypeId;
+    }
+
+    public ShipDirection getDirection() {
+        return direction;
     }
 
     public int getPoints() {
@@ -108,8 +115,9 @@ public class Ship {
         return positions;
     }
 
-    public void setPositions(ArrayList<ShipPoint> positions) {
-        this.positions = positions;
+    public ShipType getMeta() {
+        return meta;
     }
 
+    //endregion
 }
