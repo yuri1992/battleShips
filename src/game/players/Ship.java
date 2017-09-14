@@ -1,15 +1,15 @@
-package game.ships;
+package game.players;
 
 import descriptor.Position;
 import descriptor.ShipType;
 
 import java.util.ArrayList;
 
-public class Ship {
+public class Ship implements GridEntity {
 
     private String shipId;
     private String direction;
-    private ArrayList<ShipPoint> positions;
+    private ArrayList<GridPoint> positions;
     private ShipType meta;
 
 
@@ -17,22 +17,22 @@ public class Ship {
         this.meta = meta;
         this.shipId = shipId;
         this.direction = direction;
-        this.setPositions(new ShipPoint(position));
+        this.setPositions(new GridPoint(position));
     }
 
-    private void setPositions(ShipPoint position) {
+    private void setPositions(GridPoint position) {
         positions = new ArrayList<>();
         positions.add(position);
 
         switch (direction) {
             case "ROW":
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x, position.y + i));
+                    positions.add(new GridPoint(position.x, position.y + i));
                 }
                 break;
             case "COLUMN":
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x + i, position.y));
+                    positions.add(new GridPoint(position.x + i, position.y));
                 }
                 break;
             case "RIGHT_DOWN":
@@ -47,9 +47,14 @@ public class Ship {
 
     }
 
-    public boolean isHit(ShipPoint shipPoint) {
-        for (ShipPoint pt : positions) {
-            if (pt.equals(shipPoint) && pt.isHit()) {
+    private void setPositions(ArrayList<GridPoint> positions) {
+        this.positions = positions;
+    }
+
+    @Override
+    public boolean isHit(GridPoint gridPoint) {
+        for (GridPoint pt : positions) {
+            if (pt.equals(gridPoint) && pt.isHit()) {
                 return true;
             }
         }
@@ -60,7 +65,7 @@ public class Ship {
         return true, if all ship been hitted
      */
     public boolean isDrowned() {
-        for (ShipPoint pt : positions) {
+        for (GridPoint pt : positions) {
             if (!pt.isHit())
                 return false;
         }
@@ -70,9 +75,10 @@ public class Ship {
     /*
         if ship located on @pt will mark as hit and return True.
      */
-    public boolean hit(int x, int y) {
-        for (ShipPoint pt : positions) {
-            if (pt.x == x && pt.y == y) {
+    @Override
+    public boolean hit(GridPoint p) {
+        for (GridPoint pt : positions) {
+            if (pt.x == p.getX() && pt.y == p.getY()) {
                 pt.setHit();
                 return true;
             }
@@ -88,12 +94,12 @@ public class Ship {
         return meta.getScore();
     }
 
-    public ArrayList<ShipPoint> getPositions() {
+    @Override
+    public GridPoint getPosition() {
+        return positions.get(9);
+    }
+
+    public ArrayList<GridPoint> getPositions() {
         return positions;
     }
-
-    public void setPositions(ArrayList<ShipPoint> positions) {
-        this.positions = positions;
-    }
-
 }

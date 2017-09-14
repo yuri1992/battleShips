@@ -1,10 +1,10 @@
-.empty-cell {
+.empty {
     -fx-background-color: transparent;
     -fx-background-image: url(sea.png);
     -fx-background-size: 30px 30px;
 }
 
-.ship-cell {
+.ship {
     -fx-background-color: transparent;
     -fx-background-image: url(ship.png);
     -fx-background-size: 30px 30px;
@@ -16,8 +16,14 @@
     -fx-background-size: 30px 30px;
 }
 
-.miss-cell {
+.miss {
     -fx-background-color: transparent;
     -fx-background-image: url(miss.png);
+    -fx-background-size: 30px 30px;
+}
+
+.mine {
+    -fx-background-color: transparent;
+    -fx-background-image: url(mine.png);
     -fx-background-size: 30px 30px;
 }

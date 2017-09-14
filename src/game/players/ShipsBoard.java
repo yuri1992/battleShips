@@ -3,38 +3,38 @@ package game.players;
 import game.exceptions.BoardBuilderException;
 import game.exceptions.ShipsLocatedTooClose;
 import game.exceptions.ShipsOffBoardException;
-import game.ships.Ship;
-import game.ships.ShipPoint;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShipsBoard implements Board {
-    private Ship[][] board;
+    private GridEntity[][] board;
     private int boardSize;
+    private int minesAllowance;
 
-    public Ship[][] getBoard() {
-        return board;
+    private List<Ship> ships;
+
+    public ShipsBoard(List<Ship> ships, int boardSize, int mines) throws BoardBuilderException {
+        this.board = new GridEntity[boardSize][boardSize];
+        this.boardSize = boardSize;
+        this.minesAllowance = mines;
+        this.setShips(ships);
     }
 
-    public ShipsBoard(List<Ship> ships, int boardSize) throws BoardBuilderException {
-        this.board = new Ship[boardSize][boardSize];
-        this.boardSize = boardSize;
+    private void setShips(List<Ship> ships) throws ShipsOffBoardException, ShipsLocatedTooClose {
         for (Ship ship : ships) {
             validateShipLocation(ship.getPositions());
-            for (ShipPoint pt : ship.getPositions()) {
+            for (GridPoint pt : ship.getPositions()) {
                 setShip(pt, ship);
             }
         }
+        this.ships = ships;
     }
 
-    /*
-        Adding submarine to the board
-     */
-    private void setShip(ShipPoint pt, Ship ship) throws ShipsLocatedTooClose {
-        ArrayList<ShipPoint> l1 = getProhibitedShipPoints(pt);
+    private void setShip(GridPoint pt, Ship ship) throws ShipsLocatedTooClose {
+        ArrayList<GridPoint> l1 = getProhibitedShipPoints(pt);
 
-        for (ShipPoint p : l1) {
+        for (GridPoint p : l1) {
             Ship shipByPoint = getShipByPoint(p);
             if (shipByPoint != null && shipByPoint != ship) {
                 throw new ShipsLocatedTooClose("Ships " + ship.getType() + " and  " + shipByPoint.getType() + " located too close to each other at point " + ship.getPositions().get(0));
@@ -47,10 +47,19 @@ public class ShipsBoard implements Board {
     /*
         Verify ship is not off board
      */
-    private boolean validateShipLocation(ArrayList<ShipPoint> positions) throws ShipsOffBoardException {
-        for (ShipPoint pt : positions) {
+    private void validateShipLocation(ArrayList<GridPoint> positions) throws ShipsOffBoardException {
+        for (GridPoint pt : positions) {
             if (pt.x < 1 || pt.x >= boardSize || pt.y < 1 || pt.y >= boardSize) {
                 throw new ShipsOffBoardException("Ship is positioned out of board boandaries at point " + pt);
+            }
+        }
+    }
+
+    public boolean isMineLocationValid(GridPoint pt) {
+        for (GridPoint prohibitedPoint : this.getProhibitedShipPoints(pt)) {
+            GridEntity shipByPoint = getShipByPoint(prohibitedPoint);
+            if (shipByPoint != null) {
+                return false;
             }
         }
         return true;
@@ -59,52 +68,77 @@ public class ShipsBoard implements Board {
     /*
      Return list of Prohibited ShipPoints near to @pt.
      */
-    private ArrayList<ShipPoint> getProhibitedShipPoints(ShipPoint pt) {
-        ArrayList<ShipPoint> l = new ArrayList<>();
-        l.add(new ShipPoint(pt.x, pt.y + 1));
-        l.add(new ShipPoint(pt.x, pt.y));
-        l.add(new ShipPoint(pt.x, pt.y - 1));
-        l.add(new ShipPoint(pt.x + 1, pt.y + 1));
-        l.add(new ShipPoint(pt.x + 1, pt.y));
-        l.add(new ShipPoint(pt.x + 1, pt.y - 1));
-        l.add(new ShipPoint(pt.x - 1, pt.y + 1));
-        l.add(new ShipPoint(pt.x - 1, pt.y));
-        l.add(new ShipPoint(pt.x - 1, pt.y - 1));
+    private ArrayList<GridPoint> getProhibitedShipPoints(GridPoint pt) {
+        ArrayList<GridPoint> l = new ArrayList<>();
+        l.add(new GridPoint(pt.x, pt.y + 1));
+        l.add(new GridPoint(pt.x, pt.y));
+        l.add(new GridPoint(pt.x, pt.y - 1));
+        l.add(new GridPoint(pt.x + 1, pt.y + 1));
+        l.add(new GridPoint(pt.x + 1, pt.y));
+        l.add(new GridPoint(pt.x + 1, pt.y - 1));
+        l.add(new GridPoint(pt.x - 1, pt.y + 1));
+        l.add(new GridPoint(pt.x - 1, pt.y));
+        l.add(new GridPoint(pt.x - 1, pt.y - 1));
         return l;
     }
 
 
-    public Ship getShipByPoint(ShipPoint pt) {
+    public boolean hit(GridPoint pt) {
+        GridEntity ship = board[pt.x][pt.y];
+        if (ship != null) {
+            ship.hit(pt);
+            return true;
+        }
+        return false;
+    }
+
+    public Ship getShipByPoint(GridPoint pt) {
         if (pt.y < 0 || pt.x < 0 || pt.x >= board.length || pt.y >= board.length)
             return null;
 
-        return board[pt.x][pt.y];
+        if (board[pt.x][pt.y] != null && board[pt.x][pt.y] instanceof Ship)
+            return (Ship) board[pt.x][pt.y];
+
+        return null;
     }
 
     @Override
-    public String[][] printBoard() {
-        String[][] res = new String[board.length][board.length];
+    public BoardType[][] printBoard() {
+        BoardType[][] res = new BoardType[board.length][board.length];
 
         for (int y = 1; y < board.length; y++) {
             for (int x = 1; x < board.length; x++) {
                 if (board[y][x] == null)
-                    res[y][x] = "~";
-                else if (board[y][x].isHit(new ShipPoint(x, y)))
-                    res[y][x] = "%";
-                else
-                    res[y][x] = "@";
+                    res[y][x] = BoardType.EMPTY;
+                else if (board[y][x] instanceof Mine) {
+                    res[y][x] = BoardType.MINE;
+                    if (board[y][x].isHit(new GridPoint(x, y)))
+                        res[y][x] = BoardType.MINE_HIT;
+                } else {
+                    res[y][x] = BoardType.SHIP;
+                    if (board[y][x].isHit(new GridPoint(x, y)))
+                        res[y][x] = BoardType.SHIP_HIT;
+                }
+
             }
         }
 
         return res;
     }
 
-    public boolean hit(ShipPoint pt) {
-        Ship ship = board[pt.x][pt.y];
-        if (ship != null) {
-            ship.hit(pt.x, pt.y);
-            return true;
+    public boolean allShipsGotHit() {
+        for (Ship ship : ships) {
+            if (!ship.isDrowned())
+                return false;
         }
+        return true;
+    }
+
+    public GridEntity[][] getBoard() {
+        return board;
+    }
+
+    public boolean placeMine(GridPoint gridPoint) {
         return false;
     }
 }

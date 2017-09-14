@@ -7,8 +7,9 @@ import game.engine.JAXBGameParser;
 import game.engine.TurnType;
 import game.exceptions.InvalidFileFormatException;
 import game.exceptions.GameSettingsInitializationException;
+import game.players.BoardType;
 import game.players.Player;
-import game.ships.ShipPoint;
+import game.players.GridPoint;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
@@ -152,7 +153,7 @@ public class ConsoleRunner {
         System.out.println("-----------------------------------------------------------------------------------");
     }
 
-    private void printBoard(String[][] board) {
+    private void printBoard(BoardType[][] board) {
         System.out.format("%-3s", "\\");
         for (int col = 1; col < board.length; col++) {
             System.out.format("%-3s", col);
@@ -187,7 +188,7 @@ public class ConsoleRunner {
         int x = ConsoleUtils.getIntegerByRange(1, game.getBoardSize());
         System.out.println("Please Enter the Column:");
         int y = ConsoleUtils.getIntegerByRange(1, game.getBoardSize());
-        ShipPoint fireToPoint = new ShipPoint(x, y);
+        GridPoint fireToPoint = new GridPoint(x, y);
 
         // Making attack to the request point.
         if (this.game.playAttack(fireToPoint) == TurnType.HIT) {

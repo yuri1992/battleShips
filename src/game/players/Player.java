@@ -2,10 +2,7 @@ package game.players;
 
 import descriptor.ShipType;
 import game.engine.GameTurn;
-import game.engine.TurnType;
 import game.exceptions.GameSettingsInitializationException;
-import game.ships.Ship;
-import game.ships.ShipPoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,64 +11,81 @@ import java.util.List;
 public class Player {
 
     private int playerId;
-    private List<Ship> ships;
-    private List<GameTurn> turns;
-
-    public GameTurn getCurrentTurn() {
-        return currentTurn;
-    }
-
-    private GameTurn currentTurn;
-    private AttackBoard attackBoard;
-    private ShipsBoard shipsBoard;
     private int score = 0;
 
-    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap, int playerId) throws
-            GameSettingsInitializationException {
-        this.playerId = playerId;
-        this.setShips(ships, shipTypeHashMap);
-        shipsBoard = new ShipsBoard(this.ships, boardSize + 1);
-        attackBoard = new AttackBoard(boardSize + 1, boardSize + 1);
-        turns = new ArrayList<>();
-    }
+    private List<GameTurn> turns;
+    private GameTurn currentTurn;
 
-    /*
-        Checking if player has ship on @pt position, if do will mark this point as hitted.
-     */
-    public boolean hit(ShipPoint pt) {
-        return this.getShipsBoard().hit(pt);
+    private AttackBoard attackBoard;
+    private ShipsBoard shipsBoard;
+
+
+    public Player(List<descriptor.Ship> ships, int boardSize, HashMap<String, ShipType> shipTypeHashMap, int playerId, int mine) throws
+            GameSettingsInitializationException {
+
+        this.playerId = playerId;
+        setShipsBoard(ships, shipTypeHashMap, boardSize + 1, mine);
+        attackBoard = new AttackBoard(boardSize + 1);
+        turns = new ArrayList<>();
     }
 
     /*
         Return true when all of player ships been defeated
      */
     public boolean isLost() {
-        for (Ship ship : ships) {
-            if (!ship.isDrowned())
-                return false;
-        }
-        return true;
+        return this.shipsBoard.allShipsGotHit();
     }
 
     /*
         Marking @pt as been attacked by the player.
      */
-    public void logAttack(ShipPoint pt, boolean b) {
+    public void logAttack(GridPoint pt, boolean b) {
         attackBoard.setShoot(pt, b);
         currentTurn.setHit(b);
+        currentTurn.setPoint(pt);
+    }
+
+    private void setShipsBoard(List<descriptor.Ship> descriptorShips, HashMap<String, ShipType> shipTypeHashMap, int boardSize, int minesAllowed) throws GameSettingsInitializationException {
+        List<Ship> ships = new ArrayList<>();
+
+        for (descriptor.Ship item : descriptorShips) {
+            String shipTypeId = item.getShipTypeId();
+            ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
+        }
+
+        shipsBoard = new ShipsBoard(ships, boardSize, minesAllowed);
+    }
+
+
+    public void startTurn() {
+        if (this.currentTurn == null) {
+            this.currentTurn = new GameTurn();
+        }
+    }
+
+    public void endTurn() {
+        if (this.currentTurn != null) {
+            this.currentTurn.setEndAt();
+            this.turns.add(this.currentTurn);
+        }
+        this.currentTurn = null;
+    }
+
+    public boolean placeMine(GridPoint gridPoint) {
+        return this.shipsBoard.placeMine(gridPoint);
+    }
+
+    @Override
+    public String toString() {
+        return "Player " + playerId;
+    }
+
+    public GameTurn getCurrentTurn() {
+        return currentTurn;
     }
 
     public PlayerStatistics getStatistics() {
         return new PlayerStatistics(this);
-    }
-
-    public void setShips(List<descriptor.Ship> ships, HashMap<String, ShipType> shipTypeHashMap) throws GameSettingsInitializationException {
-        this.ships = new ArrayList<>();
-
-        for (descriptor.Ship item : ships) {
-            String shipTypeId = item.getShipTypeId();
-            this.ships.add(new Ship(shipTypeId, item.getDirection(), item.getPosition(), shipTypeHashMap.get(shipTypeId)));
-        }
     }
 
     public AttackBoard getAttackBoard() {
@@ -106,20 +120,7 @@ public class Player {
         return turns;
     }
 
-    public void startTurn() {
-        if (this.currentTurn == null) {
-            this.currentTurn = new GameTurn();
-        }
-    }
-
-    public void endTurn() {
-        this.currentTurn.setEndAt();
-        this.turns.add(this.currentTurn);
-        this.currentTurn = null;
-    }
-
-    @Override
-    public String toString() {
-        return "Player " +playerId;
+    public boolean hit(GridPoint pt) {
+        return this.getShipsBoard().hit(pt);
     }
 }

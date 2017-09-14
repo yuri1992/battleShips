@@ -4,9 +4,9 @@ import descriptor.BattleShipGame;
 import descriptor.Board;
 import descriptor.ShipType;
 import game.exceptions.*;
+import game.players.GridPoint;
 import game.players.Player;
-import game.ships.Ship;
-import game.ships.ShipPoint;
+import game.players.Ship;
 
 import java.util.*;
 
@@ -21,40 +21,30 @@ public class GameManager {
     private Player currentPlayer = null;
     private Player winner;
     private Date startAt = null;
-    private boolean isInitialize = false;
+    private boolean allowMines = false;
 
     public GameManager() {
-
     }
 
     public GameManager(BattleShipGame gameDescriptor) throws GameSettingsInitializationException {
         this.setShipTypeHashMap(gameDescriptor.getShipTypes().getShipType());
-        validateConfiguraionProperties(gameDescriptor);
+        validateConfigurationProperties(gameDescriptor);
 
         mode = GameMode.valueOf(gameDescriptor.getGameType());
         boardSize = gameDescriptor.getBoardSize();
-        this.setPlayerList(gameDescriptor.getBoards().getBoard());
-        this.isInitialize = true;
+        this.setPlayerList(gameDescriptor);
     }
 
     public void start() {
         this.isRunning = true;
         this.startAt = new Date();
         this.setCurrentPlayer(playerList.get(0));
-        this.prepareNextTurn();
-    }
-
-    public void finishGame() {
-        this.isRunning = false;
+        this.getCurrentPlayer().startTurn();
     }
 
     public void resignGame() {
         this.isRunning = false;
         this.setWinner(this.getNextPlayer());
-    }
-
-    public GameStatistics getStatistics() {
-        return new GameStatistics(this.startAt, this.playerList);
     }
 
     private void setShipTypeHashMap(List<ShipType> shipTypes) throws DuplicatedShipTypesDecleared {
@@ -87,8 +77,8 @@ public class GameManager {
     /*
         Shooting the the @pt requests by the current player, if player did hit a ship, will have another turn,
         otherwise will switch the turn.
-     */
-    public TurnType playAttack(ShipPoint pt) {
+    */
+    public TurnType playAttack(GridPoint pt) {
         Player currentPlayer = this.getCurrentPlayer();
         Player nextPlayer = this.getNextPlayer();
 
@@ -98,8 +88,6 @@ public class GameManager {
         // Did player hit a ship
         boolean didHit = nextPlayer.hit(pt);
         currentPlayer.logAttack(pt, didHit);
-        currentPlayer.getCurrentTurn().setPoint(pt);
-        currentPlayer.endTurn();
 
         // Check if ship is hit and drowned
         if (didHit) {
@@ -107,14 +95,22 @@ public class GameManager {
             if (s.isDrowned()) {
                 currentPlayer.updateScore(s.getPoints());
             }
+            this.prepareNextTurn();
+            return TurnType.HIT;
+        } else {
+            this.switchTurns();
+            return TurnType.MISS;
         }
-
-        this.setCurrentPlayer(didHit ? currentPlayer : nextPlayer);
-        this.prepareNextTurn();
-        return didHit ? TurnType.HIT : TurnType.MISS;
     }
 
-    public void prepareNextTurn() {
+    private void switchTurns() {
+        this.getCurrentPlayer().endTurn();
+        this.setCurrentPlayer(this.getNextPlayer());
+        this.getCurrentPlayer().startTurn();
+    }
+
+    private void prepareNextTurn() {
+        this.getCurrentPlayer().endTurn();
         this.getCurrentPlayer().startTurn();
     }
 
@@ -123,57 +119,16 @@ public class GameManager {
         return playerList.get(0) != this.getCurrentPlayer() ? playerList.get(0) : playerList.get(1);
     }
 
-    private void setPlayerList(List<Board> playerList) throws GameSettingsInitializationException {
+    private void setPlayerList(BattleShipGame gameDescriptor) throws GameSettingsInitializationException {
+        List<Board> gamePlayers = gameDescriptor.getBoards().getBoard();
+        int mines = gameDescriptor.getMine() != null ? gameDescriptor.getMine().getAmount() : 0;
+        this.allowMines = mines > 0;
         this.playerList = new ArrayList<>();
-        this.playerList.add(new Player(playerList.get(0).getShip(), this.getBoardSize(), this.getShipTypeHashMap(), 1));
-        this.playerList.add(new Player(playerList.get(1).getShip(), this.getBoardSize(), this.getShipTypeHashMap(), 2));
+        this.playerList.add(new Player(gamePlayers.get(0).getShip(), this.getBoardSize(), this.getShipTypeHashMap(), 1, mines));
+        this.playerList.add(new Player(gamePlayers.get(1).getShip(), this.getBoardSize(), this.getShipTypeHashMap(), 2, mines));
     }
 
-    private void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public void setRunning(boolean running) {
-        isRunning = running;
-    }
-
-    public int getBoardSize() {
-        return boardSize;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setShipTypeHashMap(HashMap<String, ShipType> shipTypeHashMap) {
-        this.shipTypeHashMap = shipTypeHashMap;
-    }
-
-    public GameMode getMode() {
-        return mode;
-    }
-
-    public HashMap<String, ShipType> getShipTypeHashMap() {
-        return shipTypeHashMap;
-    }
-
-    public List<Player> getPlayerList() {
-        return playerList;
-    }
-
-    public void setWinner(Player winner) {
-        this.winner = winner;
-    }
-
-    public Player getWinner() {
-        return winner;
-    }
-
-    private void validateConfiguraionProperties(BattleShipGame gameDescriptor) throws GameSettingsInitializationException {
+    private void validateConfigurationProperties(BattleShipGame gameDescriptor) throws GameSettingsInitializationException {
 
         try {
             GameMode.valueOf(gameDescriptor.getGameType());
@@ -213,7 +168,68 @@ public class GameManager {
         }
     }
 
-    public boolean placeMine(ShipPoint shipPoint) {
+
+    public boolean placeMine(GridPoint gridPoint) {
+        if (this.currentPlayer.placeMine(gridPoint)) {
+            this.switchTurns();
+            return true;
+        }
         return false;
+    }
+
+    public boolean isAllowMines() {
+        return allowMines;
+    }
+
+    public void finishGame() {
+        this.isRunning = false;
+    }
+
+    public GameStatistics getStatistics() {
+        return new GameStatistics(this.startAt, this.playerList);
+    }
+
+    private void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
+    public int getBoardSize() {
+        return boardSize;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setShipTypeHashMap(HashMap<String, ShipType> shipTypeHashMap) {
+        this.shipTypeHashMap = shipTypeHashMap;
+    }
+
+    public GameMode getMode() {
+        return mode;
+    }
+
+    private HashMap<String, ShipType> getShipTypeHashMap() {
+        return shipTypeHashMap;
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    private void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 }
