@@ -32,13 +32,15 @@ public class Main extends Application {
 
         PlayerScreenController playerScreenController = fxmlLoader.getController();
         playerScreenController.init(primaryStage);
+
         MainModel model = new MainModel();
         playerScreenController.setModel(model);
 
-        Scene scene = new Scene(root, 900, 800);
+        Scene scene = new Scene(root, 880, 810);
 
         primaryStage.setScene(scene);
         primaryStage.show();
+        playerScreenController.setVisibility(false);
 
     }
 

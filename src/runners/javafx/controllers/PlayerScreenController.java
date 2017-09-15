@@ -53,7 +53,7 @@ public class PlayerScreenController extends BaseController {
     private TextField stat_time; // Value injected by FXMLLoader
 
     @FXML // fx:id="stat_score"
-    private TextField stat_score; // Value injected by FXMLLoader
+    private Label stat_score; // Value injected by FXMLLoader
 
     @FXML // fx:id="place_mine"
     private Button place_mine; // Value injected by FXMLLoader
@@ -86,6 +86,9 @@ public class PlayerScreenController extends BaseController {
     private MenuItem menuFile_Quit;
 
     @FXML
+    private AnchorPane stats_container;
+
+    @FXML
     private Menu menuGame;
 
     @FXML
@@ -103,6 +106,7 @@ public class PlayerScreenController extends BaseController {
     private void handleFileMenuItemPressed(ActionEvent event) {
         if (event.getSource() == menuFile_StartGame) {
             menuController.handleStartGameButtonPressed();
+            this.setVisibility(true);
             if (game != null) {
                 this.render();
             }
@@ -141,6 +145,13 @@ public class PlayerScreenController extends BaseController {
     public void init(Stage window) {
         this.window = window;
         this.menuController = new MainMenuController(window);
+    }
+
+    public void setVisibility(boolean visible) {
+        this.list_moves.setVisible(visible);
+        this.stats_container.setVisible(visible);
+        this.ships_board.setVisible(visible);
+        this.attack_board.setVisible(visible);
     }
 
     //region Setters / Getters
@@ -282,12 +293,20 @@ public class PlayerScreenController extends BaseController {
     }
 
     private void render() {
-        this.player_name.setText(game.getCurrentPlayer().toString());
-        this.renderShipsBoard();
-        this.renderAttackBoard();
-        this.renderHistoryMoves();
-        this.renderStatistics();
-        this.renderMinesStack();
+        if (!game.isGameOver() && game.isRunning()) {
+            this.player_name.setText(game.getCurrentPlayer().toString());
+            this.renderShipsBoard();
+            this.renderAttackBoard();
+            this.renderHistoryMoves();
+            this.renderStatistics();
+            this.renderMinesStack();
+        } else {
+            // Todo: Show Winner Message
+            this.setVisibility(false);
+            this.msg.setText("WE HAVE A WINNER!!! " + this.game.getWinner().toString());
+            this.msg.getStyleClass().clear();
+            this.msg.getStyleClass().add("text-winner");
+        }
     }
 
     private void renderMinesStack() {
@@ -321,8 +340,7 @@ public class PlayerScreenController extends BaseController {
 
     private void renderStatistics() {
         PlayerStatistics p = game.getCurrentPlayer().getStatistics();
-        stat_score.setText(String.valueOf(p.getScore()));
-        stat_score.setEditable(false);
+        stat_score.setText("Score: " + String.valueOf(p.getScore()));
         stat_turns.setText(String.valueOf(p.getTurns()));
         stat_turns.setEditable(false);
         stat_hits.setText(String.valueOf(p.getHits()));
