@@ -34,7 +34,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </ScrollPane>
-            <Label layoutX="28.0" layoutY="52.0" text="My Ships Borad">
+            <Label layoutX="28.0" layoutY="52.0" text="My Ships Board">
                <font>
                   <Font name="Arial" size="26.0" />
                </font>

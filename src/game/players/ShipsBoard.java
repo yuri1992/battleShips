@@ -52,7 +52,7 @@ public class ShipsBoard implements Board {
     private void validateShipLocation(ArrayList<GridPoint> positions) throws ShipsOffBoardException {
         for (GridPoint pt : positions) {
             if (pt.x < 1 || pt.x >= boardSize || pt.y < 1 || pt.y >= boardSize) {
-                throw new ShipsOffBoardException("Ship is positioned out of board boandaries at point " + pt);
+                throw new ShipsOffBoardException("Ship is positioned out of board boundaries at point " + pt);
             }
         }
     }
