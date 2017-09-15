@@ -3,6 +3,7 @@ package game.engine;
 public enum TurnType {
     HIT("HIT"),
     MISS("MISS"),
+    HIT_MINE("HIT_MINE"),
     NOT_EMPTY("NOT_EMPTY");
 
     private final String text;

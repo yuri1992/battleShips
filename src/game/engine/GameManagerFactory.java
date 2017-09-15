@@ -4,8 +4,8 @@ import descriptor.BattleShipGame;
 import descriptor.Board;
 import game.exceptions.*;
 import game.players.Player;
-import game.ships.Ship;
-import game.ships.ShipType;
+import game.players.ships.Ship;
+import game.players.ships.ShipType;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -40,12 +40,17 @@ public class GameManagerFactory {
         int size = gameDescriptor.getBoardSize();
         validateBoardSize(size);
 
+        int mines = 0;
+        if (mode == GameMode.ADVANCE && gameDescriptor.getMine() != null) {
+            mines = gameDescriptor.getMine().getAmount();
+        }
+
         List<ShipType> types = parseShipTypes(gameDescriptor.getShipTypes().getShipType());
         validateShipTypes(types, mode);
-        List<Player> players = parsePlayers(gameDescriptor.getBoards().getBoard(), types, size);
+        List<Player> players = parsePlayers(gameDescriptor.getBoards().getBoard(), types, size, mines);
         validateShipCount(types, players);
 
-        return new GameManager(mode, size, types, players);
+        return new GameManager(mode, size, types, players, mines > 0);
     }
 
     static private List<ShipType> parseShipTypes(List<descriptor.ShipType> descTypes) {
@@ -57,13 +62,14 @@ public class GameManagerFactory {
         return types;
     }
 
-    static private List<Player> parsePlayers(List<Board> playerList, List<ShipType> types, int boardSize) throws
+    static private List<Player> parsePlayers(List<Board> playerList, List<ShipType> types, int boardSize, int mines)
+            throws
             GameSettingsInitializationException {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < playerList.size(); ++i) {
             descriptor.Board descBoard = playerList.get(i);
 
-            List<game.ships.Ship> ships = new ArrayList<>();
+            List<game.players.ships.Ship> ships = new ArrayList<>();
 
             for (descriptor.Ship item : descBoard.getShip()) {
                 String shipTypeId = item.getShipTypeId();
@@ -76,7 +82,7 @@ public class GameManagerFactory {
             }
             validateShipDirections(ships);
 
-            players.add(new Player(ships, boardSize, i + 1));
+            players.add(new Player(ships, boardSize, i + 1, mines));
         }
         return players;
     }
@@ -100,7 +106,7 @@ public class GameManagerFactory {
         }
     }
 
-    static private void validateShipDirections(List<game.ships.Ship> ships) throws GameSettingsInitializationException {
+    static private void validateShipDirections(List<game.players.ships.Ship> ships) throws GameSettingsInitializationException {
         for (Ship ship : ships) {
             if (ship.getDirection().getCategory() != ship.getMeta().getCategory()) {
                 throw new GameSettingsInitializationException("Ship direction configuration does not fit");

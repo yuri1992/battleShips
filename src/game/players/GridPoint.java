@@ -1,20 +1,20 @@
-package game.ships;
+package game.players;
 
 import descriptor.Position;
 
-public class ShipPoint extends java.awt.Point {
+public class GridPoint extends java.awt.Point {
     private boolean isHit = false;
 
-    public ShipPoint(int x, int y) {
+    public GridPoint(int x, int y) {
         super(x, y);
     }
 
-    public ShipPoint(Position pos) {
+    public GridPoint(Position pos) {
         this.x = pos.getX();
         this.y = pos.getY();
     }
 
-    public ShipPoint() {
+    public GridPoint() {
         x = 0;
         y = 0;
     }

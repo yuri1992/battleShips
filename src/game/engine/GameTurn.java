@@ -1,6 +1,6 @@
 package game.engine;
 
-import game.ships.ShipPoint;
+import game.players.GridPoint;
 import runners.console.ConsoleUtils;
 
 import java.util.Date;
@@ -9,7 +9,7 @@ public class GameTurn {
     private Date startAt;
     private Date endAt = null;
     private boolean isHit = false;
-    private ShipPoint point;
+    private GridPoint point;
 
     public GameTurn() {
         startAt = new Date();
@@ -31,7 +31,7 @@ public class GameTurn {
         isHit = hit;
     }
 
-    public void setPoint(ShipPoint point) {
+    public void setPoint(GridPoint point) {
         this.point = point;
     }
 

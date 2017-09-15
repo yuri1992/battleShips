@@ -1,4 +1,4 @@
-package game.ships;
+package game.players.ships;
 
 import game.engine.GameMode;
 

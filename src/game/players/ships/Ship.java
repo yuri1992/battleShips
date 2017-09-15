@@ -1,72 +1,77 @@
-package game.ships;
+package game.players.ships;
 
 import descriptor.Position;
+import game.players.GridEntity;
+import game.players.GridPoint;
+import game.players.ships.ShipDirection;
+import game.players.ships.ShipType;
 
 import java.util.ArrayList;
 
-public class Ship {
+public class Ship implements GridEntity {
 
     private String shipTypeId;
     private ShipDirection direction;
-    private Position markerPosition;
-    private ArrayList<ShipPoint> positions;
+    private GridPoint markerPosition;
+    private ArrayList<GridPoint> positions;
     private ShipType meta;
 
 
     public Ship(String shipTypeId, String direction, Position position, ShipType meta) {
         this.shipTypeId = shipTypeId;
         this.direction = ShipDirection.valueOf(direction);
-        this.markerPosition = position;
+        this.markerPosition = new GridPoint(position);
         this.meta = meta;
-        this.setPositions(new ShipPoint(position));
+        this.setPositions(markerPosition);
     }
 
-    private void setPositions(ShipPoint position) {
+    private void setPositions(GridPoint position) {
         positions = new ArrayList<>();
         positions.add(position);
 
         switch (direction) {
             case ROW:
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x, position.y + i));
+                    positions.add(new GridPoint(position.x, position.y + i));
                 }
                 break;
             case COLUMN:
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x + i, position.y));
+                    positions.add(new GridPoint(position.x + i, position.y));
                 }
                 break;
             case RIGHT_DOWN:
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x, position.y - i)); // go left
-                    positions.add(new ShipPoint(position.x + i, position.y)); // go down
+                    positions.add(new GridPoint(position.x, position.y - i)); // go left
+                    positions.add(new GridPoint(position.x + i, position.y)); // go down
                 }
                 break;
             case RIGHT_UP:
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x, position.y - i)); // go left
-                    positions.add(new ShipPoint(position.x - i, position.y)); // go up
+                    positions.add(new GridPoint(position.x, position.y - i)); // go left
+                    positions.add(new GridPoint(position.x - i, position.y)); // go up
                 }
                 break;
             case UP_RIGHT:
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x + i, position.y)); // go down
-                    positions.add(new ShipPoint(position.x, position.y + i)); // go right
+                    positions.add(new GridPoint(position.x + i, position.y)); // go down
+                    positions.add(new GridPoint(position.x, position.y + i)); // go right
                 }
                 break;
             case DOWN_RIGHT:
                 for (int i = 1; i < meta.getLength(); i++) {
-                    positions.add(new ShipPoint(position.x - i, position.y)); // go up
-                    positions.add(new ShipPoint(position.x, position.y + i)); // go right
+                    positions.add(new GridPoint(position.x - i, position.y)); // go up
+                    positions.add(new GridPoint(position.x, position.y + i)); // go right
                 }
                 break;
         }
 
     }
 
-    public boolean isHit(ShipPoint shipPoint) {
-        for (ShipPoint pt : positions) {
-            if (pt.equals(shipPoint) && pt.isHit()) {
+    @Override
+    public boolean isHit(GridPoint gridPoint) {
+        for (GridPoint pt : positions) {
+            if (pt.equals(gridPoint) && pt.isHit()) {
                 return true;
             }
         }
@@ -77,7 +82,7 @@ public class Ship {
         return true, if all ship been hitted
      */
     public boolean isDrowned() {
-        for (ShipPoint pt : positions) {
+        for (GridPoint pt : positions) {
             if (!pt.isHit())
                 return false;
         }
@@ -87,9 +92,10 @@ public class Ship {
     /*
         if ship located on @pt will mark as hit and return True.
      */
-    public boolean hit(int x, int y) {
-        for (ShipPoint pt : positions) {
-            if (pt.x == x && pt.y == y) {
+    @Override
+    public boolean hit(GridPoint p) {
+        for (GridPoint pt : positions) {
+            if (pt.x == p.getX() && pt.y == p.getY()) {
                 pt.setHit();
                 return true;
             }
@@ -111,7 +117,12 @@ public class Ship {
         return meta.getScore();
     }
 
-    public ArrayList<ShipPoint> getPositions() {
+    @Override
+    public GridPoint getPosition() {
+        return markerPosition;
+    }
+
+    public ArrayList<GridPoint> getPositions() {
         return positions;
     }
 

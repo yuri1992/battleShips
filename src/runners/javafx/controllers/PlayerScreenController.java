@@ -3,17 +3,23 @@ package runners.javafx.controllers;
 import game.engine.GameManager;
 import game.engine.GameTurn;
 import game.engine.TurnType;
-import game.players.PlayerStatistics;
-import game.ships.ShipPoint;
+import game.players.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import runners.console.ConsoleUtils;
 
+import java.awt.*;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class PlayerScreenController extends BaseController {
@@ -174,35 +180,48 @@ public class PlayerScreenController extends BaseController {
 
 
     private void renderShipsBoard() {
-        String[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
+        BoardType[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
         this.ships_board.getChildren().clear();
         for (int x = 1; x < board.length; x++) {
             for (int y = 1; y < board.length; y++) {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(y * 35 - 35);
-                n.setLayoutY(x * 35 - 35);
-                n.setText(board[x][y]);
+                n.setLayoutX(x * 35 - 35);
+                n.setLayoutY(y * 35 - 35);
+                n.setText(" ");
                 //n.setDisable(true);
 
-                if (board[x][y] == "~")
-                    n.getStyleClass().add("empty-cell");
-                else if (board[x][y] == "@")
-                    n.getStyleClass().add("ship-cell");
-                else
-                    n.getStyleClass().add("ship-hit");
+                switch (board[x][y]) {
+                    case MINE:
+                        n.getStyleClass().add("mine");
+                        break;
+                    case SHIP:
+                        n.getStyleClass().add("ship");
+                        break;
+                    case EMPTY:
+                        n.getStyleClass().add("empty");
+                        break;
+                    case MINE_HIT:
+                        n.getStyleClass().add("mine-hit");
+                        break;
+                    case SHIP_HIT:
+                        n.getStyleClass().add("ship-hit");
+                        break;
+                }
 
-                int finalX = x;
-                int finalY = y;
-                n.setOnAction((event) -> {
-                    if (game.placeMine(new ShipPoint(finalX, finalY))) {
-                        this.renderPlaceMineSeccsffully();
-                    } else {
-                        this.renderPlaceMineFailed();
-                    }
-                    this.render();
-                });
+                if (game.isAllowMines()) {
+                    int finalX = x;
+                    int finalY = y;
+                    n.setOnAction((event) -> {
+                        if (game.placeMine(new GridPoint(finalX, finalY))) {
+                            this.renderPlaceMineSeccsffully();
+                        } else {
+                            this.renderPlaceMineFailed();
+                        }
+                        this.render();
+                    });
+                }
 
                 this.ships_board.getChildren().add(n);
             }
@@ -216,7 +235,7 @@ public class PlayerScreenController extends BaseController {
     }
 
 
-    public void render() {
+    private void render() {
         this.player_name.setText(game.getCurrentPlayer().toString());
         this.renderShipsBoard();
         this.renderAttackBoard();
@@ -247,27 +266,32 @@ public class PlayerScreenController extends BaseController {
 
     private void renderAttackBoard() {
         this.attack_board.getChildren().clear();
-        String[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
+        BoardType[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
         for (int x = 1; x < board.length; x++) {
             for (int y = 1; y < board.length; y++) {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(y * 35 - 35);
-                n.setLayoutY(x * 35 - 35);
-                n.setText(board[x][y]);
+                n.setLayoutX(x * 35 - 35);
+                n.setLayoutY(y * 35 - 35);
+                n.setText(" ");
 
-                if (board[x][y] == "~")
-                    n.getStyleClass().add("empty-cell");
-                else if (board[x][y] == "*")
-                    n.getStyleClass().add("ship-hit");
-                else
-                    n.getStyleClass().add("miss-cell");
+                switch (board[y][x]) {
+                    case MISS:
+                        n.getStyleClass().add("miss");
+                        break;
+                    case EMPTY:
+                        n.getStyleClass().add("empty");
+                        break;
+                    case SHIP_HIT:
+                        n.getStyleClass().add("ship-hit");
+                        break;
+                }
 
                 int finalX = x;
                 int finalY = y;
                 n.setOnAction((event) -> {
-                    TurnType turnType = game.playAttack(new ShipPoint(finalX, finalY));
+                    TurnType turnType = game.playAttack(new GridPoint(finalY, finalX));
                     if (turnType == TurnType.HIT) {
                         this.renderDialogSuccessTurn();
                     } else if (turnType == TurnType.MISS) {

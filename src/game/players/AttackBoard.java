@@ -1,59 +1,30 @@
 package game.players;
 
-import game.ships.ShipPoint;
+import java.util.Arrays;
 
 public class AttackBoard implements Board {
-    AttackBoardMove[][] board;
+    BoardType[][] board;
 
     @Override
-    public String[][] printBoard() {
-        String[][] res = new String[board.length][board.length];
-
-        for (int y = 1; y < board.length; y++) {
-            for (int x = 1; x < board.length; x++) {
-                if (board[y][x] == null)
-                    res[y][x] = "~";
-                else if (board[y][x].isHit())
-                    res[y][x] = "*";
-                else
-                    res[y][x] = "^";
-            }
-        }
-
-        return res;
-    }
-
-    public void setShoot(ShipPoint pt, boolean attack) {
-        board[pt.x][pt.y] = new AttackBoardMove();
-        board[pt.x][pt.y].setHit(attack);
-    }
-
-    public AttackBoard(int rows, int cols) {
-        this.board = new AttackBoardMove[rows][cols];
-    }
-
-    public AttackBoardMove[][] getBoard() {
+    public BoardType[][] printBoard() {
         return board;
     }
 
-    public void setBoard(AttackBoardMove[][] board) {
-        this.board = board;
+    public void setShoot(GridPoint pt, boolean attack) {
+        board[pt.x][pt.y] = attack ? BoardType.SHIP_HIT : BoardType.MISS;
+
     }
 
-    public boolean isAttacked(ShipPoint pt) {
-        return board[pt.x][pt.y] != null;
-    }
-}
-
-
-class AttackBoardMove {
-    private boolean isHit;
-
-    public boolean isHit() {
-        return isHit;
+    public AttackBoard(int boardSize) {
+        this.board = new BoardType[boardSize][boardSize];
+        for (int y = 1; y < board.length; y++) {
+            Arrays.fill(board[y], BoardType.EMPTY);
+        }
     }
 
-    public void setHit(boolean hit) {
-        isHit = hit;
+    public boolean isAttacked(GridPoint pt) {
+        return board[pt.x][pt.y] != BoardType.EMPTY;
     }
 }
+
+

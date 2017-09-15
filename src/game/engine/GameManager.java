@@ -1,10 +1,9 @@
 package game.engine;
 
-import game.ships.ShipType;
-import game.exceptions.*;
+import game.players.ships.ShipType;
+import game.players.GridPoint;
 import game.players.Player;
-import game.ships.Ship;
-import game.ships.ShipPoint;
+import game.players.ships.Ship;
 
 import java.util.*;
 
@@ -19,15 +18,15 @@ public class GameManager {
     private Player currentPlayer = null;
     private Player winner;
     private Date startAt = null;
-    private boolean isInitialize = false;
+    private boolean allowMines = false;
 
-    public GameManager(GameMode mode, int boardSize, List<ShipType> shipTypes, List<Player> players) {
+    public GameManager(GameMode mode, int boardSize, List<ShipType> shipTypes, List<Player> players, boolean
+            allowMines) {
         this.mode = mode;
         this.boardSize = boardSize;
         this.shipTypes = shipTypes;
         this.playerList = players;
-
-        this.isInitialize = true;
+        this.allowMines = allowMines;
     }
 
     //region Setters / Getters
@@ -64,12 +63,16 @@ public class GameManager {
         return currentPlayer;
     }
 
-    public void setWinner(Player winner) {
+    private void setWinner(Player winner) {
         this.winner = winner;
     }
 
     public Player getWinner() {
         return winner;
+    }
+
+    public boolean isAllowMines() {
+        return allowMines;
     }
 
     //endregion
@@ -78,11 +81,7 @@ public class GameManager {
         this.isRunning = true;
         this.startAt = new Date();
         this.setCurrentPlayer(playerList.get(0));
-        this.prepareNextTurn();
-    }
-
-    public void finishGame() {
-        this.isRunning = false;
+        this.getCurrentPlayer().startTurn();
     }
 
     public void resignGame() {
@@ -90,8 +89,8 @@ public class GameManager {
         this.setWinner(this.getNextPlayer());
     }
 
-    public GameStatistics getStatistics() {
-        return new GameStatistics(this.startAt, this.playerList);
+    public void finishGame() {
+        this.isRunning = false;
     }
 
     /*
@@ -112,11 +111,27 @@ public class GameManager {
         return false;
     }
 
+    private void switchTurns() {
+        this.getCurrentPlayer().endTurn();
+        this.setCurrentPlayer(this.getNextPlayer());
+        this.getCurrentPlayer().startTurn();
+    }
+
+    private void prepareNextTurn() {
+        this.getCurrentPlayer().endTurn();
+        this.getCurrentPlayer().startTurn();
+    }
+
+    public Player getNextPlayer() {
+        // Todo: make this function more fancy and flexible to support multi user game.
+        return playerList.get(0) != this.getCurrentPlayer() ? playerList.get(0) : playerList.get(1);
+    }
+
     /*
         Shooting the the @pt requests by the current player, if player did hit a ship, will have another turn,
         otherwise will switch the turn.
-     */
-    public TurnType playAttack(ShipPoint pt) {
+    */
+    public TurnType playAttack(GridPoint pt) {
         Player currentPlayer = this.getCurrentPlayer();
         Player nextPlayer = this.getNextPlayer();
 
@@ -126,8 +141,6 @@ public class GameManager {
         // Did player hit a ship
         boolean didHit = nextPlayer.hit(pt);
         currentPlayer.logAttack(pt, didHit);
-        currentPlayer.getCurrentTurn().setPoint(pt);
-        currentPlayer.endTurn();
 
         // Check if ship is hit and drowned
         if (didHit) {
@@ -135,23 +148,29 @@ public class GameManager {
             if (s.isDrowned()) {
                 currentPlayer.updateScore(s.getPoints());
             }
+            this.prepareNextTurn();
+            return TurnType.HIT;
+        } else {
+            this.switchTurns();
+            return TurnType.MISS;
         }
-
-        this.setCurrentPlayer(didHit ? currentPlayer : nextPlayer);
-        this.prepareNextTurn();
-        return didHit ? TurnType.HIT : TurnType.MISS;
     }
 
-    public void prepareNextTurn() {
-        this.getCurrentPlayer().startTurn();
-    }
-
-    public Player getNextPlayer() {
-        // Todo: make this function more fancy and flexible to support multi user game.
-        return playerList.get(0) != this.getCurrentPlayer() ? playerList.get(0) : playerList.get(1);
-    }
-
-    public boolean placeMine(ShipPoint shipPoint) {
+    public boolean placeMine(GridPoint gridPoint) {
+        if (this.currentPlayer.placeMine(gridPoint)) {
+            this.switchTurns();
+            return true;
+        }
         return false;
     }
+
+    public GameStatistics getStatistics() {
+        return new GameStatistics(this.startAt, this.playerList);
+    }
+
 }
+/**
+ *
+ this.allowMines = mines > 0;
+
+ **/
