@@ -2,18 +2,22 @@ package runners.javafx.controllers;
 
 import game.engine.GameManager;
 import game.engine.GameTurn;
-import game.engine.TurnType;
-import game.players.*;
+import game.engine.HitType;
+import game.players.BoardType;
+import game.players.GridPoint;
+import game.players.PlayerStatistics;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import runners.console.ConsoleUtils;
 
@@ -59,6 +63,9 @@ public class PlayerScreenController extends BaseController {
 
     @FXML // fx:id="player_name"
     private Label player_name; // Value injected by FXMLLoader
+
+    @FXML
+    private HBox mine_container;
 
     @FXML
     private Label msg;
@@ -154,16 +161,24 @@ public class PlayerScreenController extends BaseController {
     private void renderDialogSuccessTurn() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Successful Attack");
-        alert.setHeaderText("Nice Shoot, You successfully attacked opposite ship");
-        alert.setContentText("I have a great message for you!");
+        alert.setHeaderText(null);
+        alert.setContentText("Nice Shoot, You successfully attacked opposite ship");
         alert.showAndWait();
     }
 
     private void renderDialogFailedTurn() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Unsuccessful Attack");
-        alert.setHeaderText("You did not shoot a ship");
-        alert.setContentText("Please try again in the next turn");
+        alert.setTitle("You Miss");
+        alert.setHeaderText(null);
+        alert.setContentText("You Miss, Switching Players, Please try again in the next turn");
+        alert.showAndWait();
+    }
+
+    private void renderDialogAttckedMine() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Stepping on a mine");
+        alert.setHeaderText(null);
+        alert.setContentText("You attcked a mine, the attack was reflacted to you.");
         alert.showAndWait();
     }
 
@@ -173,6 +188,22 @@ public class PlayerScreenController extends BaseController {
         alert.setTitle("Point Already Attacked");
         alert.setHeaderText(null);
         alert.setContentText("You already attcked this Point");
+        alert.showAndWait();
+    }
+
+    private void renderPlaceMineFailed() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("You can not put mine in that place");
+        alert.setHeaderText(null);
+        alert.setContentText("Mine, can't be located near to ship.");
+        alert.showAndWait();
+    }
+
+    private void renderPlaceMineSuccessfully() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Mine Placed Successfully.");
+        alert.setHeaderText(null);
+        alert.setContentText("Mine Placed Successfully, Skiping Turn.");
         alert.showAndWait();
     }
 
@@ -200,36 +231,54 @@ public class PlayerScreenController extends BaseController {
                     case EMPTY:
                         n.getStyleClass().add("empty");
                         break;
+                    case MISS:
+                        n.getStyleClass().add("miss");
+                        break;
                     case MINE_HIT:
-                        n.getStyleClass().add("mine-hit");
+                        n.getStyleClass().add("ship-hit");
                         break;
                     case SHIP_HIT:
                         n.getStyleClass().add("ship-hit");
                         break;
                 }
 
+                int finalRow = row;
+                int finalCol = col;
                 if (game.isAllowMines()) {
-                    int finalRow = row;
-                    int finalCol = col;
-                    n.setOnAction((event) -> {
-                        if (game.placeMine(new GridPoint(finalRow, finalCol))) {
-                            this.renderPlaceMineSeccsffully();
-                        } else {
-                            this.renderPlaceMineFailed();
-                        }
-                        this.render();
+                    n.setOnDragOver((event) -> {
+                        event.acceptTransferModes(TransferMode.ANY);
+                        event.consume();
+                    });
+
+                    n.setOnDragDropped((event) -> {
+                        Dragboard db = event.getDragboard();
+                        db.clear();
+                        event.setDropCompleted(true);
+                        event.consume();
+
+
+                        // Avoiding getting drag gesture been played while Alert window is pop outed.
+                        Task<Void> delayed = new Task<Void>() {
+                            @Override
+                            protected Void call() throws Exception {
+                                Thread.sleep(100);
+                                return null;
+                            }
+                        };
+                        delayed.setOnSucceeded(event1 -> {
+                            if (game.placeMine(new GridPoint(finalRow, finalCol))) {
+                                this.renderPlaceMineSuccessfully();
+                                this.render();
+                            } else {
+                                this.renderPlaceMineFailed();
+                            }
+                        });
+                        new Thread(delayed).start();
                     });
                 }
-
                 this.ships_board.getChildren().add(n);
             }
         }
-    }
-
-    private void renderPlaceMineFailed() {
-    }
-
-    private void renderPlaceMineSeccsffully() {
     }
 
     private void render() {
@@ -238,6 +287,36 @@ public class PlayerScreenController extends BaseController {
         this.renderAttackBoard();
         this.renderHistoryMoves();
         this.renderStatistics();
+        this.renderMinesStack();
+    }
+
+    private void renderMinesStack() {
+        int mines = this.game.getCurrentPlayer().getShipsBoard().getAvailableMines();
+        mine_container.getChildren().clear();
+        for (int i = 0; i < mines; i++) {
+            Button mine = new Button();
+            mine.minWidth(15);
+            mine.minHeight(15);
+            mine.setText(" ");
+            mine.getStyleClass().add("mine");
+
+            mine.setOnDragDetected((event -> {
+                Dragboard db = mine.startDragAndDrop(TransferMode.ANY);
+                WritableImage snapshot = mine.snapshot(new SnapshotParameters(), null);
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+                db.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
+                event.consume();
+            }));
+
+            mine.setOnDragDone((event -> {
+                event.acceptTransferModes(TransferMode.ANY);
+                event.consume();
+            }));
+            mine_container.getChildren().add(mine);
+        }
+
     }
 
     private void renderStatistics() {
@@ -283,16 +362,21 @@ public class PlayerScreenController extends BaseController {
                     case SHIP_HIT:
                         n.getStyleClass().add("ship-hit");
                         break;
+                    case MINE_HIT:
+                        n.getStyleClass().add("ship-hit");
+                        break;
                 }
 
                 int finalCol = col;
                 int finalRow = row;
                 n.setOnAction((event) -> {
-                    TurnType turnType = game.playAttack(new GridPoint(finalRow, finalCol));
-                    if (turnType == TurnType.HIT) {
+                    HitType turnType = game.playAttack(new GridPoint(finalRow, finalCol));
+                    if (turnType == HitType.HIT) {
                         this.renderDialogSuccessTurn();
-                    } else if (turnType == TurnType.MISS) {
+                    } else if (turnType == HitType.MISS) {
                         this.renderDialogFailedTurn();
+                    } else if (turnType == HitType.HIT_MINE) {
+                        this.renderDialogAttckedMine();
                     } else {
                         this.renderDialogAlreadyAttacked();
                     }
