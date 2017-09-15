@@ -186,7 +186,7 @@ public class ConsoleRunner {
         GridPoint fireToPoint = new GridPoint(x, y);
 
         // Making attack to the request point.
-        if (this.game.playAttack(fireToPoint) == TurnType.HIT) {
+        if (this.game.playAttack(fireToPoint) == HitType.HIT) {
             System.out.println("NICE JOB! you successfully hit a ship.");
             System.out.println();
         }
