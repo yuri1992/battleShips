@@ -1,14 +1,15 @@
 package game.engine;
 
-public enum TurnType {
+public enum HitType {
     HIT("HIT"),
     MISS("MISS"),
-    HIT_MINE("HIT_MINE"),
-    NOT_EMPTY("NOT_EMPTY");
+    PLACE_MINE("PLACE MINE"),
+    HIT_MINE("HIT MINE"),
+    NOT_EMPTY("NOT EMPTY");
 
     private final String text;
 
-    private TurnType(final String text) {
+    private HitType(final String text) {
         this.text = text;
     }
 
