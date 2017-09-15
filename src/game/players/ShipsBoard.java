@@ -1,24 +1,36 @@
 package game.players;
 
+import game.engine.HitType;
 import game.exceptions.BoardBuilderException;
 import game.exceptions.ShipsLocatedTooClose;
 import game.exceptions.ShipsOffBoardException;
 import game.players.ships.Ship;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShipsBoard implements Board {
-    private GridEntity[][] board;
+    private BoardType[][] board;
     private int boardSize;
-    private int minesAllowance;
+    private int minesAllowance = 0;
 
+    private HashMap<GridPoint, GridEntity> map;
     private List<Ship> ships;
+    private List<Mine> mines;
 
     public ShipsBoard(List<Ship> ships, int boardSize, int mines) throws BoardBuilderException {
-        this.board = new GridEntity[boardSize][boardSize];
+        this.board = new BoardType[boardSize][boardSize];
+        for (int row = 1; row < board.length; row++) {
+            for (int col = 1; col < board.length; col++) {
+                board[row][col] = BoardType.EMPTY;
+            }
+        }
+
         this.boardSize = boardSize;
         this.minesAllowance = mines;
+        this.map = new HashMap<>();
+        this.mines = new ArrayList<>();
         this.setShips(ships);
     }
 
@@ -43,7 +55,8 @@ public class ShipsBoard implements Board {
             }
         }
 
-        board[pt.x][pt.y] = ship;
+        board[pt.x][pt.y] = BoardType.SHIP;
+        map.put(pt, ship);
     }
 
     /*
@@ -85,46 +98,45 @@ public class ShipsBoard implements Board {
     }
 
 
-    public boolean hit(GridPoint pt) {
-        GridEntity ship = board[pt.x][pt.y];
-        if (ship != null) {
-            ship.hit(pt);
-            return true;
+    public HitType hit(GridPoint pt) {
+        GridEntity gridEntity = map.get(pt);
+
+        if (gridEntity instanceof Ship) {
+            gridEntity.hit(pt);
+            board[pt.x][pt.y] = BoardType.SHIP_HIT;
+            return HitType.HIT;
+        } else if (gridEntity instanceof Mine) {
+            gridEntity.hit(pt);
+            board[pt.x][pt.y] = BoardType.MINE_HIT;
+            return HitType.HIT_MINE;
+        } else {
+            // Todo : We should mark were the opposite player did attcked us.
+            board[pt.x][pt.y] = BoardType.MISS;
         }
-        return false;
+        return HitType.MISS;
     }
 
     public Ship getShipByPoint(GridPoint pt) {
         if (pt.y < 0 || pt.x < 0 || pt.x >= board.length || pt.y >= board.length)
             return null;
 
-        if (board[pt.x][pt.y] != null && board[pt.x][pt.y] instanceof Ship)
-            return (Ship) board[pt.x][pt.y];
+        GridEntity gridEntity = map.get(pt);
+        if (gridEntity != null && gridEntity instanceof Ship)
+            return (Ship) gridEntity;
 
         return null;
     }
 
+    public GridEntity getPyPoint(GridPoint pt) {
+        if (pt.y < 0 || pt.x < 0 || pt.x >= board.length || pt.y >= board.length)
+            return null;
+
+        return map.get(pt);
+    }
+
     @Override
     public BoardType[][] printBoard() {
-        BoardType[][] res = new BoardType[board.length][board.length];
-        for (int row = 1; row < board.length; row++) {
-            for (int col = 1; col < board.length; col++) {
-                if (board[row][col] == null)
-                    res[row][col] = BoardType.EMPTY;
-                else if (board[row][col] instanceof Mine) {
-                    res[row][col] = BoardType.MINE;
-                    if (board[row][col].isHit(new GridPoint(row, col)))
-                        res[row][col] = BoardType.MINE_HIT;
-                } else {
-                    res[row][col] = BoardType.SHIP;
-                    if (board[row][col].isHit(new GridPoint(row, col)))
-                        res[row][col] = BoardType.SHIP_HIT;
-                }
-
-            }
-        }
-
-        return res;
+        return board;
     }
 
     public boolean allShipsGotHit() {
@@ -135,11 +147,30 @@ public class ShipsBoard implements Board {
         return true;
     }
 
-    public GridEntity[][] getBoard() {
+    public BoardType[][] getBoard() {
         return board;
     }
 
-    public boolean placeMine(GridPoint gridPoint) {
-        return false;
+
+    public int getAvailableMines() {
+        return minesAllowance - mines.size();
+    }
+
+    public boolean setMine(GridPoint gridPoint) {
+        if (this.getPyPoint(gridPoint) != null) {
+            return false;
+        }
+
+        for (GridPoint prohibitedPoint : getProhibitedShipPoints(gridPoint)) {
+            if (this.getPyPoint(prohibitedPoint) != null) {
+                return false;
+            }
+        }
+
+        Mine mine = new Mine(gridPoint);
+        this.mines.add(mine);
+        board[gridPoint.x][gridPoint.y] = BoardType.MINE;
+        map.put(gridPoint, mine);
+        return true;
     }
 }
