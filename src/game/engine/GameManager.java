@@ -1,11 +1,12 @@
 package game.engine;
 
-import game.players.ships.ShipType;
 import game.players.GridPoint;
 import game.players.Player;
 import game.players.ships.Ship;
+import game.players.ships.ShipType;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 
 public class GameManager {
@@ -131,33 +132,54 @@ public class GameManager {
         Shooting the the @pt requests by the current player, if player did hit a ship, will have another turn,
         otherwise will switch the turn.
     */
-    public TurnType playAttack(GridPoint pt) {
+    public HitType playAttack(GridPoint pt) {
         Player currentPlayer = this.getCurrentPlayer();
         Player nextPlayer = this.getNextPlayer();
 
         if (currentPlayer.getAttackBoard().isAttacked(pt))
-            return TurnType.NOT_EMPTY;
+            return HitType.NOT_EMPTY;
 
         // Did player hit a ship
-        boolean didHit = nextPlayer.hit(pt);
-        currentPlayer.logAttack(pt, didHit);
+        HitType hitType = nextPlayer.getShipsBoard().hit(pt);
 
-        // Check if ship is hit and drowned
-        if (didHit) {
-            Ship s = nextPlayer.getShipsBoard().getShipByPoint(pt);
-            if (s.isDrowned()) {
-                currentPlayer.updateScore(s.getPoints());
-            }
-            this.prepareNextTurn();
-            return TurnType.HIT;
-        } else {
+
+        if (hitType == HitType.MISS) {
+            currentPlayer.logAttack(pt, hitType);
             this.switchTurns();
-            return TurnType.MISS;
+            return hitType;
         }
+
+        Ship s = null;
+        Player player = null;
+
+        if (hitType == HitType.HIT) {
+            player = currentPlayer;
+            s = nextPlayer.getShipsBoard().getShipByPoint(pt);
+            currentPlayer.logAttack(pt, hitType);
+            this.prepareNextTurn();
+        } else {
+            player = nextPlayer;
+            s = currentPlayer.getShipsBoard().getShipByPoint(pt);
+
+            // Marking attack of the mine
+            currentPlayer.logAttack(pt, hitType);
+            // Marking attack of the mine
+            nextPlayer.getAttackBoard().setShoot(pt, s != null);
+            this.switchTurns();
+        }
+
+        if (s != null && s.isDrowned()) {
+            player.updateScore(s.getPoints());
+        }
+
+        return hitType;
     }
 
     public boolean placeMine(GridPoint gridPoint) {
-        if (this.currentPlayer.placeMine(gridPoint)) {
+        if (this.currentPlayer.getShipsBoard().setMine(gridPoint)) {
+            GameTurn currentTurn = this.currentPlayer.getCurrentTurn();
+            currentTurn.setPoint(gridPoint);
+            currentTurn.setHitType(HitType.PLACE_MINE);
             this.switchTurns();
             return true;
         }
@@ -169,8 +191,3 @@ public class GameManager {
     }
 
 }
-/**
- *
- this.allowMines = mines > 0;
-
- **/
