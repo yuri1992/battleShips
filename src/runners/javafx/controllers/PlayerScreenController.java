@@ -17,9 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import runners.console.ConsoleUtils;
 
-import java.awt.*;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class PlayerScreenController extends BaseController {
@@ -182,17 +180,17 @@ public class PlayerScreenController extends BaseController {
     private void renderShipsBoard() {
         BoardType[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
         this.ships_board.getChildren().clear();
-        for (int x = 1; x < board.length; x++) {
-            for (int y = 1; y < board.length; y++) {
+        for (int row = 1; row < board.length; row++) {
+            for (int col = 1; col < board.length; col++) {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(x * 35 - 35);
-                n.setLayoutY(y * 35 - 35);
+                n.setLayoutX(col * 35 - 35);
+                n.setLayoutY(row * 35 - 35);
                 n.setText(" ");
                 //n.setDisable(true);
 
-                switch (board[x][y]) {
+                switch (board[row][col]) {
                     case MINE:
                         n.getStyleClass().add("mine");
                         break;
@@ -211,10 +209,10 @@ public class PlayerScreenController extends BaseController {
                 }
 
                 if (game.isAllowMines()) {
-                    int finalX = x;
-                    int finalY = y;
+                    int finalRow = row;
+                    int finalCol = col;
                     n.setOnAction((event) -> {
-                        if (game.placeMine(new GridPoint(finalX, finalY))) {
+                        if (game.placeMine(new GridPoint(finalRow, finalCol))) {
                             this.renderPlaceMineSeccsffully();
                         } else {
                             this.renderPlaceMineFailed();
@@ -233,7 +231,6 @@ public class PlayerScreenController extends BaseController {
 
     private void renderPlaceMineSeccsffully() {
     }
-
 
     private void render() {
         this.player_name.setText(game.getCurrentPlayer().toString());
@@ -267,16 +264,16 @@ public class PlayerScreenController extends BaseController {
     private void renderAttackBoard() {
         this.attack_board.getChildren().clear();
         BoardType[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
-        for (int x = 1; x < board.length; x++) {
-            for (int y = 1; y < board.length; y++) {
+        for (int row = 1; row < board.length; row++) {
+            for (int col = 1; col < board.length; col++) {
                 Button n = new Button();
                 n.minWidth(15);
                 n.minHeight(15);
-                n.setLayoutX(x * 35 - 35);
-                n.setLayoutY(y * 35 - 35);
+                n.setLayoutX(col * 35 - 35);
+                n.setLayoutY(row * 35 - 35);
                 n.setText(" ");
 
-                switch (board[y][x]) {
+                switch (board[row][col]) {
                     case MISS:
                         n.getStyleClass().add("miss");
                         break;
@@ -288,10 +285,10 @@ public class PlayerScreenController extends BaseController {
                         break;
                 }
 
-                int finalX = x;
-                int finalY = y;
+                int finalCol = col;
+                int finalRow = row;
                 n.setOnAction((event) -> {
-                    TurnType turnType = game.playAttack(new GridPoint(finalY, finalX));
+                    TurnType turnType = game.playAttack(new GridPoint(finalRow, finalCol));
                     if (turnType == TurnType.HIT) {
                         this.renderDialogSuccessTurn();
                     } else if (turnType == TurnType.MISS) {

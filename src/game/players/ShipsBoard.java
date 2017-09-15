@@ -107,18 +107,18 @@ public class ShipsBoard implements Board {
     @Override
     public BoardType[][] printBoard() {
         BoardType[][] res = new BoardType[board.length][board.length];
-        for (int y = 1; y < board.length; y++) {
-            for (int x = 1; x < board.length; x++) {
-                if (board[y][x] == null)
-                    res[y][x] = BoardType.EMPTY;
-                else if (board[y][x] instanceof Mine) {
-                    res[y][x] = BoardType.MINE;
-                    if (board[y][x].isHit(new GridPoint(x, y)))
-                        res[y][x] = BoardType.MINE_HIT;
+        for (int row = 1; row < board.length; row++) {
+            for (int col = 1; col < board.length; col++) {
+                if (board[row][col] == null)
+                    res[row][col] = BoardType.EMPTY;
+                else if (board[row][col] instanceof Mine) {
+                    res[row][col] = BoardType.MINE;
+                    if (board[row][col].isHit(new GridPoint(row, col)))
+                        res[row][col] = BoardType.MINE_HIT;
                 } else {
-                    res[y][x] = BoardType.SHIP;
-                    if (board[y][x].isHit(new GridPoint(x, y)))
-                        res[y][x] = BoardType.SHIP_HIT;
+                    res[row][col] = BoardType.SHIP;
+                    if (board[row][col].isHit(new GridPoint(row, col)))
+                        res[row][col] = BoardType.SHIP_HIT;
                 }
 
             }
