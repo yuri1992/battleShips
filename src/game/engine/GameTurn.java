@@ -8,7 +8,7 @@ import java.util.Date;
 public class GameTurn {
     private Date startAt;
     private Date endAt = null;
-    private boolean isHit = false;
+    private HitType hitType = HitType.MISS;
     private GridPoint point;
 
     public GameTurn() {
@@ -23,12 +23,12 @@ public class GameTurn {
         this.endAt = new Date();
     }
 
-    public boolean isHit() {
-        return isHit;
+    public boolean isHitType() {
+        return hitType == HitType.HIT;
     }
 
-    public void setHit(boolean hit) {
-        isHit = hit;
+    public void setHitType(HitType hitType) {
+        this.hitType = hitType;
     }
 
     public void setPoint(GridPoint point) {
@@ -38,6 +38,6 @@ public class GameTurn {
     public String toString() {
         if (point == null)
             return "Not Used Turn";
-        return (isHit ? "Hit" : "Miss") + " on " + point + " took " + ConsoleUtils.formatDateHM(getTurnTime());
+        return hitType.toString() + " on " + point + " took " + ConsoleUtils.formatDateHM(getTurnTime());
     }
 }
