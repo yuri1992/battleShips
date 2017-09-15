@@ -25,7 +25,7 @@ public class PlayerStatistics {
 
         for (GameTurn gameTurn : player.getTurns()) {
             avgTurnTime += gameTurn.getTurnTime();
-            if (gameTurn.isHit()) {
+            if (gameTurn.isHitType()) {
                 hits++;
             } else {
                 misses++;
