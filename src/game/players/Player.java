@@ -1,6 +1,7 @@
 package game.players;
 
 import game.engine.GameTurn;
+import game.engine.HitType;
 import game.exceptions.BoardBuilderException;
 import game.players.ships.Ship;
 
@@ -30,9 +31,10 @@ public class Player {
     /*
         Marking @pt as been attacked by the player.
      */
-    public void logAttack(GridPoint pt, boolean b) {
-        attackBoard.setShoot(pt, b);
-        currentTurn.setHit(b);
+    public void logAttack(GridPoint pt, HitType hitType) {
+        // Todo: Figure out if hitting a mine is equaling to hitting a ship
+        attackBoard.setShoot(pt, hitType == HitType.HIT || hitType == HitType.HIT_MINE);
+        currentTurn.setHitType(hitType);
         currentTurn.setPoint(pt);
     }
 
@@ -48,14 +50,6 @@ public class Player {
             this.turns.add(this.currentTurn);
         }
         this.currentTurn = null;
-    }
-
-    public boolean placeMine(GridPoint gridPoint) {
-        return this.shipsBoard.placeMine(gridPoint);
-    }
-
-    public boolean hit(GridPoint pt) {
-        return this.getShipsBoard().hit(pt);
     }
 
     /*
@@ -107,6 +101,7 @@ public class Player {
     public ShipsBoard getShipsBoard() {
         return shipsBoard;
     }
+
 
     //endregion
 
