@@ -167,7 +167,7 @@ public class PlayerScreenController extends BaseController {
         } else if (event.getSource() == menuFile_Quit) {
             menuController.handleQuitGamePressed();
         } else // TODO: Amir: throw exception??
-            System.out.println("unkonw");
+            System.out.println("unknown");
 
     }
 
@@ -185,6 +185,11 @@ public class PlayerScreenController extends BaseController {
 
     @FXML
     private void handlePreviewNavigationPressed(ActionEvent event) {
+        if (event.getSource() == navigatePrevTurn) {
+            game.undoTurn(true);
+        } else if (event.getSource() == navigateNextTurn) {
+            game.redoTurn(true);
+        }
     }
 
     //endregion

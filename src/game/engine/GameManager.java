@@ -223,6 +223,29 @@ public class GameManager {
         return false;
     }
 
+    public boolean undoTurn(boolean isReplayMode) {
+        System.out.println("undo??");
+        if (isReplayMode) {
+
+        } else {
+            /// TODO: Amir: Implement undo in the middle of the game
+            System.out.println("Not impl yet");
+        }
+        return false;
+    }
+
+    public boolean redoTurn(boolean isReplayMode) {
+        System.out.println("redo??");
+        if (!isReplayMode) {
+            System.out.println("redo not supported in real game");
+            return false;
+        }
+
+        /// TODO: Amir: Implement redo replay
+        System.out.println("Not impl yet");
+        return false;
+    }
+
     public GameStatistics getGameStatistics() {
         return new GameStatistics(this);
     }
