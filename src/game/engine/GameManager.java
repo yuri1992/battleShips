@@ -52,7 +52,7 @@ public class GameManager {
         return isRunning;
     }
 
-    public void setRunning(boolean running) {
+    private void setRunning(boolean running) {
         isRunning = running;
     }
 
@@ -105,6 +105,7 @@ public class GameManager {
                 } else {
                     this.setWinner(getNextPlayer());
                 }
+                setRunning(false);
                 return true;
             }
 

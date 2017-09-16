@@ -114,7 +114,7 @@ public class PlayerScreenController extends BaseController {
             setGame(menuController.handleLoadXmlButtonPressed());
         } else if (event.getSource() == menuFile_ResignGame) {
             if (menuController.handleResignGamePressed()) {
-                this.game = null;
+                handleGameOver(true);
             }
         } else if (event.getSource() == menuFile_Quit) {
             menuController.handleQuitGamePressed();
@@ -168,7 +168,6 @@ public class PlayerScreenController extends BaseController {
         menuFile_ResignGame.setDisable(!isEnabled || game == null);
     }
 
-
     private void renderDialogSuccessTurn() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Successful Attack");
@@ -193,7 +192,6 @@ public class PlayerScreenController extends BaseController {
         alert.showAndWait();
     }
 
-
     private void renderDialogAlreadyAttacked() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Point Already Attacked");
@@ -217,7 +215,6 @@ public class PlayerScreenController extends BaseController {
         alert.setContentText("Mine Placed Successfully, Skiping Turn.");
         alert.showAndWait();
     }
-
 
     private void renderShipsBoard() {
         BoardType[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
@@ -293,20 +290,29 @@ public class PlayerScreenController extends BaseController {
     }
 
     private void render() {
-        if (!game.isGameOver() && game.isRunning()) {
-            this.player_name.setText(game.getCurrentPlayer().toString());
-            this.renderShipsBoard();
-            this.renderAttackBoard();
-            this.renderHistoryMoves();
-            this.renderStatistics();
-            this.renderMinesStack();
-        } else {
-            // Todo: Show Winner Message
+        if (game == null) {
             this.setVisibility(false);
-            this.msg.setText("WE HAVE A WINNER!!! " + this.game.getWinner().toString());
-            this.msg.getStyleClass().clear();
-            this.msg.getStyleClass().add("text-winner");
+            return;
         }
+
+        if (game.isRunning()) {
+            if (game.isGameOver()) {
+                // Todo: Show Winner Message
+                handleGameOver(false);
+//                this.msg.setText("WE HAVE A WINNER!!! " + this.game.getWinner().toString());
+//                this.msg.getStyleClass().clear();
+//                this.msg.getStyleClass().add("text-winner");
+                this.setVisibility(false);
+            } else {
+                this.player_name.setText(game.getCurrentPlayer().toString());
+                this.renderShipsBoard();
+                this.renderAttackBoard();
+                this.renderHistoryMoves();
+                this.renderStatistics();
+                this.renderMinesStack();
+            }
+        }
+
     }
 
     private void renderMinesStack() {
@@ -405,5 +411,15 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
+    private void handleGameOver(boolean byResign) {
 
+        String reason = (byResign ? this.game.getCurrentPlayer() + " resigned from the game.\n" : "");
+
+        AlertBoxController.displayAlert("Game Over!", reason +
+                "The Winner is " + this.game.getWinner() + "!\n" +
+                "Congratulations!!");
+
+        this.menuFile_StartGame.setDisable(true);
+        this.menuFile_ResignGame.setDisable(true);
+    }
 }

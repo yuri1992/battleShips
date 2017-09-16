@@ -73,21 +73,13 @@ public class MainMenuController {
             return false;
         }
 
-        boolean res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to\n" +
+        boolean res = false;
+        res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to\n" +
                         "resign from the game?");
         if (res) {
-
             this.game.resignGame();
-
-            AlertBoxController.displayAlert("Game Over!", this.game.getCurrentPlayer() + " resigned from " +
-                    "the game.\n" +
-                    "The Winner is " + this.game.getWinner() + "!\n" +
-                    "Congratulations!!");
-
-            this.game = null;
-            return true;
         }
-        return false;
+        return res;
     }
 
     public void handleQuitGamePressed() {
