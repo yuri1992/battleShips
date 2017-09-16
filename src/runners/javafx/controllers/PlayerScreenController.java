@@ -187,6 +187,7 @@ public class PlayerScreenController extends BaseController {
     private void handlePreviewNavigationPressed(ActionEvent event) {
         if (event.getSource() == navigatePrevTurn) {
             game.undoTurn(true);
+            render();
         } else if (event.getSource() == navigateNextTurn) {
             game.redoTurn(true);
         }

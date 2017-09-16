@@ -12,7 +12,10 @@ public class AttackBoard implements Board {
 
     public void setShoot(GridPoint pt, boolean attack) {
         board[pt.x][pt.y] = attack ? BoardType.SHIP_HIT : BoardType.MISS;
+    }
 
+    public void setUnShoot(GridPoint pt) {
+        board[pt.x][pt.y] = BoardType.EMPTY;
     }
 
     public AttackBoard(int boardSize) {

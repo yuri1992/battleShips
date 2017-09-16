@@ -95,12 +95,21 @@ public class Ship implements GridEntity {
     @Override
     public boolean hit(GridPoint p) {
         for (GridPoint pt : positions) {
-            if (pt.x == p.getX() && pt.y == p.getY()) {
+            if (pt.equals(p)) {
                 pt.setHit();
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public void unHit(GridPoint p) {
+        for (GridPoint pt : positions) {
+            if (pt.equals(p)) {
+                pt.setUnHit();
+            }
+        }
     }
 
     //region Setters / Getters

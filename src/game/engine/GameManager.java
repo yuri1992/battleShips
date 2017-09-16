@@ -224,8 +224,47 @@ public class GameManager {
     }
 
     public boolean undoTurn(boolean isReplayMode) {
-        System.out.println("undo??");
         if (isReplayMode) {
+            if (currentTurn != null) { // reverse last move if set
+                // unlog hits
+                Player currPlayer = getCurrentPlayer();
+                Player nextPlayer = getNextPlayer();
+                GridPoint pt = currentTurn.getPoint();
+
+                // Did player hit a ship
+                HitType hitType = currentTurn.getHitType();
+
+                Ship hitShip = null;
+                Player reduceScoreFromPlayer = null;
+
+                if (hitType == HitType.HIT) {
+                    hitShip = nextPlayer.getShipsBoard().getShipByPoint(pt);
+                    reduceScoreFromPlayer = currPlayer;
+                } else if (hitType == HitType.HIT_MINE) {
+                    hitShip = currPlayer.getShipsBoard().getShipByPoint(pt);
+                    reduceScoreFromPlayer = nextPlayer;
+
+                    // Marking attack of the mine
+                    nextPlayer.getAttackBoard().setUnShoot(pt);
+                }
+
+                if (hitShip != null && hitShip.isDrowned()) {
+                    reduceScoreFromPlayer.updateScore(-hitShip.getPoints());
+                }
+
+                // un-hit and un-mark
+                nextPlayer.getShipsBoard().unHit(pt);
+                currPlayer.unmarkAttack(pt);
+            }
+
+            int prevIndex = (currentTurn == null ? getMovesCount() - 1 : currentTurn.getIndex() - 2);
+            if (prevIndex >= 0) {
+                currentTurn = getTurnList().get(prevIndex);
+                currentPlayer = currentTurn.getPlayer();
+            } else {
+                currentTurn = null;
+                currentPlayer = getPlayerList().get(0);
+            }
 
         } else {
             /// TODO: Amir: Implement undo in the middle of the game

@@ -10,6 +10,11 @@ public interface GridEntity {
     boolean isHit(GridPoint gridPoint);
     int getPoints();
 
+    /*
+        Unhit point to support undo functionality
+     */
+    void unHit(GridPoint gridPoint);
+
     GridPoint getPosition();
     String toString();
 }
