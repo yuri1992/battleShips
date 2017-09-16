@@ -148,13 +148,6 @@ public class PlayerScreenController extends BaseController {
         this.menuController = new MainMenuController(window);
     }
 
-    public void setVisibility(boolean visible) {
-        this.list_moves.setVisible(visible);
-        this.stats_container.setVisible(visible);
-        this.ships_board.setVisible(visible);
-        this.attack_board.setVisible(visible);
-    }
-
     //region Setters / Getters
 
     public void setGame(GameManager game) {
@@ -164,10 +157,19 @@ public class PlayerScreenController extends BaseController {
 
     //endregion
 
+    public void setVisibility(boolean visible) {
+        this.list_moves.setVisible(visible);
+        this.stats_container.setVisible(visible);
+        this.ships_board.setVisible(visible);
+        this.attack_board.setVisible(visible);
+    }
+
     private void enableGameRelatedMenuItems(boolean isEnabled) {
         menuFile_StartGame.setDisable(!isEnabled || game == null);
         menuFile_ResignGame.setDisable(!isEnabled || game == null);
     }
+
+    //region Alert Messages
 
     private void renderDialogSuccessTurn() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -215,6 +217,31 @@ public class PlayerScreenController extends BaseController {
         alert.setHeaderText(null);
         alert.setContentText("Mine Placed Successfully, Skiping Turn.");
         alert.showAndWait();
+    }
+
+    //endregion
+
+    private void render() {
+        if (game == null) {
+            this.setVisibility(false);
+            return;
+        }
+
+        if (game.isRunning()) {
+            if (game.isGameOver()) {
+                // Todo: Show Winner Message
+                handleGameOver(false);
+                this.setVisibility(false);
+            } else {
+                this.player_name.setText(game.getCurrentPlayer().toString());
+                this.renderShipsBoard();
+                this.renderAttackBoard();
+                this.renderHistoryMoves();
+                this.renderStatistics();
+                this.renderMinesStack();
+            }
+        }
+
     }
 
     private void renderShipsBoard() {
@@ -290,81 +317,6 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
-    private void render() {
-        if (game == null) {
-            this.setVisibility(false);
-            return;
-        }
-
-        if (game.isRunning()) {
-            if (game.isGameOver()) {
-                // Todo: Show Winner Message
-                handleGameOver(false);
-//                this.msg.setText("WE HAVE A WINNER!!! " + this.game.getWinner().toString());
-//                this.msg.getStyleClass().clear();
-//                this.msg.getStyleClass().add("text-winner");
-                this.setVisibility(false);
-            } else {
-                this.player_name.setText(game.getCurrentPlayer().toString());
-                this.renderShipsBoard();
-                this.renderAttackBoard();
-                this.renderHistoryMoves();
-                this.renderStatistics();
-                this.renderMinesStack();
-            }
-        }
-
-    }
-
-    private void renderMinesStack() {
-        int mines = this.game.getCurrentPlayer().getShipsBoard().getAvailableMines();
-        mine_container.getChildren().clear();
-        for (int i = 0; i < mines; i++) {
-            Button mine = new Button();
-            mine.minWidth(15);
-            mine.minHeight(15);
-            mine.setText(" ");
-            mine.getStyleClass().add("mine");
-
-            mine.setOnDragDetected((event -> {
-                Dragboard db = mine.startDragAndDrop(TransferMode.ANY);
-                WritableImage snapshot = mine.snapshot(new SnapshotParameters(), null);
-                ClipboardContent content = new ClipboardContent();
-                content.putString("");
-                db.setContent(content);
-                db.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
-                event.consume();
-            }));
-
-            mine.setOnDragDone((event -> {
-                event.acceptTransferModes(TransferMode.ANY);
-                event.consume();
-            }));
-            mine_container.getChildren().add(mine);
-        }
-
-    }
-
-    private void renderStatistics() {
-        PlayerStatistics p = game.getCurrentPlayer().getStatistics();
-        stat_score.setText("Score: " + String.valueOf(p.getScore()));
-        stat_turns.setText(String.valueOf(p.getTurns()));
-        stat_turns.setEditable(false);
-        stat_hits.setText(String.valueOf(p.getHits()));
-        stat_hits.setEditable(false);
-        stat_miss.setText(String.valueOf(p.getMisses()));
-        stat_miss.setEditable(false);
-        stat_time.setText(ConsoleUtils.formatDateHM(p.getAvgTurnTime()));
-        stat_time.setEditable(false);
-    }
-
-    private void renderHistoryMoves() {
-        this.list_moves.getItems().clear();
-        for (GameTurn turn : game.getCurrentPlayer().getTurns()) {
-            this.list_moves.getItems().add(turn.toString());
-        }
-    }
-
     private void renderAttackBoard() {
         this.attack_board.getChildren().clear();
         BoardType[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
@@ -410,6 +362,55 @@ public class PlayerScreenController extends BaseController {
                 this.attack_board.getChildren().add(n);
             }
         }
+    }
+
+    private void renderHistoryMoves() {
+        this.list_moves.getItems().clear();
+        for (GameTurn turn : game.getCurrentPlayer().getTurns()) {
+            this.list_moves.getItems().add(turn.toString());
+        }
+    }
+
+    private void renderStatistics() {
+        PlayerStatistics p = game.getCurrentPlayer().getStatistics();
+        stat_score.setText("Score: " + String.valueOf(p.getScore()));
+        stat_turns.setText(String.valueOf(p.getTurns()));
+        stat_turns.setEditable(false);
+        stat_hits.setText(String.valueOf(p.getHits()));
+        stat_hits.setEditable(false);
+        stat_miss.setText(String.valueOf(p.getMisses()));
+        stat_miss.setEditable(false);
+        stat_time.setText(ConsoleUtils.formatDateHM(p.getAvgTurnTime()));
+        stat_time.setEditable(false);
+    }
+
+    private void renderMinesStack() {
+        int mines = this.game.getCurrentPlayer().getShipsBoard().getAvailableMines();
+        mine_container.getChildren().clear();
+        for (int i = 0; i < mines; i++) {
+            Button mine = new Button();
+            mine.minWidth(15);
+            mine.minHeight(15);
+            mine.setText(" ");
+            mine.getStyleClass().add("mine");
+
+            mine.setOnDragDetected((event -> {
+                Dragboard db = mine.startDragAndDrop(TransferMode.ANY);
+                WritableImage snapshot = mine.snapshot(new SnapshotParameters(), null);
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+                db.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
+                event.consume();
+            }));
+
+            mine.setOnDragDone((event -> {
+                event.acceptTransferModes(TransferMode.ANY);
+                event.consume();
+            }));
+            mine_container.getChildren().add(mine);
+        }
+
     }
 
     private void handleGameOver(boolean byResign) {
