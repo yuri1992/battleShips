@@ -132,7 +132,7 @@ public class GameManager {
 
     public void endTurn() {
         if (this.currentTurn != null) {
-            this.currentTurn.setEndAt();
+            this.currentTurn.end();
             currentPlayer.endTurn();
         }
         this.currentTurn = null;

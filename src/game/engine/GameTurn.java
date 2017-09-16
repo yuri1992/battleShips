@@ -24,7 +24,7 @@ public class GameTurn {
         return endAt.getTime() - startAt.getTime();
     }
 
-    public void setEndAt() {
+    public void end() {
         this.endAt = new Date();
     }
 
