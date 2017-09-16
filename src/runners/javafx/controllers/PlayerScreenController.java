@@ -229,7 +229,6 @@ public class PlayerScreenController extends BaseController {
 
         if (game.isRunning()) {
             if (game.isGameOver()) {
-                // Todo: Show Winner Message
                 handleGameOver(false);
                 this.setVisibility(false);
             } else {
