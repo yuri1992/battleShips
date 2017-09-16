@@ -21,7 +21,7 @@ public class GameManager {
     private List<GameTurn> turnList;
     private GameTurn currentTurn;
 
-    private boolean isRunning;
+    private GameState state;
     private Player currentPlayer = null;
     private Player winner;
     private Date startTime = null;
@@ -35,6 +35,7 @@ public class GameManager {
         this.playerList = players;
         this.allowMines = allowMines;
         this.turnList = new ArrayList<>();
+        this.state = GameState.LOADED;
     }
 
     //region Setters / Getters
@@ -59,12 +60,8 @@ public class GameManager {
         return turnList;
     }
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    private void setRunning(boolean running) {
-        isRunning = running;
+    public GameState getState() {
+        return state;
     }
 
     private void setCurrentPlayer(Player currentPlayer) {
@@ -94,7 +91,7 @@ public class GameManager {
     //endregion
 
     public void startGame() {
-        this.isRunning = true;
+        this.state = GameState.IN_PROGRESS;
         this.startTime = new Date();
         this.setCurrentPlayer(playerList.get(0));
         startTurn();
@@ -107,7 +104,7 @@ public class GameManager {
 
     public void finishGame() {
         currentTurn = null;
-        this.isRunning = false;
+        this.state = GameState.REPLAY;
     }
 
     /*

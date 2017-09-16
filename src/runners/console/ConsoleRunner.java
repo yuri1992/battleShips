@@ -24,7 +24,7 @@ public class ConsoleRunner {
     public void start() {
         this.isGameRunning = true;
         while (this.isGameRunning) {
-            if (this.game != null && this.game.isRunning() && this.game.isGameOver()) {
+            if (this.game != null && game.getState() == GameState.IN_PROGRESS && this.game.isGameOver()) {
                 this.gameOver();
             } else {
                 this.printGameMenu();
@@ -74,7 +74,7 @@ public class ConsoleRunner {
     }
 
     private void loadGame() {
-        if (this.game != null && this.game.isRunning()) {
+        if (this.game != null && game.getState() == GameState.IN_PROGRESS) {
             System.out.println("Game is already running, we can't load xml settings during a game.");
             return;
         }
@@ -103,7 +103,7 @@ public class ConsoleRunner {
     }
 
     private void startGame() {
-        if (this.game != null && this.game.isRunning()) {
+        if (this.game != null && game.getState() == GameState.IN_PROGRESS) {
             System.out.println("Game already started, you can't start it again.");
             return;
         }
@@ -170,7 +170,7 @@ public class ConsoleRunner {
             System.out.println();
             return;
         }
-        if (!game.isRunning()) {
+        if (game.getState() != GameState.IN_PROGRESS) {
             System.out.println("Game is not running.");
             System.out.println();
             return;
@@ -268,7 +268,7 @@ public class ConsoleRunner {
 
     private void endGame() {
         this.isGameRunning = false;
-        if (this.game != null && this.game.isRunning())
+        if (this.game != null && game.getState() == GameState.IN_PROGRESS)
             this.game.finishGame();
         System.out.println("You decided to exited the game, hope to see you soon.");
     }

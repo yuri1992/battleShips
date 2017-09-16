@@ -2,6 +2,7 @@ package runners.javafx.controllers;
 
 import game.engine.GameManager;
 import game.engine.GameManagerFactory;
+import game.engine.GameState;
 import game.exceptions.GameSettingsInitializationException;
 import game.exceptions.InvalidFileFormatException;
 import javafx.event.EventHandler;
@@ -125,7 +126,7 @@ public class MainMenuController {
     }
 
     private boolean isGameInProgress() {
-        return (this.game != null && this.game.isRunning());
+        return (game != null && game.getState() == GameState.IN_PROGRESS);
     }
 
     private void closeProgram() {

@@ -1,6 +1,7 @@
 package runners.javafx.controllers;
 
 import game.engine.GameManager;
+import game.engine.GameState;
 import game.engine.GameTurn;
 import game.engine.HitType;
 import game.players.BoardType;
@@ -138,7 +139,7 @@ public class PlayerScreenController extends BaseController {
         this.attack_board.setVisible(visible);
         this.stat_score.setVisible(visible);
 
-        boolean isPreviewMode = (game != null && !game.isRunning());
+        boolean isPreviewMode = (game != null && game.getState() == GameState.REPLAY);
         navigatePrevTurn.setVisible(visible && isPreviewMode);
         navigateNextTurn.setVisible(visible && isPreviewMode);
     }
@@ -253,16 +254,20 @@ public class PlayerScreenController extends BaseController {
             return;
         }
 
-        if (game.isRunning()) {
-            if (game.isGameOver()) {
+        if (game.getState() == GameState.IN_PROGRESS && game.isGameOver()) {
                 handleGameOver(false);
-            } else {
-                this.player_name.setText(game.getCurrentPlayer().toString());
-                this.renderShipsBoard();
-                this.renderAttackBoard();
-                this.renderHistoryMoves();
+        } else if (game.getState() == GameState.IN_PROGRESS ||
+                game.getState() == GameState.REPLAY) {
+            this.player_name.setText(game.getCurrentPlayer().toString());
+            this.renderShipsBoard();
+            this.renderAttackBoard();
+            this.renderHistoryMoves();
+
+            if (game.getState() == GameState.IN_PROGRESS) {
                 this.renderStatistics();
                 this.renderMinesStack();
+            } else {
+                /// TODO: Amir: Calc statistics differenly
             }
         }
     }
