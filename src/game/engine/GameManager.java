@@ -5,6 +5,7 @@ import game.players.Player;
 import game.players.ships.Ship;
 import game.players.ships.ShipType;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,9 @@ public class GameManager {
     private int boardSize;
     private List<ShipType> shipTypes;
     private List<Player> playerList;
+    private List<GameTurn> turnList;
+    private GameTurn currentTurn;
+
     private boolean isRunning;
     private Player currentPlayer = null;
     private Player winner;
@@ -28,6 +32,7 @@ public class GameManager {
         this.shipTypes = shipTypes;
         this.playerList = players;
         this.allowMines = allowMines;
+        this.turnList = new ArrayList<>();
     }
 
     //region Setters / Getters
@@ -46,6 +51,10 @@ public class GameManager {
 
     public List<Player> getPlayerList() {
         return playerList;
+    }
+
+    public List<GameTurn> getTurnList() {
+        return turnList;
     }
 
     public boolean isRunning() {
@@ -82,7 +91,7 @@ public class GameManager {
         this.isRunning = true;
         this.startAt = new Date();
         this.setCurrentPlayer(playerList.get(0));
-        this.getCurrentPlayer().startTurn();
+        startTurn();
     }
 
     public void resignGame() {
@@ -113,15 +122,31 @@ public class GameManager {
         return false;
     }
 
+    public void startTurn() {
+        if (this.currentTurn == null) {
+            this.currentTurn = new GameTurn(getMovesCount() + 1, getCurrentPlayer());
+            turnList.add(this.currentTurn);
+            getCurrentPlayer().setCurrentTurn(this.currentTurn);
+        }
+    }
+
+    public void endTurn() {
+        if (this.currentTurn != null) {
+            this.currentTurn.setEndAt();
+            currentPlayer.endTurn();
+        }
+        this.currentTurn = null;
+    }
+
     private void switchTurns() {
-        this.getCurrentPlayer().endTurn();
+        endTurn();
         this.setCurrentPlayer(this.getNextPlayer());
-        this.getCurrentPlayer().startTurn();
+        startTurn();
     }
 
     private void prepareNextTurn() {
-        this.getCurrentPlayer().endTurn();
-        this.getCurrentPlayer().startTurn();
+        endTurn();
+        startTurn();
     }
 
     public Player getNextPlayer() {
@@ -177,10 +202,9 @@ public class GameManager {
     }
 
     public boolean placeMine(GridPoint gridPoint) {
-        if (this.currentPlayer.getShipsBoard().setMine(gridPoint)) {
-            GameTurn currentTurn = this.currentPlayer.getCurrentTurn();
-            currentTurn.setPoint(gridPoint);
-            currentTurn.setHitType(HitType.PLACE_MINE);
+        if (this.currentPlayer.getShipsBoard().setMine(gridPoint) && currentTurn != null) {
+            this.currentTurn.setPoint(gridPoint);
+            this.currentTurn.setHitType(HitType.PLACE_MINE);
             this.switchTurns();
             return true;
         }
@@ -191,4 +215,7 @@ public class GameManager {
         return new GameStatistics(this.startAt, this.playerList);
     }
 
+    public int getMovesCount() {
+        return getTurnList().size();
+    }
 }

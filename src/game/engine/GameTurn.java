@@ -1,18 +1,23 @@
 package game.engine;
 
 import game.players.GridPoint;
+import game.players.Player;
 import runners.console.ConsoleUtils;
 
 import java.util.Date;
 
 public class GameTurn {
+    private int index = 0;
+    private Player player = null;
     private Date startAt;
     private Date endAt = null;
     private HitType hitType = HitType.MISS;
     private GridPoint point;
 
-    public GameTurn() {
-        startAt = new Date();
+    public GameTurn(int index, Player player) {
+        this.index = index;
+        this.player = player;
+        this.startAt = new Date();
     }
 
     public long getTurnTime() {

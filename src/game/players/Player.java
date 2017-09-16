@@ -38,15 +38,8 @@ public class Player {
         currentTurn.setPoint(pt);
     }
 
-    public void startTurn() {
-        if (this.currentTurn == null) {
-            this.currentTurn = new GameTurn();
-        }
-    }
-
     public void endTurn() {
         if (this.currentTurn != null) {
-            this.currentTurn.setEndAt();
             this.turns.add(this.currentTurn);
         }
         this.currentTurn = null;
@@ -88,6 +81,10 @@ public class Player {
 
     public List<GameTurn> getTurns() {
         return turns;
+    }
+
+    public void setCurrentTurn(GameTurn currentTurn) {
+        this.currentTurn = currentTurn;
     }
 
     public GameTurn getCurrentTurn() {
