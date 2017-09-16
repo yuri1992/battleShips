@@ -5,7 +5,7 @@ public enum GridState {
     OCCUPIED("OCCUPIED");
 
     private final String text;
-    private GridState(final String text) {
+    GridState(final String text) {
         this.text = text;
     }
 

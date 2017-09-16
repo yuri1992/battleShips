@@ -9,7 +9,7 @@ public enum HitType {
 
     private final String text;
 
-    private HitType(final String text) {
+    HitType(final String text) {
         this.text = text;
     }
 

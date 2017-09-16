@@ -10,7 +10,7 @@ public enum BoardType {
 
     private final String text;
 
-    private BoardType(final String text) {
+    BoardType(final String text) {
         this.text = text;
     }
 

@@ -12,7 +12,7 @@ public enum ConsoleMenu {
 
     private final String text;
 
-    private ConsoleMenu(final String text) {
+    ConsoleMenu(final String text) {
         this.text = text;
     }
 
