@@ -66,10 +66,14 @@ public class PlayerScreenController extends BaseController {
     private Label player_name; // Value injected by FXMLLoader
 
     @FXML
-    private HBox mine_container;
+    private Button navigatePrevTurn;
 
     @FXML
-    private Label msg;
+    private Button navigateNextTurn;
+
+
+    @FXML
+    private HBox mine_container;
 
     @FXML
     private Menu menuFile;
@@ -104,6 +108,49 @@ public class PlayerScreenController extends BaseController {
 
 
     @FXML
+    void handleOnPlaceMine(ActionEvent event) {
+        for (Node child : this.ships_board.getChildren()) {
+            if (((Button) child).getText().equals("~"))
+                child.setDisable(false);
+        }
+        place_mine.setDisable(true);
+    }
+
+    public void init(Stage window) {
+        this.window = window;
+        this.menuController = new MainMenuController(window);
+    }
+
+    //region Setters / Getters
+
+    public void setGame(GameManager game) {
+        this.game = game;
+        enableGameRelatedMenuItems(game != null);
+        setVisibility(false);
+    }
+
+    //endregion
+
+    public void setVisibility(boolean visible) {
+        this.list_moves.setVisible(visible);
+        this.stats_container.setVisible(visible);
+        this.ships_board.setVisible(visible);
+        this.attack_board.setVisible(visible);
+        this.stat_score.setVisible(visible);
+
+        boolean isPreviewMode = (game != null && !game.isRunning());
+        navigatePrevTurn.setVisible(visible && isPreviewMode);
+        navigateNextTurn.setVisible(visible && isPreviewMode);
+    }
+
+    private void enableGameRelatedMenuItems(boolean isEnabled) {
+        menuFile_StartGame.setDisable(!isEnabled || game == null);
+        menuFile_ResignGame.setDisable(!isEnabled || game == null);
+    }
+
+    //region Handle User Events
+
+    @FXML
     private void handleFileMenuItemPressed(ActionEvent event) {
         if (event.getSource() == menuFile_StartGame) {
             menuController.handleStartGameButtonPressed();
@@ -131,43 +178,16 @@ public class PlayerScreenController extends BaseController {
 
     @FXML
     private void handleHelpMenuItemPressed(ActionEvent event) {
-        menuController.handleAboutButtonPressed();
+        if (event.getSource() == menuHelp_About) {
+            menuController.handleAboutButtonPressed();
+        }
     }
 
     @FXML
-    void handleOnPlaceMine(ActionEvent event) {
-        for (Node child : this.ships_board.getChildren()) {
-            if (((Button) child).getText().equals("~"))
-                child.setDisable(false);
-        }
-        place_mine.setDisable(true);
-    }
-
-    public void init(Stage window) {
-        this.window = window;
-        this.menuController = new MainMenuController(window);
-    }
-
-    //region Setters / Getters
-
-    public void setGame(GameManager game) {
-        this.game = game;
-        enableGameRelatedMenuItems(game != null);
+    private void handlePreviewNavigationPressed(ActionEvent event) {
     }
 
     //endregion
-
-    public void setVisibility(boolean visible) {
-        this.list_moves.setVisible(visible);
-        this.stats_container.setVisible(visible);
-        this.ships_board.setVisible(visible);
-        this.attack_board.setVisible(visible);
-    }
-
-    private void enableGameRelatedMenuItems(boolean isEnabled) {
-        menuFile_StartGame.setDisable(!isEnabled || game == null);
-        menuFile_ResignGame.setDisable(!isEnabled || game == null);
-    }
 
     //region Alert Messages
 
@@ -424,5 +444,6 @@ public class PlayerScreenController extends BaseController {
         AlertBoxController.displayAlert("Game Over!", reason + winner + scores.toString() + congrats);
 
         enableGameRelatedMenuItems(false);
+        setVisibility(true); // start preview mode
     }
 }
