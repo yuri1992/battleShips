@@ -14,7 +14,6 @@ public class Player {
     private int score = 0;
 
     private List<Ship> ships;
-    private GameTurn currentTurn;
 
     private AttackBoard attackBoard;
     private ShipsBoard shipsBoard;
@@ -29,15 +28,9 @@ public class Player {
     /*
         Marking @pt as been attacked by the player.
      */
-    public void logAttack(GridPoint pt, HitType hitType) {
+    public void markAttack(GridPoint pt, HitType hitType) {
         // Todo: Figure out if hitting a mine is equaling to hitting a ship
         attackBoard.setShoot(pt, hitType == HitType.HIT || hitType == HitType.HIT_MINE);
-        currentTurn.setHitType(hitType);
-        currentTurn.setPoint(pt);
-    }
-
-    public void endTurn() {
-        this.currentTurn = null;
     }
 
     /*
@@ -68,10 +61,6 @@ public class Player {
 
     public List<Ship> getShips() {
         return ships;
-    }
-
-    public void setCurrentTurn(GameTurn currentTurn) {
-        this.currentTurn = currentTurn;
     }
 
     public AttackBoard getAttackBoard() {

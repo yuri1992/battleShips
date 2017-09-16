@@ -129,19 +129,24 @@ public class GameManager {
     }
 
     public void startTurn() {
-        if (this.currentTurn == null) {
-            this.currentTurn = new GameTurn(getMovesCount() + 1, getCurrentPlayer());
-            turnList.add(this.currentTurn);
-            getCurrentPlayer().setCurrentTurn(this.currentTurn);
+        if (currentTurn == null) {
+            currentTurn = new GameTurn(getMovesCount() + 1, getCurrentPlayer());
         }
     }
 
+    private void updateTurnResults(GridPoint pt, HitType hitType) {
+        // Todo: Figure out if hitting a mine is equaling to hitting a ship
+        currentTurn.setHitType(hitType);
+        currentTurn.setPoint(pt);
+        getCurrentPlayer().markAttack(pt, hitType);
+    }
+
     public void endTurn() {
-        if (this.currentTurn != null) {
-            this.currentTurn.end();
-            currentPlayer.endTurn();
+        if (currentTurn != null) {
+            currentTurn.end();
+            turnList.add(currentTurn);
         }
-        this.currentTurn = null;
+        currentTurn = null;
     }
 
     private void switchTurns() {
@@ -165,10 +170,10 @@ public class GameManager {
         otherwise will switch the turn.
     */
     public HitType playAttack(GridPoint pt) {
-        Player currentPlayer = this.getCurrentPlayer();
+        Player currPlayer = this.getCurrentPlayer();
         Player nextPlayer = this.getNextPlayer();
 
-        if (currentPlayer.getAttackBoard().isAttacked(pt))
+        if (currPlayer.getAttackBoard().isAttacked(pt))
             return HitType.NOT_EMPTY;
 
         // Did player hit a ship
@@ -176,7 +181,7 @@ public class GameManager {
 
 
         if (hitType == HitType.MISS) {
-            currentPlayer.logAttack(pt, hitType);
+            updateTurnResults(pt, hitType);
             this.switchTurns();
             return hitType;
         }
@@ -185,16 +190,16 @@ public class GameManager {
         Player player = null;
 
         if (hitType == HitType.HIT) {
-            player = currentPlayer;
+            player = currPlayer;
             s = nextPlayer.getShipsBoard().getShipByPoint(pt);
-            currentPlayer.logAttack(pt, hitType);
+            updateTurnResults(pt, hitType);
             this.prepareNextTurn();
         } else {
             player = nextPlayer;
-            s = currentPlayer.getShipsBoard().getShipByPoint(pt);
+            s = currPlayer.getShipsBoard().getShipByPoint(pt);
 
             // Marking attack of the mine
-            currentPlayer.logAttack(pt, hitType);
+            updateTurnResults(pt, hitType);
             // Marking attack of the mine
             nextPlayer.getAttackBoard().setShoot(pt, s != null);
             this.switchTurns();
