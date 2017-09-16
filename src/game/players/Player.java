@@ -71,7 +71,6 @@ public class Player {
         return shipsBoard;
     }
 
-
     //endregion
 
 }

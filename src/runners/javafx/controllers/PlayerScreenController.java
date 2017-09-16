@@ -250,7 +250,6 @@ public class PlayerScreenController extends BaseController {
         if (game.isRunning()) {
             if (game.isGameOver()) {
                 handleGameOver(false);
-                this.setVisibility(false);
             } else {
                 this.player_name.setText(game.getCurrentPlayer().toString());
                 this.renderShipsBoard();
@@ -260,7 +259,6 @@ public class PlayerScreenController extends BaseController {
                 this.renderMinesStack();
             }
         }
-
     }
 
     private void renderShipsBoard() {

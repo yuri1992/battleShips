@@ -132,7 +132,7 @@ public class MainMenuController {
         boolean res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to exit the " +
                 "program?");
         if (res) {
-            if (this.game != null && this.game.isRunning())
+            if (this.game != null)
                 this.game.finishGame();
 
             window.close();

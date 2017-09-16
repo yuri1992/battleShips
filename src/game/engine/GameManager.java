@@ -101,11 +101,12 @@ public class GameManager {
     }
 
     public void resignGame() {
-        this.isRunning = false;
-        this.setWinner(this.getNextPlayer());
+        setWinner(this.getNextPlayer());
+        finishGame();
     }
 
     public void finishGame() {
+        currentTurn = null;
         this.isRunning = false;
     }
 
@@ -116,11 +117,11 @@ public class GameManager {
         for (Player p : playerList) {
             if (p.isLost()) {
                 if (p != getCurrentPlayer()) {
-                    this.setWinner(getCurrentPlayer());
+                    setWinner(getCurrentPlayer());
                 } else {
-                    this.setWinner(getNextPlayer());
+                    setWinner(getNextPlayer());
                 }
-                setRunning(false);
+                finishGame();
                 return true;
             }
 
