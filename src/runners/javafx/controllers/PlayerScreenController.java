@@ -419,7 +419,6 @@ public class PlayerScreenController extends BaseController {
                 "The Winner is " + this.game.getWinner() + "!\n" +
                 "Congratulations!!");
 
-        this.menuFile_StartGame.setDisable(true);
-        this.menuFile_ResignGame.setDisable(true);
+        enableGameRelatedMenuItems(false);
     }
 }
