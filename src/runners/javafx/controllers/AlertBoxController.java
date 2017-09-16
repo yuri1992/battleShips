@@ -59,7 +59,6 @@ public class AlertBoxController implements Initializable {
         } catch (IOException e) {
             System.out.println(e);
         }
-
     }
 
     @Override

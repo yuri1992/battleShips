@@ -5,6 +5,7 @@ import game.engine.GameTurn;
 import game.engine.HitType;
 import game.players.BoardType;
 import game.players.GridPoint;
+import game.players.Player;
 import game.players.PlayerStatistics;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -414,10 +415,13 @@ public class PlayerScreenController extends BaseController {
     private void handleGameOver(boolean byResign) {
 
         String reason = (byResign ? this.game.getCurrentPlayer() + " resigned from the game.\n" : "");
-
-        AlertBoxController.displayAlert("Game Over!", reason +
-                "The Winner is " + this.game.getWinner() + "!\n" +
-                "Congratulations!!");
+        String winner = "The Winner is " + this.game.getWinner() + "!\n";
+        StringBuilder scores = new StringBuilder();
+        for (Player p : this.game.getPlayerList()) {
+            scores.append(p.toString() + ":     " + p.getScore() + " points\n");
+        }
+        String congrats = "Congratulations!!";
+        AlertBoxController.displayAlert("Game Over!", reason + winner + scores.toString() + congrats);
 
         enableGameRelatedMenuItems(false);
     }
