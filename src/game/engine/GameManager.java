@@ -2,12 +2,14 @@ package game.engine;
 
 import game.players.GridPoint;
 import game.players.Player;
+import game.players.PlayerStatistics;
 import game.players.ships.Ship;
 import game.players.ships.ShipType;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class GameManager {
@@ -22,7 +24,7 @@ public class GameManager {
     private boolean isRunning;
     private Player currentPlayer = null;
     private Player winner;
-    private Date startAt = null;
+    private Date startTime = null;
     private boolean allowMines = false;
 
     public GameManager(GameMode mode, int boardSize, List<ShipType> shipTypes, List<Player> players, boolean
@@ -81,6 +83,10 @@ public class GameManager {
         return winner;
     }
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
     public boolean isAllowMines() {
         return allowMines;
     }
@@ -89,7 +95,7 @@ public class GameManager {
 
     public void startGame() {
         this.isRunning = true;
-        this.startAt = new Date();
+        this.startTime = new Date();
         this.setCurrentPlayer(playerList.get(0));
         startTurn();
     }
@@ -211,11 +217,20 @@ public class GameManager {
         return false;
     }
 
-    public GameStatistics getStatistics() {
-        return new GameStatistics(this.startAt, this.playerList);
+    public GameStatistics getGameStatistics() {
+        return new GameStatistics(this);
+    }
+
+    public PlayerStatistics getPlayerStatistics(Player player) {
+        return new PlayerStatistics(player, getPlayerMoves(player));
     }
 
     public int getMovesCount() {
         return getTurnList().size();
     }
+
+    public List<GameTurn> getPlayerMoves(Player player) {
+        return getTurnList().stream().filter(t -> player.equals(t.getPlayer())).collect(Collectors.toList());
+    }
+
 }

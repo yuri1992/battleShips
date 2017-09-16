@@ -17,41 +17,26 @@ import java.util.List;
  */
 public class GameStatistics {
     private int turns;
-    private Date startAt;
+    private Date startTime;
     private List<PlayerStatistics> playerStatistics;
 
 
-    public GameStatistics(Date startAt, List<Player> playerList) {
-        this.startAt = startAt;
-        this.setPlayerStatistics(playerList);
-        this.setTurns(this.playerStatistics.get(0).getTurns() + this.playerStatistics.get(1).getTurns());
+    public GameStatistics(GameManager game) {
+        startTime = game.getStartTime();
+        turns = (int)game.getTurnList().stream().filter(t -> t.isOver()).count();
+
+        playerStatistics = new ArrayList<>();
+        game.getPlayerList().forEach(player -> {
+            this.playerStatistics.add(new PlayerStatistics(player, game.getPlayerMoves(player)));
+        });
     }
 
     public long getTotalTime() {
-        return this.startAt == null ? 0 : new Date().getTime() - this.startAt.getTime();
+        return startTime == null ? 0 : new Date().getTime() - startTime.getTime();
     }
 
     public int getTurns() {
         return turns;
-    }
-
-    public void setTurns(int turns) {
-        this.turns = turns;
-    }
-
-    public Date getStartAt() {
-        return startAt;
-    }
-
-    public void setStartAt(Date startAt) {
-        this.startAt = startAt;
-    }
-
-    public void setPlayerStatistics(List<Player> playerList) {
-        playerStatistics = new ArrayList<>();
-        playerList.forEach(player -> {
-            this.playerStatistics.add(player.getStatistics());
-        });
     }
 
     public List<PlayerStatistics> getPlayerStatistics() {

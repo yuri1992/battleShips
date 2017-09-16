@@ -2,6 +2,8 @@ package game.players;
 
 import game.engine.GameTurn;
 
+import java.util.List;
+
 /*
         - How many hits
         - How many misses.
@@ -15,15 +17,15 @@ public class PlayerStatistics {
     private int turns;
     private long avgTurnTime;
 
-    public PlayerStatistics(Player player) {
+    public PlayerStatistics(Player player, List<GameTurn> moves) {
         name = player.toString();
         score = player.getScore();
-        turns = player.getTurns().size();
+        turns = moves.size();
         avgTurnTime = 0;
         misses = 0;
         hits = 0;
 
-        for (GameTurn gameTurn : player.getTurns()) {
+        for (GameTurn gameTurn : moves) {
             avgTurnTime += gameTurn.getTurnTime();
             if (gameTurn.isHitType()) {
                 hits++;

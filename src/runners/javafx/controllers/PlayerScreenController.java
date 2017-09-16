@@ -365,13 +365,13 @@ public class PlayerScreenController extends BaseController {
 
     private void renderHistoryMoves() {
         this.list_moves.getItems().clear();
-        for (GameTurn turn : game.getCurrentPlayer().getTurns()) {
+        for (GameTurn turn : game.getPlayerMoves(game.getCurrentPlayer())) {
             this.list_moves.getItems().add(turn.toString());
         }
     }
 
     private void renderStatistics() {
-        PlayerStatistics p = game.getCurrentPlayer().getStatistics();
+        PlayerStatistics p = game.getPlayerStatistics(game.getCurrentPlayer());
         stat_score.setText("Score: " + String.valueOf(p.getScore()));
         stat_turns.setText(String.valueOf(p.getTurns()));
         stat_turns.setEditable(false);

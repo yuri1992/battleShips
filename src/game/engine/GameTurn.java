@@ -21,6 +21,8 @@ public class GameTurn {
     }
 
     public long getTurnTime() {
+        if (endAt == null)
+            return 0;
         return endAt.getTime() - startAt.getTime();
     }
 
@@ -32,6 +34,20 @@ public class GameTurn {
         return hitType == HitType.HIT;
     }
 
+    public boolean isOver() {
+        return (endAt != null);
+    }
+
+    //region Setters / Getters
+
+    public int getIndex() {
+        return index;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     public void setHitType(HitType hitType) {
         this.hitType = hitType;
     }
@@ -39,6 +55,8 @@ public class GameTurn {
     public void setPoint(GridPoint point) {
         this.point = point;
     }
+
+    //endregion
 
     public String toString() {
         if (point == null)

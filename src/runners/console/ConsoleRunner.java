@@ -200,7 +200,7 @@ public class ConsoleRunner {
             System.out.println();
             return;
         }
-        GameStatistics statistics = this.game.getStatistics();
+        GameStatistics statistics = this.game.getGameStatistics();
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("Total Turns Played " + statistics.getTurns());

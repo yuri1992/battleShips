@@ -14,7 +14,6 @@ public class Player {
     private int score = 0;
 
     private List<Ship> ships;
-    private List<GameTurn> turns;
     private GameTurn currentTurn;
 
     private AttackBoard attackBoard;
@@ -25,7 +24,6 @@ public class Player {
         this.ships = ships;
         shipsBoard = new ShipsBoard(ships, boardSize + 1, mine);
         attackBoard = new AttackBoard(boardSize + 1);
-        turns = new ArrayList<>();
     }
 
     /*
@@ -39,9 +37,6 @@ public class Player {
     }
 
     public void endTurn() {
-        if (this.currentTurn != null) {
-            this.turns.add(this.currentTurn);
-        }
         this.currentTurn = null;
     }
 
@@ -55,10 +50,6 @@ public class Player {
     @Override
     public String toString() {
         return "Player " + playerId;
-    }
-
-    public PlayerStatistics getStatistics() {
-        return new PlayerStatistics(this);
     }
 
     public void updateScore(int points) {
@@ -79,16 +70,8 @@ public class Player {
         return ships;
     }
 
-    public List<GameTurn> getTurns() {
-        return turns;
-    }
-
     public void setCurrentTurn(GameTurn currentTurn) {
         this.currentTurn = currentTurn;
-    }
-
-    public GameTurn getCurrentTurn() {
-        return currentTurn;
     }
 
     public AttackBoard getAttackBoard() {
