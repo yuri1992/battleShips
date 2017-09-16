@@ -78,7 +78,7 @@ public class GameManager {
 
     //endregion
 
-    public void start() {
+    public void startGame() {
         this.isRunning = true;
         this.startAt = new Date();
         this.setCurrentPlayer(playerList.get(0));

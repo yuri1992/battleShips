@@ -64,7 +64,7 @@ public class MainMenuController {
             return;
         }
 
-        this.game.start();
+        this.game.startGame();
     }
 
     public boolean handleResignGamePressed() {

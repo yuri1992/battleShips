@@ -113,7 +113,7 @@ public class ConsoleRunner {
             return;
         }
 
-        this.game.start();
+        this.game.startGame();
         this.showGameStatus();
 
     }
