@@ -173,4 +173,13 @@ public class ShipsBoard implements Board {
         map.put(gridPoint, mine);
         return true;
     }
+
+    public List<Ship> getRemainShips() {
+        List<Ship> remain = new ArrayList<>();
+        for (Ship ship : ships) {
+            if (!ship.isDrowned())
+                remain.add(ship);
+        }
+        return remain;
+    }
 }
