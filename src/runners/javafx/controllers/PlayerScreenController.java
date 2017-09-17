@@ -316,20 +316,21 @@ public class PlayerScreenController extends BaseController {
             this.renderShipsBoard(null);
             this.renderAttackBoard(null);
             this.renderStatistics();
-            this.renderHistoryMoves();
+            this.renderHistoryMoves(null);
             this.renderMinesStack();
             this.renderRemainShips();
         } else if (game.getState() == GameState.REPLAY) {
             // It is possible that navigation get rto point where current player is null
             if (game.getCurrentPlayer() != null) {
-                this.player_name.setText(game.getCurrentPlayer().toString());
                 GridPoint pt = (game.getCurrentTurn() != null ? game.getCurrentTurn().getPoint() : null);
                 GridPoint hitMine = (game.getCurrentTurn() != null && game.getCurrentTurn().getHitType() == HitType
                         .HIT_MINE ? pt : null);
+                GameTurn turn = game.getCurrentTurn() != null ? game.getCurrentTurn() : null;
+                this.player_name.setText(game.getCurrentPlayer().toString());
                 this.renderShipsBoard(hitMine);
                 this.renderAttackBoard(pt);
-                this.renderStatistics();
-                this.renderHistoryMoves();
+                this.renderStatistics(turn);
+                this.renderHistoryMoves(turn);
                 this.renderRemainShips();
             }
         }
@@ -463,9 +464,9 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
-    private void renderHistoryMoves() {
+    private void renderHistoryMoves(GameTurn untilTurn) {
         this.list_moves.getItems().clear();
-        for (GameTurn turn : game.getPlayerMoves(game.getCurrentPlayer())) {
+        for (GameTurn turn : game.getPlayerMoves(game.getCurrentPlayer(), untilTurn)) {
             this.list_moves.getItems().add(turn.toString());
         }
     }
@@ -493,7 +494,20 @@ public class PlayerScreenController extends BaseController {
     }
 
     private void renderStatistics() {
-        PlayerStatistics p = game.getPlayerStatistics(game.getCurrentPlayer());
+        PlayerStatistics p = game.getPlayerStatistics(game.getCurrentPlayer(), null);
+        displayStatisticsField(p);
+
+        stats_total_turn.setText("Playing Turn No: " + (game.getMovesCount() + 1));
+    }
+
+    private void renderStatistics(GameTurn untilTurn) {
+        PlayerStatistics p = game.getPlayerStatistics(game.getCurrentPlayer(), untilTurn);
+        displayStatisticsField(p);
+
+        stats_total_turn.setText("Playing Turn No: " + untilTurn.getIndex());
+    }
+
+    private void displayStatisticsField(PlayerStatistics p) {
         stat_score.setText("Score: " + String.valueOf(p.getScore()));
         stat_score_opp.setText("Opponent Score: " + game.getNextPlayer().getScore());
         stat_turns.setText(String.valueOf(p.getTurns()));
@@ -504,8 +518,6 @@ public class PlayerScreenController extends BaseController {
         stat_miss.setEditable(false);
         stat_time.setText(ConsoleUtils.formatDateHM(p.getAvgTurnTime()));
         stat_time.setEditable(false);
-
-        stats_total_turn.setText("Playing Turn No: " + (game.getMovesCount() + 1));
     }
 
     private void renderMinesStack() {
