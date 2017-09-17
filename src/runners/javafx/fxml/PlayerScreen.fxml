@@ -31,11 +31,6 @@
                     <MenuItem fx:id="menuFile_Quit" mnemonicParsing="false" onAction="#handleFileMenuItemPressed" text="Exit" />
                 </items>
             </Menu>
-            <Menu fx:id="menuGame" mnemonicParsing="false" text="Game">
-                <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleGameMenuItemPressed" text="Show stats..." />
-                </items>
-            </Menu>
             <Menu fx:id="menuHelp" mnemonicParsing="false" text="Style">
                 <items>
                   <MenuItem fx:id="theme_regular" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="Regular" />
