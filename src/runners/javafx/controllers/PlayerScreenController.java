@@ -170,11 +170,18 @@ public class PlayerScreenController extends BaseController {
         boolean isPreviewMode = (game != null && game.getState() == GameState.REPLAY);
         navigatePrevTurn.setVisible(visible && isPreviewMode);
         navigateNextTurn.setVisible(visible && isPreviewMode);
+        enableReplayRelatedMenuItems();
     }
 
     private void enableGameRelatedMenuItems(boolean isEnabled) {
         menuFile_StartGame.setDisable(!isEnabled || game == null);
         menuFile_ResignGame.setDisable(!isEnabled || game == null);
+    }
+
+    private void enableReplayRelatedMenuItems() {
+        if (game == null) return;
+        navigatePrevTurn.setDisable(!game.isUndoTurnAvailable());
+        navigateNextTurn.setDisable(!game.isRedoTurnAvailable());
     }
 
     //region Handle User Events
@@ -238,6 +245,7 @@ public class PlayerScreenController extends BaseController {
             game.redoTurn();
             render();
         }
+        enableReplayRelatedMenuItems();
     }
 
     //endregion
