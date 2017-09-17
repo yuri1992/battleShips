@@ -222,6 +222,14 @@ public class GameManager {
         return false;
     }
 
+    public boolean isUndoTurnAvailable() {
+        return (state == GameState.REPLAY && replayCurrentDisplayIndex > 0);
+    }
+
+    public boolean isRedoTurnAvailable() {
+        return (state == GameState.REPLAY && replayCurrentDisplayIndex <= getMovesCount());
+    }
+
     public boolean undoTurn() {
         if (state == GameState.REPLAY) {
             if (currentTurn == null) {
