@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: runners.console.Main
+Main-Class: runners.javafx.Main
 
