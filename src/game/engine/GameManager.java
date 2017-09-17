@@ -336,13 +336,13 @@ public class GameManager {
                 nextPlayer.getAttackBoard().setShoot(pt, hitShip != null);
             }
 
-            if (hitShip != null && hitShip.isDrowned()) {
-                addScoreToPlayer.updateScore(+hitShip.getPoints());
-            }
-
-            // un-hit and un-mark
+            // re-hit and re-mark
             nextPlayer.getShipsBoard().hit(pt);
             currPlayer.markAttack(pt, hitType);
+
+            if (hitShip != null && hitShip.isDrowned()) {
+                addScoreToPlayer.updateScore(hitShip.getPoints());
+            }
             return true;
         }
 
