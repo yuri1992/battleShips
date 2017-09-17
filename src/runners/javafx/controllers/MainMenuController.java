@@ -120,8 +120,7 @@ public class MainMenuController {
             AlertBoxController.displayAlert("Could not load file", "File must be a valid XML format.");
 
         } catch (JAXBException | GameSettingsInitializationException e) {
-            AlertBoxController.displayAlert("Could not load file", "XML file is not valid, please make sure your xml" +
-                    " file meet the xsd file.");
+            AlertBoxController.displayAlert("Could not load file", "XML file is not valid: " + e.toString());
         }
     }
 
