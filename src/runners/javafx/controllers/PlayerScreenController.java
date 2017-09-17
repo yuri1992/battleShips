@@ -7,6 +7,7 @@ import game.players.BoardType;
 import game.players.GridPoint;
 import game.players.Player;
 import game.players.PlayerStatistics;
+import game.players.ships.Ship;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,10 +20,14 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import runners.console.ConsoleUtils;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PlayerScreenController extends BaseController {
@@ -71,6 +76,8 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private Button navigateNextTurn;
 
+    @FXML
+    private VBox remain_container;
 
     @FXML
     private HBox mine_container;
@@ -101,6 +108,12 @@ public class PlayerScreenController extends BaseController {
 
     @FXML
     private MenuItem menuHelp_About;
+
+    @FXML
+    private Label stat_score_opp;
+
+    @FXML
+    private Label stats_total_turn;
 
     private MainMenuController menuController;
     private Stage window;
@@ -262,6 +275,7 @@ public class PlayerScreenController extends BaseController {
                 this.renderHistoryMoves();
                 this.renderStatistics();
                 this.renderMinesStack();
+                this.renderRemainShips();
             }
         }
     }
@@ -393,9 +407,32 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
+    private void renderRemainShips() {
+        List<Ship> ships = this.game.getNextPlayer().getShipsBoard().getRemainShips();
+        this.remain_container.getChildren().clear();
+        HashMap<String, Integer> counter = new HashMap<String, Integer>();
+
+        for (Ship ship : ships) {
+            Integer count = counter.get(ship.getShipType());
+            if (count == null) {
+                count = 0;
+            }
+            count++;
+            counter.put(ship.getShipType(), count);
+        }
+
+        for (Map.Entry<String, Integer> entry : counter.entrySet()) {
+            Label text = new Label();
+            text.setText(entry.getKey() + " remains " + entry.getValue() + " ships");
+            text.getStyleClass().add("text-remaining");
+            remain_container.getChildren().add(text);
+        }
+    }
+
     private void renderStatistics() {
         PlayerStatistics p = game.getPlayerStatistics(game.getCurrentPlayer());
         stat_score.setText("Score: " + String.valueOf(p.getScore()));
+        stat_score_opp.setText("Opponent Score: " + game.getNextPlayer().getScore());
         stat_turns.setText(String.valueOf(p.getTurns()));
         stat_turns.setEditable(false);
         stat_hits.setText(String.valueOf(p.getHits()));
@@ -404,35 +441,42 @@ public class PlayerScreenController extends BaseController {
         stat_miss.setEditable(false);
         stat_time.setText(ConsoleUtils.formatDateHM(p.getAvgTurnTime()));
         stat_time.setEditable(false);
+
+        stats_total_turn.setText("Playing Turn No: " + (game.getMovesCount() + 1));
     }
 
     private void renderMinesStack() {
         int mines = this.game.getCurrentPlayer().getShipsBoard().getAvailableMines();
         mine_container.getChildren().clear();
-        for (int i = 0; i < mines; i++) {
-            Button mine = new Button();
-            mine.minWidth(15);
-            mine.minHeight(15);
-            mine.setText(" ");
-            mine.getStyleClass().add("mine");
+        if (mines == 0) {
+            Label text = new Label();
+            text.setText("No Mine Available");
+            mine_container.getChildren().add(text);
+        } else {
+            for (int i = 0; i < mines; i++) {
+                Button mine = new Button();
+                mine.minWidth(15);
+                mine.minHeight(15);
+                mine.setText(" ");
+                mine.getStyleClass().add("mine");
 
-            mine.setOnDragDetected((event -> {
-                Dragboard db = mine.startDragAndDrop(TransferMode.ANY);
-                WritableImage snapshot = mine.snapshot(new SnapshotParameters(), null);
-                ClipboardContent content = new ClipboardContent();
-                content.putString("");
-                db.setContent(content);
-                db.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
-                event.consume();
-            }));
+                mine.setOnDragDetected((event -> {
+                    Dragboard db = mine.startDragAndDrop(TransferMode.ANY);
+                    WritableImage snapshot = mine.snapshot(new SnapshotParameters(), null);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString("");
+                    db.setContent(content);
+                    db.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
+                    event.consume();
+                }));
 
-            mine.setOnDragDone((event -> {
-                event.acceptTransferModes(TransferMode.ANY);
-                event.consume();
-            }));
-            mine_container.getChildren().add(mine);
+                mine.setOnDragDone((event -> {
+                    event.acceptTransferModes(TransferMode.ANY);
+                    event.consume();
+                }));
+                mine_container.getChildren().add(mine);
+            }
         }
-
     }
 
     private void handleGameOver(boolean byResign) {
