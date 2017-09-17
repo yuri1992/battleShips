@@ -230,10 +230,10 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private void handlePreviewNavigationPressed(ActionEvent event) {
         if (event.getSource() == navigatePrevTurn) {
-            game.undoTurn(true);
+            game.undoTurn();
             render();
         } else if (event.getSource() == navigateNextTurn) {
-            game.redoTurn(true);
+            game.redoTurn();
         }
     }
 

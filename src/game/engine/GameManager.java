@@ -20,6 +20,7 @@ public class GameManager {
     private List<Player> playerList;
     private List<GameTurn> turnList;
     private GameTurn currentTurn;
+    private int replayCurrentDisplayIndex = 0; // holds the number of the displayed turn during replay
 
     private GameState state;
     private Player currentPlayer = null;
@@ -104,7 +105,8 @@ public class GameManager {
 
     public void finishGame() {
         currentTurn = null;
-        this.state = GameState.REPLAY;
+        state = GameState.REPLAY;
+        replayCurrentDisplayIndex = getMovesCount() + 1; // mark display as after last turn
     }
 
     /*
@@ -220,9 +222,16 @@ public class GameManager {
         return false;
     }
 
-    public boolean undoTurn(boolean isReplayMode) {
-        if (isReplayMode) {
-            if (currentTurn != null) { // reverse last move if set
+    public boolean undoTurn() {
+        if (state == GameState.REPLAY) {
+            if (currentTurn == null) {
+
+                if (replayCurrentDisplayIndex == 0)
+                    return false; // no more moves to go back
+                else
+                    replayCurrentDisplayIndex--; // this is first prev move
+
+            } else { // reverse last move if set
                 // unlog hits
                 Player currPlayer = getCurrentPlayer();
                 Player nextPlayer = getNextPlayer();
@@ -252,11 +261,12 @@ public class GameManager {
                 // un-hit and un-mark
                 nextPlayer.getShipsBoard().unHit(pt);
                 currPlayer.unmarkAttack(pt);
+                replayCurrentDisplayIndex--;
             }
 
-            int prevIndex = (currentTurn == null ? getMovesCount() - 1 : currentTurn.getIndex() - 2);
-            if (prevIndex >= 0) {
-                currentTurn = getTurnList().get(prevIndex);
+            if (replayCurrentDisplayIndex > 0) {
+                currentTurn = getTurnList().stream().filter(t -> t.getIndex() == replayCurrentDisplayIndex).collect
+                        (Collectors.toList()).get(0);
                 currentPlayer = currentTurn.getPlayer();
             } else {
                 currentTurn = null;
@@ -270,9 +280,9 @@ public class GameManager {
         return false;
     }
 
-    public boolean redoTurn(boolean isReplayMode) {
+    public boolean redoTurn() {
         System.out.println("redo??");
-        if (!isReplayMode) {
+        if (state != GameState.REPLAY) {
             System.out.println("redo not supported in real game");
             return false;
         }
