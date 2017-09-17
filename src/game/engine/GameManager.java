@@ -201,9 +201,11 @@ public class GameManager {
         } else {
             player = nextPlayer;
             s = currPlayer.getShipsBoard().getShipByPoint(pt);
+            currPlayer.getShipsBoard().hit(pt);
 
             // Marking attack of the mine
             updateTurnResults(pt, hitType);
+
             // Marking attack of the mine
             nextPlayer.getAttackBoard().setShoot(pt, s != null);
             this.switchTurns();
