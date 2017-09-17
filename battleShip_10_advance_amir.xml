@@ -17,7 +17,7 @@
         </shipType>
     </shipTypes>
     <mine>
-        <amount>0</amount>
+        <amount>5</amount>
     </mine>
     <boards>
         <board>

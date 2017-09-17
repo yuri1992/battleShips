@@ -166,6 +166,7 @@ public class PlayerScreenController extends BaseController {
         this.ships_board.setVisible(visible);
         this.attack_board.setVisible(visible);
         this.stat_score.setVisible(visible);
+        this.mine_container.setVisible(visible);
 
         boolean isPreviewMode = (game != null && game.getState() == GameState.REPLAY);
         navigatePrevTurn.setVisible(visible && isPreviewMode);
@@ -312,6 +313,7 @@ public class PlayerScreenController extends BaseController {
             if (game.isGameOver())
                 handleGameOver(false);
 
+            this.mine_container.setVisible(true);
             this.player_name.setText(game.getCurrentPlayer().toString());
             this.renderShipsBoard(null);
             this.renderAttackBoard(null);
@@ -332,6 +334,7 @@ public class PlayerScreenController extends BaseController {
                 this.renderStatistics(turn);
                 this.renderHistoryMoves(turn);
                 this.renderRemainShips();
+                this.mine_container.setVisible(false);
             }
         }
     }
