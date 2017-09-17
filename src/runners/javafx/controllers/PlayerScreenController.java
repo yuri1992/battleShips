@@ -234,6 +234,7 @@ public class PlayerScreenController extends BaseController {
             render();
         } else if (event.getSource() == navigateNextTurn) {
             game.redoTurn();
+            render();
         }
     }
 
@@ -299,19 +300,23 @@ public class PlayerScreenController extends BaseController {
 
         if (game.getState() == GameState.IN_PROGRESS && game.isGameOver()) {
             handleGameOver(false);
-        } else if (game.getState() == GameState.IN_PROGRESS ||
-                game.getState() == GameState.REPLAY) {
+        } else if (game.getState() == GameState.IN_PROGRESS) {
             this.player_name.setText(game.getCurrentPlayer().toString());
             this.renderShipsBoard();
             this.renderAttackBoard();
+            this.renderStatistics();
             this.renderHistoryMoves();
-
-            if (game.getState() == GameState.IN_PROGRESS) {
+            this.renderMinesStack();
+            this.renderRemainShips();
+        } else if (game.getState() == GameState.REPLAY) {
+            // It is possible that navigation get rto point where current player is null
+            if (game.getCurrentPlayer() != null) {
+                this.player_name.setText(game.getCurrentPlayer().toString());
+                this.renderShipsBoard();
+                this.renderAttackBoard();
                 this.renderStatistics();
-                this.renderMinesStack();
+                this.renderHistoryMoves();
                 this.renderRemainShips();
-            } else {
-                /// TODO: Amir: Calc statistics differenly
             }
         }
     }
