@@ -353,8 +353,8 @@ public class GameManager {
         return new GameStatistics(this);
     }
 
-    public PlayerStatistics getPlayerStatistics(Player player) {
-        return new PlayerStatistics(player, getPlayerMoves(player));
+    public PlayerStatistics getPlayerStatistics(Player player, GameTurn untilTurn) {
+        return new PlayerStatistics(player, getPlayerMoves(player, untilTurn));
     }
 
     public int getMovesCount() {
@@ -362,7 +362,16 @@ public class GameManager {
     }
 
     public List<GameTurn> getPlayerMoves(Player player) {
-        return getTurnList().stream().filter(t -> player.equals(t.getPlayer())).collect(Collectors.toList());
+        return getPlayerMoves(player, null);
+    }
+
+    public List<GameTurn> getPlayerMoves(Player player, GameTurn untilTurn) {
+        if (untilTurn != null) {
+            return getTurnList().stream().filter(t -> (player.equals(t.getPlayer()) && t.getIndex() <= untilTurn.getIndex()))
+                    .collect(Collectors.toList());
+        } else {
+            return getTurnList().stream().filter(t -> player.equals(t.getPlayer())).collect(Collectors.toList());
+        }
     }
 
 }
