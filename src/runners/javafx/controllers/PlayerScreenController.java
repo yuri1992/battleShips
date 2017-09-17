@@ -195,7 +195,9 @@ public class PlayerScreenController extends BaseController {
                 this.render();
             }
         } else if (event.getSource() == menuFile_LoadXML) {
-            setGame(menuController.handleLoadXmlButtonPressed());
+            GameManager newGame = menuController.handleLoadXmlButtonPressed();
+            if (newGame != null)
+                setGame(newGame);
         } else if (event.getSource() == menuFile_ResignGame) {
             if (menuController.handleResignGamePressed()) {
                 handleGameOver(true);
