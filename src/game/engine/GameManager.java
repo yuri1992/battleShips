@@ -271,8 +271,9 @@ public class GameManager {
             } else {
                 currentTurn = null;
                 currentPlayer = getPlayerList().get(0);
+                return false;
             }
-
+            return true;
         } else {
             /// TODO: Amir: Implement undo in the middle of the game
             System.out.println("Not impl yet");
@@ -281,14 +282,58 @@ public class GameManager {
     }
 
     public boolean redoTurn() {
-        System.out.println("redo??");
         if (state != GameState.REPLAY) {
             System.out.println("redo not supported in real game");
             return false;
         }
 
-        /// TODO: Amir: Implement redo replay
-        System.out.println("Not impl yet");
+        if (replayCurrentDisplayIndex > getMovesCount()) {
+            return false; // last move is already displayed
+        } else {
+            replayCurrentDisplayIndex++;
+            if (replayCurrentDisplayIndex <= getMovesCount()) {
+                currentTurn = getTurnList().stream().filter(t -> t.getIndex() == replayCurrentDisplayIndex).collect
+                        (Collectors.toList()).get(0);
+                currentPlayer = currentTurn.getPlayer();
+            } else {
+                currentTurn = null;
+                currentPlayer = null;
+            }
+        }
+
+        if (currentTurn != null) {
+            // unlog hits
+            Player currPlayer = getCurrentPlayer();
+            Player nextPlayer = getNextPlayer();
+            GridPoint pt = currentTurn.getPoint();
+
+            // Did player hit a ship
+            HitType hitType = currentTurn.getHitType();
+
+            Ship hitShip = null;
+            Player addScoreToPlayer = null;
+
+            if (hitType == HitType.HIT) {
+                hitShip = nextPlayer.getShipsBoard().getShipByPoint(pt);
+                addScoreToPlayer = currPlayer;
+            } else if (hitType == HitType.HIT_MINE) {
+                hitShip = currPlayer.getShipsBoard().getShipByPoint(pt);
+                addScoreToPlayer = nextPlayer;
+
+                // Marking attack of the mine
+                nextPlayer.getAttackBoard().setShoot(pt, hitShip != null);
+            }
+
+            if (hitShip != null && hitShip.isDrowned()) {
+                addScoreToPlayer.updateScore(+hitShip.getPoints());
+            }
+
+            // un-hit and un-mark
+            nextPlayer.getShipsBoard().hit(pt);
+            currPlayer.markAttack(pt, hitType);
+            return true;
+        }
+
         return false;
     }
 
