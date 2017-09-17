@@ -298,9 +298,10 @@ public class PlayerScreenController extends BaseController {
             return;
         }
 
-        if (game.getState() == GameState.IN_PROGRESS && game.isGameOver()) {
-            handleGameOver(false);
-        } else if (game.getState() == GameState.IN_PROGRESS) {
+        if (game.getState() == GameState.IN_PROGRESS) {
+            if (game.isGameOver())
+                handleGameOver(false);
+
             this.player_name.setText(game.getCurrentPlayer().toString());
             this.renderShipsBoard();
             this.renderAttackBoard();
