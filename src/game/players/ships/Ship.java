@@ -129,6 +129,20 @@ public class Ship implements GridEntity {
     public ShipType getMeta() {
         return meta;
     }
+    @Override
+    public String toString() {
+        return "Ship type " + shipTypeId + " Remaining hits :" + this.getUnhit();
+    }
+
+    public int getUnhit() {
+        int count = 0;
+        for (GridPoint point : this.getPositions()) {
+            if (!point.isHit()) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     //endregion
 }
