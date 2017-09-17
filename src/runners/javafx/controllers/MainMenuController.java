@@ -43,7 +43,7 @@ public class MainMenuController {
     public GameManager handleLoadXmlButtonPressed() {
         if (isGameInProgress()) {
             AlertBoxController.displayAlert("Illegal Action", "Game already in progress, you can't load another.");
-            return game;
+            return null;
         }
 
         if (window != null) {
