@@ -36,7 +36,7 @@ public class Main extends Application {
         MainModel model = new MainModel();
         playerScreenController.setModel(model);
 
-        Scene scene = new Scene(root, 880, 810);
+        Scene scene = new Scene(root, 877, 815);
 
         primaryStage.setScene(scene);
         primaryStage.show();
