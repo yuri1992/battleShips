@@ -85,10 +85,10 @@
                <content>
                 <AnchorPane fx:id="stats_container" minHeight="0.0" minWidth="0.0" prefHeight="204.0" prefWidth="131.0">
                      <children>
-                        <Label layoutX="21.0" layoutY="11.0" prefHeight="31.0" prefWidth="99.0" text="Turn Number" />
+                        <Label layoutX="21.0" layoutY="11.0" prefHeight="31.0" prefWidth="99.0" text="Plated Turns" />
                         <Label layoutX="21.0" layoutY="39.0" prefHeight="31.0" prefWidth="99.0" text="Hits" />
                         <Label layoutX="21.0" layoutY="73.0" prefHeight="23.0" prefWidth="99.0" text="Misses" />
-                        <Label layoutX="21.0" layoutY="100.0" prefHeight="22.0" prefWidth="99.0" text="Time" />
+                        <Label layoutX="21.0" layoutY="100.0" prefHeight="22.0" prefWidth="99.0" text="Avg. Time" />
                         <TextField fx:id="stat_turns" disable="true" layoutX="125.0" layoutY="14.0" prefHeight="26.0" prefWidth="53.0" />
                         <TextField fx:id="stat_hits" disable="true" layoutX="125.0" layoutY="43.0" prefHeight="26.0" prefWidth="53.0" />
                         <TextField fx:id="stat_miss" disable="true" layoutX="126.0" layoutY="72.0" prefHeight="26.0" prefWidth="53.0" />
