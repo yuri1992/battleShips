@@ -129,7 +129,7 @@
                         <Font name="Arial" size="26.0" />
                      </font>
                   </Label>
-                  <Label fx:id="player_name" layoutX="28.0" layoutY="14.0" styleClass="text-header" text="Welcome Player ...">
+                  <Label fx:id="player_name" layoutX="28.0" layoutY="14.0" styleClass="text-header" text="Welcome to BattleShips">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
