@@ -33,3 +33,12 @@
     -fx-font-size: 24px;
     -fx-color: red;
 }
+
+.text-remaining {
+
+}
+
+.grey-border {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+}
