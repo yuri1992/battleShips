@@ -33,6 +33,11 @@ public class Player {
         attackBoard.setShoot(pt, hitType == HitType.HIT || hitType == HitType.HIT_MINE);
     }
 
+    public void unmarkAttack(GridPoint pt) {
+        // Todo: Figure out if hitting a mine is equaling to hitting a ship
+        attackBoard.setUnShoot(pt);
+    }
+
     /*
         Return true when all of player ships been defeated
     */

@@ -25,6 +25,13 @@ public class Mine implements GridEntity {
     }
 
     @Override
+    public void unHit(GridPoint gridPoint) {
+        if (gridPoint.equals(this.positions.get(0))) {
+            this.positions.get(0).setUnHit();
+        }
+    }
+
+    @Override
     public boolean isHit(GridPoint gridPoint) {
         if (gridPoint.equals(this.positions.get(0))) {
             return this.positions.get(0).isHit();

@@ -21,7 +21,7 @@ public class GameManager {
     private List<GameTurn> turnList;
     private GameTurn currentTurn;
 
-    private boolean isRunning;
+    private GameState state;
     private Player currentPlayer = null;
     private Player winner;
     private Date startTime = null;
@@ -35,6 +35,7 @@ public class GameManager {
         this.playerList = players;
         this.allowMines = allowMines;
         this.turnList = new ArrayList<>();
+        this.state = GameState.LOADED;
     }
 
     //region Setters / Getters
@@ -59,12 +60,8 @@ public class GameManager {
         return turnList;
     }
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    private void setRunning(boolean running) {
-        isRunning = running;
+    public GameState getState() {
+        return state;
     }
 
     private void setCurrentPlayer(Player currentPlayer) {
@@ -94,7 +91,7 @@ public class GameManager {
     //endregion
 
     public void startGame() {
-        this.isRunning = true;
+        this.state = GameState.IN_PROGRESS;
         this.startTime = new Date();
         this.setCurrentPlayer(playerList.get(0));
         startTurn();
@@ -107,7 +104,7 @@ public class GameManager {
 
     public void finishGame() {
         currentTurn = null;
-        this.isRunning = false;
+        this.state = GameState.REPLAY;
     }
 
     /*
@@ -224,8 +221,47 @@ public class GameManager {
     }
 
     public boolean undoTurn(boolean isReplayMode) {
-        System.out.println("undo??");
         if (isReplayMode) {
+            if (currentTurn != null) { // reverse last move if set
+                // unlog hits
+                Player currPlayer = getCurrentPlayer();
+                Player nextPlayer = getNextPlayer();
+                GridPoint pt = currentTurn.getPoint();
+
+                // Did player hit a ship
+                HitType hitType = currentTurn.getHitType();
+
+                Ship hitShip = null;
+                Player reduceScoreFromPlayer = null;
+
+                if (hitType == HitType.HIT) {
+                    hitShip = nextPlayer.getShipsBoard().getShipByPoint(pt);
+                    reduceScoreFromPlayer = currPlayer;
+                } else if (hitType == HitType.HIT_MINE) {
+                    hitShip = currPlayer.getShipsBoard().getShipByPoint(pt);
+                    reduceScoreFromPlayer = nextPlayer;
+
+                    // Marking attack of the mine
+                    nextPlayer.getAttackBoard().setUnShoot(pt);
+                }
+
+                if (hitShip != null && hitShip.isDrowned()) {
+                    reduceScoreFromPlayer.updateScore(-hitShip.getPoints());
+                }
+
+                // un-hit and un-mark
+                nextPlayer.getShipsBoard().unHit(pt);
+                currPlayer.unmarkAttack(pt);
+            }
+
+            int prevIndex = (currentTurn == null ? getMovesCount() - 1 : currentTurn.getIndex() - 2);
+            if (prevIndex >= 0) {
+                currentTurn = getTurnList().get(prevIndex);
+                currentPlayer = currentTurn.getPlayer();
+            } else {
+                currentTurn = null;
+                currentPlayer = getPlayerList().get(0);
+            }
 
         } else {
             /// TODO: Amir: Implement undo in the middle of the game

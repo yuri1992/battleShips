@@ -116,6 +116,22 @@ public class ShipsBoard implements Board {
         return HitType.MISS;
     }
 
+    /*
+        To support undo
+     */
+    public void unHit(GridPoint pt) {
+        GridEntity gridEntity = map.get(pt);
+        if (gridEntity instanceof Ship) {
+            gridEntity.unHit(pt);
+            board[pt.x][pt.y] = BoardType.SHIP;
+        } else if (gridEntity instanceof Mine) {
+            gridEntity.unHit(pt);
+            board[pt.x][pt.y] = BoardType.MINE;
+        } else {
+            board[pt.x][pt.y] = BoardType.EMPTY;
+        }
+    }
+
     public Ship getShipByPoint(GridPoint pt) {
         if (pt.y < 0 || pt.x < 0 || pt.x >= board.length || pt.y >= board.length)
             return null;

@@ -52,8 +52,16 @@ public class GameTurn {
         this.hitType = hitType;
     }
 
+    public HitType getHitType() {
+        return hitType;
+    }
+
     public void setPoint(GridPoint point) {
         this.point = point;
+    }
+
+    public GridPoint getPoint() {
+        return point;
     }
 
     //endregion

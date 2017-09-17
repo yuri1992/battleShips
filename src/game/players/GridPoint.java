@@ -31,6 +31,10 @@ public class GridPoint extends java.awt.Point {
         isHit = true;
     }
 
+    public void setUnHit() {
+        isHit = false;
+    }
+
     public boolean isHit() {
         return isHit;
     }
