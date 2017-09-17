@@ -1,1 +1,1 @@
-java -jar BattleShipsConsole.jar
+java -jar BattleShipsJavafx.jar
