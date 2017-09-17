@@ -99,6 +99,18 @@ public class PlayerScreenController extends BaseController {
     private MenuItem menuFile_Quit;
 
     @FXML
+    private MenuItem theme_regular;
+
+    @FXML
+    private MenuItem theme_dracula;
+
+    @FXML
+    private MenuItem theme_white;
+
+    @FXML
+    private MenuItem theme_games;
+
+    @FXML
     private AnchorPane stats_container;
 
     @FXML
@@ -115,6 +127,9 @@ public class PlayerScreenController extends BaseController {
 
     @FXML
     private Label stats_total_turn;
+
+    @FXML
+    private AnchorPane main_container;
 
     private MainMenuController menuController;
     private Stage window;
@@ -184,6 +199,21 @@ public class PlayerScreenController extends BaseController {
             System.out.println("unknown");
 
     }
+
+    @FXML
+    void handleStyleThemeChange(ActionEvent event) {
+        this.main_container.getStyleClass().clear();
+        if (event.getSource() == theme_dracula) {
+            this.main_container.getStyleClass().add("theme-dracula");
+        } else if (event.getSource() == theme_games) {
+            this.main_container.getStyleClass().add("theme-games");
+        } else if (event.getSource() == theme_regular) {
+            this.main_container.getStyleClass().add("theme-regular");
+        } else if (event.getSource() == theme_white) {
+            this.main_container.getStyleClass().add("theme-white");
+        }
+    }
+
 
     @FXML
     private void handleGameMenuItemPressed(ActionEvent event) {
@@ -268,7 +298,7 @@ public class PlayerScreenController extends BaseController {
         }
 
         if (game.getState() == GameState.IN_PROGRESS && game.isGameOver()) {
-                handleGameOver(false);
+            handleGameOver(false);
         } else if (game.getState() == GameState.IN_PROGRESS ||
                 game.getState() == GameState.REPLAY) {
             this.player_name.setText(game.getCurrentPlayer().toString());
