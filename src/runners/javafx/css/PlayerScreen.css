@@ -22,6 +22,11 @@
     -fx-background-size: 30px 30px;
 }
 
+.highlight-border {
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+}
+
 .mine {
     -fx-background-color: transparent;
     -fx-background-image: url(mine.png);

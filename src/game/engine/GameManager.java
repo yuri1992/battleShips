@@ -61,6 +61,10 @@ public class GameManager {
         return turnList;
     }
 
+    public GameTurn getCurrentTurn() {
+        return currentTurn;
+    }
+
     public GameState getState() {
         return state;
     }

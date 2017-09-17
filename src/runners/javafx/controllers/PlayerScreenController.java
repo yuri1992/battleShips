@@ -311,8 +311,8 @@ public class PlayerScreenController extends BaseController {
                 handleGameOver(false);
 
             this.player_name.setText(game.getCurrentPlayer().toString());
-            this.renderShipsBoard();
-            this.renderAttackBoard();
+            this.renderShipsBoard(null);
+            this.renderAttackBoard(null);
             this.renderStatistics();
             this.renderHistoryMoves();
             this.renderMinesStack();
@@ -321,8 +321,11 @@ public class PlayerScreenController extends BaseController {
             // It is possible that navigation get rto point where current player is null
             if (game.getCurrentPlayer() != null) {
                 this.player_name.setText(game.getCurrentPlayer().toString());
-                this.renderShipsBoard();
-                this.renderAttackBoard();
+                GridPoint pt = (game.getCurrentTurn() != null ? game.getCurrentTurn().getPoint() : null);
+                GridPoint hitMine = (game.getCurrentTurn() != null && game.getCurrentTurn().getHitType() == HitType
+                        .HIT_MINE ? pt : null);
+                this.renderShipsBoard(hitMine);
+                this.renderAttackBoard(pt);
                 this.renderStatistics();
                 this.renderHistoryMoves();
                 this.renderRemainShips();
@@ -330,7 +333,7 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
-    private void renderShipsBoard() {
+    private void renderShipsBoard(GridPoint highlightPoint) {
         BoardType[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
         this.ships_board.getChildren().clear();
         for (int row = 1; row < board.length; row++) {
@@ -362,6 +365,10 @@ public class PlayerScreenController extends BaseController {
                     case SHIP_HIT:
                         n.getStyleClass().add("ship-hit");
                         break;
+                }
+
+                if (highlightPoint != null && highlightPoint.getX() == row && highlightPoint.getY() == col) {
+                    n.getStyleClass().add("highlight-border");
                 }
 
                 int finalRow = row;
@@ -403,7 +410,7 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
-    private void renderAttackBoard() {
+    private void renderAttackBoard(GridPoint highlightPoint) {
         this.attack_board.getChildren().clear();
         BoardType[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
         for (int row = 1; row < board.length; row++) {
@@ -428,6 +435,10 @@ public class PlayerScreenController extends BaseController {
                     case MINE_HIT:
                         n.getStyleClass().add("ship-hit");
                         break;
+                }
+
+                if (highlightPoint != null && highlightPoint.getX() == row && highlightPoint.getY() == col) {
+                    n.getStyleClass().add("highlight-border");
                 }
 
                 int finalCol = col;
