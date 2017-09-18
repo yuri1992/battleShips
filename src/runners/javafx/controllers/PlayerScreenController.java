@@ -507,7 +507,8 @@ public class PlayerScreenController extends BaseController {
         PlayerStatistics p = game.getPlayerStatistics(game.getCurrentPlayer(), untilTurn);
         displayStatisticsField(p);
 
-        stats_total_turn.setText("Playing Turn No: " + untilTurn.getIndex());
+        if (untilTurn != null)
+            stats_total_turn.setText("Playing Turn No: " + untilTurn.getIndex());
     }
 
     private void displayStatisticsField(PlayerStatistics p) {
