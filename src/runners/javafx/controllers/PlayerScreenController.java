@@ -33,6 +33,8 @@ import java.util.ResourceBundle;
 
 public class PlayerScreenController extends BaseController {
 
+    //region FXML Properties
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -125,10 +127,12 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private AnchorPane main_container;
 
+    //endregion
+
     private MainMenuController menuController;
     private Stage window;
     private GameManager game;
-    
+
     public void init(Stage window) {
         this.window = window;
         this.menuController = new MainMenuController(window);
