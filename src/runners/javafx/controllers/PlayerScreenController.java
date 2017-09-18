@@ -62,9 +62,6 @@ public class PlayerScreenController extends BaseController {
     @FXML // fx:id="stat_score"
     private Label stat_score; // Value injected by FXMLLoader
 
-    @FXML // fx:id="place_mine"
-    private Button place_mine; // Value injected by FXMLLoader
-
     @FXML // fx:id="list_moves"
     private ListView<String> list_moves; // Value injected by FXMLLoader
 
@@ -131,17 +128,7 @@ public class PlayerScreenController extends BaseController {
     private MainMenuController menuController;
     private Stage window;
     private GameManager game;
-
-
-    @FXML
-    void handleOnPlaceMine(ActionEvent event) {
-        for (Node child : this.ships_board.getChildren()) {
-            if (((Button) child).getText().equals("~"))
-                child.setDisable(false);
-        }
-        place_mine.setDisable(true);
-    }
-
+    
     public void init(Stage window) {
         this.window = window;
         this.menuController = new MainMenuController(window);
