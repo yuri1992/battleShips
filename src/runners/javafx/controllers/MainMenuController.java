@@ -55,17 +55,18 @@ public class MainMenuController {
         return game;
     }
 
-    public void handleStartGameButtonPressed() {
+    public boolean handleStartGameButtonPressed() {
         if (isGameInProgress()) {
             AlertBoxController.displayAlert("Illegal Action", "Game already started, you can't start it again.");
-            return;
+            return false;
         }
         if (this.game == null) {
             AlertBoxController.displayAlert("Illegal Action", "You should load XML settings file first.");
-            return;
+            return false;
         }
 
         this.game.startGame();
+        return true;
     }
 
     public boolean handleResignGamePressed() {

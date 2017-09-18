@@ -12,7 +12,6 @@ import game.players.ships.Ship;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
@@ -142,7 +141,7 @@ public class PlayerScreenController extends BaseController {
 
     public void setGame(GameManager game) {
         this.game = game;
-        enableGameRelatedMenuItems(game != null);
+        updateGameRelatedMenuItemsActiveStates();
         setVisibility(false);
     }
 
@@ -162,9 +161,10 @@ public class PlayerScreenController extends BaseController {
         enableReplayRelatedMenuItems();
     }
 
-    private void enableGameRelatedMenuItems(boolean isEnabled) {
-        menuFile_StartGame.setDisable(!isEnabled || game == null);
-        menuFile_ResignGame.setDisable(!isEnabled || game == null);
+    private void updateGameRelatedMenuItemsActiveStates() {
+        menuFile_StartGame.setDisable(game == null || game.getState() != GameState.LOADED);
+        menuFile_LoadXML.setDisable(game != null && game.getState() == GameState.IN_PROGRESS);
+        menuFile_ResignGame.setDisable(game == null || game.getState() != GameState.IN_PROGRESS);
     }
 
     private void enableReplayRelatedMenuItems() {
@@ -178,10 +178,12 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private void handleFileMenuItemPressed(ActionEvent event) {
         if (event.getSource() == menuFile_StartGame) {
-            menuController.handleStartGameButtonPressed();
-            this.setVisibility(true);
-            if (game != null) {
-                this.render();
+            if (menuController.handleStartGameButtonPressed()) {
+                setVisibility(true);
+                updateGameRelatedMenuItemsActiveStates();
+                if (game != null) {
+                    render();
+                }
             }
         } else if (event.getSource() == menuFile_LoadXML) {
             GameManager newGame = menuController.handleLoadXmlButtonPressed();
@@ -552,7 +554,7 @@ public class PlayerScreenController extends BaseController {
         String congrats = "Congratulations!!";
         AlertBoxController.displayAlert("Game Over!", reason + winner + scores.toString() + congrats);
 
-        enableGameRelatedMenuItems(false);
+        updateGameRelatedMenuItemsActiveStates();
         setVisibility(true); // start preview mode
     }
 }
