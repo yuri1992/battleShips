@@ -8,9 +8,11 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -33,10 +35,14 @@
             </Menu>
             <Menu fx:id="menuHelp" mnemonicParsing="false" text="Style">
                 <items>
-                  <MenuItem fx:id="theme_regular" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="Regular" />
-                    <MenuItem fx:id="theme_dracula" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="Dracula" />
-                  <MenuItem fx:id="theme_white" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="White" />
-                  <MenuItem fx:id="theme_games" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="Game Of Thrones" />
+                  <RadioMenuItem fx:id="theme_regular" mnemonicParsing="false" onAction="#handleStyleThemeChange" selected="true" text="Regular">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="styleToggle" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem fx:id="theme_dracula" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="Dracula" toggleGroup="$styleToggle" />
+                  <RadioMenuItem fx:id="theme_white" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="White" toggleGroup="$styleToggle" />
+                  <RadioMenuItem fx:id="theme_games" mnemonicParsing="false" onAction="#handleStyleThemeChange" text="Game Of Thrones" toggleGroup="$styleToggle" />
                 </items>
             </Menu>
             <Menu fx:id="menuHelp1" mnemonicParsing="false" text="Help">

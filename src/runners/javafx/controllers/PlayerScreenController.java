@@ -99,16 +99,16 @@ public class PlayerScreenController extends BaseController {
     private MenuItem menuFile_Quit;
 
     @FXML
-    private MenuItem theme_regular;
+    private RadioMenuItem theme_regular;
 
     @FXML
-    private MenuItem theme_dracula;
+    private RadioMenuItem theme_dracula;
 
     @FXML
-    private MenuItem theme_white;
+    private RadioMenuItem theme_white;
 
     @FXML
-    private MenuItem theme_games;
+    private RadioMenuItem theme_games;
 
     @FXML
     private AnchorPane stats_container;
