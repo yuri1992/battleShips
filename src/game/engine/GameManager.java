@@ -233,7 +233,7 @@ public class GameManager {
     }
 
     public boolean isRedoTurnAvailable() {
-        return (state == GameState.REPLAY && replayCurrentDisplayIndex <= getMovesCount());
+        return (state == GameState.REPLAY && replayCurrentDisplayIndex < getMovesCount());
     }
 
     public boolean undoTurn() {
@@ -266,6 +266,7 @@ public class GameManager {
 
                     // Marking attack of the mine
                     nextPlayer.getAttackBoard().setUnShoot(pt);
+                    currPlayer.getShipsBoard().unHit(pt);
                 }
 
                 if (hitShip != null && hitShip.isDrowned()) {

@@ -34,6 +34,8 @@ import java.util.ResourceBundle;
 
 public class PlayerScreenController extends BaseController {
 
+    //region FXML Properties
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -62,9 +64,6 @@ public class PlayerScreenController extends BaseController {
 
     @FXML // fx:id="stat_score"
     private Label stat_score; // Value injected by FXMLLoader
-
-    @FXML // fx:id="place_mine"
-    private Button place_mine; // Value injected by FXMLLoader
 
     @FXML // fx:id="list_moves"
     private ListView<String> list_moves; // Value injected by FXMLLoader
@@ -100,22 +99,19 @@ public class PlayerScreenController extends BaseController {
     private MenuItem menuFile_Quit;
 
     @FXML
-    private MenuItem theme_regular;
+    private RadioMenuItem theme_regular;
 
     @FXML
-    private MenuItem theme_dracula;
+    private RadioMenuItem theme_dracula;
 
     @FXML
-    private MenuItem theme_white;
+    private RadioMenuItem theme_white;
 
     @FXML
-    private MenuItem theme_games;
+    private RadioMenuItem theme_games;
 
     @FXML
     private AnchorPane stats_container;
-
-    @FXML
-    private Menu menuGame;
 
     @FXML
     private Menu menuHelp;
@@ -132,19 +128,11 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private AnchorPane main_container;
 
+    //endregion
+
     private MainMenuController menuController;
     private Stage window;
     private GameManager game;
-
-
-    @FXML
-    void handleOnPlaceMine(ActionEvent event) {
-        for (Node child : this.ships_board.getChildren()) {
-            if (((Button) child).getText().equals("~"))
-                child.setDisable(false);
-        }
-        place_mine.setDisable(true);
-    }
 
     public void init(Stage window) {
         this.window = window;
@@ -155,7 +143,7 @@ public class PlayerScreenController extends BaseController {
 
     public void setGame(GameManager game) {
         this.game = game;
-        enableGameRelatedMenuItems(game != null);
+        updateGameRelatedMenuItemsActiveStates();
         setVisibility(false);
     }
 
@@ -167,6 +155,7 @@ public class PlayerScreenController extends BaseController {
         this.ships_board.setVisible(visible);
         this.attack_board.setVisible(visible);
         this.stat_score.setVisible(visible);
+        this.mine_container.setVisible(visible);
 
         boolean isPreviewMode = (game != null && game.getState() == GameState.REPLAY);
         navigatePrevTurn.setVisible(visible && isPreviewMode);
@@ -174,9 +163,10 @@ public class PlayerScreenController extends BaseController {
         enableReplayRelatedMenuItems();
     }
 
-    private void enableGameRelatedMenuItems(boolean isEnabled) {
-        menuFile_StartGame.setDisable(!isEnabled || game == null);
-        menuFile_ResignGame.setDisable(!isEnabled || game == null);
+    private void updateGameRelatedMenuItemsActiveStates() {
+        menuFile_StartGame.setDisable(game == null || game.getState() != GameState.LOADED);
+        menuFile_LoadXML.setDisable(game != null && game.getState() == GameState.IN_PROGRESS);
+        menuFile_ResignGame.setDisable(game == null || game.getState() != GameState.IN_PROGRESS);
     }
 
     private void enableReplayRelatedMenuItems() {
@@ -190,10 +180,12 @@ public class PlayerScreenController extends BaseController {
     @FXML
     private void handleFileMenuItemPressed(ActionEvent event) {
         if (event.getSource() == menuFile_StartGame) {
-            menuController.handleStartGameButtonPressed();
-            this.setVisibility(true);
-            if (game != null) {
-                this.render();
+            if (menuController.handleStartGameButtonPressed()) {
+                setVisibility(true);
+                updateGameRelatedMenuItemsActiveStates();
+                if (game != null) {
+                    render();
+                }
             }
         } else if (event.getSource() == menuFile_LoadXML) {
             GameManager newGame = menuController.handleLoadXmlButtonPressed();
@@ -224,11 +216,6 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
-
-    @FXML
-    private void handleGameMenuItemPressed(ActionEvent event) {
-
-    }
 
     @FXML
     private void handleHelpMenuItemPressed(ActionEvent event) {
@@ -313,6 +300,7 @@ public class PlayerScreenController extends BaseController {
             if (game.isGameOver())
                 handleGameOver(false);
 
+            this.mine_container.setVisible(true);
             this.player_name.setText(game.getCurrentPlayer().toString());
             this.renderShipsBoard(null);
             this.renderAttackBoard(null);
@@ -333,6 +321,7 @@ public class PlayerScreenController extends BaseController {
                 this.renderStatistics(turn);
                 this.renderHistoryMoves(turn);
                 this.renderRemainShips();
+                this.mine_container.setVisible(false);
             }
         }
     }
@@ -542,7 +531,8 @@ public class PlayerScreenController extends BaseController {
         PlayerStatistics p = game.getPlayerStatistics(game.getCurrentPlayer(), untilTurn);
         displayStatisticsField(p);
 
-        stats_total_turn.setText("Playing Turn No: " + untilTurn.getIndex());
+        if (untilTurn != null)
+            stats_total_turn.setText("Playing Turn No: " + untilTurn.getIndex());
     }
 
     private void displayStatisticsField(PlayerStatistics p) {
@@ -603,7 +593,7 @@ public class PlayerScreenController extends BaseController {
         String congrats = "Congratulations!!";
         AlertBoxController.displayAlert("Game Over!", reason + winner + scores.toString() + congrats);
 
-        enableGameRelatedMenuItems(false);
+        updateGameRelatedMenuItemsActiveStates();
         setVisibility(true); // start preview mode
     }
 }
