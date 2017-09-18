@@ -114,9 +114,6 @@ public class PlayerScreenController extends BaseController {
     private AnchorPane stats_container;
 
     @FXML
-    private Menu menuGame;
-
-    @FXML
     private Menu menuHelp;
 
     @FXML
@@ -224,11 +221,6 @@ public class PlayerScreenController extends BaseController {
         }
     }
 
-
-    @FXML
-    private void handleGameMenuItemPressed(ActionEvent event) {
-
-    }
 
     @FXML
     private void handleHelpMenuItemPressed(ActionEvent event) {
