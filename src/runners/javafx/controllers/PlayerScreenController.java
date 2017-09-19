@@ -310,13 +310,20 @@ public class PlayerScreenController extends BaseController {
         } else if (game.getState() == GameState.REPLAY) {
             // It is possible that navigation get rto point where current player is null
             if (game.getCurrentPlayer() != null) {
-                GridPoint pt = (game.getCurrentTurn() != null ? game.getCurrentTurn().getPoint() : null);
-                GridPoint hitMine = (game.getCurrentTurn() != null && game.getCurrentTurn().getHitType() == HitType
-                        .HIT_MINE ? pt : null);
                 GameTurn turn = game.getCurrentTurn() != null ? game.getCurrentTurn() : null;
+                GridPoint highlightAttackBoard = null;
+                if (turn != null && turn.getHitType() != HitType.PLACE_MINE) {
+                    highlightAttackBoard = turn.getPoint();
+                }
+
+                GridPoint highlightShipBoard = null;
+                if (turn != null && (turn.getHitType() == HitType.HIT_MINE || turn.getHitType() == HitType.PLACE_MINE)) {
+                    highlightShipBoard = turn.getPoint();
+                }
+
                 this.player_name.setText(game.getCurrentPlayer().toString());
-                this.renderShipsBoard(hitMine);
-                this.renderAttackBoard(pt);
+                this.renderShipsBoard(highlightShipBoard);
+                this.renderAttackBoard(highlightAttackBoard);
                 this.renderStatistics(turn);
                 this.renderHistoryMoves(turn);
                 this.renderRemainShips();
