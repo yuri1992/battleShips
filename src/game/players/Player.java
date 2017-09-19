@@ -30,7 +30,7 @@ public class Player {
      */
     public void markAttack(GridPoint pt, HitType hitType) {
         // Todo: Figure out if hitting a mine is equaling to hitting a ship
-        attackBoard.setShoot(pt, hitType == HitType.HIT || hitType == HitType.HIT_MINE);
+        attackBoard.setShoot(pt, hitType);
     }
 
     public void unmarkAttack(GridPoint pt) {

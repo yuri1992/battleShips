@@ -16,6 +16,12 @@
     -fx-background-size: 30px 30px;
 }
 
+.mine-hit {
+    -fx-background-color: transparent;
+    -fx-background-image: url(explode.png);
+    -fx-background-size: 30px 30px;
+}
+
 .miss {
     -fx-background-color: transparent;
     -fx-background-image: url(miss.png);

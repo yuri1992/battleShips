@@ -183,7 +183,6 @@ public class GameManager {
         // Did player hit a ship
         HitType hitType = nextPlayer.getShipsBoard().hit(pt);
 
-
         if (hitType == HitType.MISS) {
             updateTurnResults(pt, hitType);
             this.switchTurns();
@@ -207,7 +206,7 @@ public class GameManager {
             updateTurnResults(pt, hitType);
 
             // Marking attack of the mine
-            nextPlayer.getAttackBoard().setShoot(pt, s != null);
+            nextPlayer.getAttackBoard().setShoot(pt, hitType);
             this.switchTurns();
         }
 
@@ -336,7 +335,7 @@ public class GameManager {
                 addScoreToPlayer = nextPlayer;
 
                 // Marking attack of the mine
-                nextPlayer.getAttackBoard().setShoot(pt, hitShip != null);
+                nextPlayer.getAttackBoard().setShoot(pt, hitType);
             }
 
             // re-hit and re-mark

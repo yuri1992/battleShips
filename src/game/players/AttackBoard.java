@@ -1,5 +1,7 @@
 package game.players;
 
+import game.engine.HitType;
+
 import java.util.Arrays;
 
 public class AttackBoard implements Board {
@@ -10,8 +12,13 @@ public class AttackBoard implements Board {
         return board;
     }
 
-    public void setShoot(GridPoint pt, boolean attack) {
-        board[pt.x][pt.y] = attack ? BoardType.SHIP_HIT : BoardType.MISS;
+    public void setShoot(GridPoint pt, HitType hit) {
+        if (hit == HitType.HIT)
+            board[pt.x][pt.y] = BoardType.SHIP_HIT;
+        else if (hit == HitType.HIT_MINE)
+            board[pt.x][pt.y] = BoardType.MINE_HIT;
+        else
+            board[pt.x][pt.y] = BoardType.MISS;
     }
 
     public void setUnShoot(GridPoint pt) {

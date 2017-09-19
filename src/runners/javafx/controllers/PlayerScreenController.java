@@ -350,7 +350,7 @@ public class PlayerScreenController extends BaseController {
                         n.getStyleClass().add("miss");
                         break;
                     case MINE_HIT:
-                        n.getStyleClass().add("ship-hit");
+                        n.getStyleClass().add("mine-hit");
                         break;
                     case SHIP_HIT:
                         n.getStyleClass().add("ship-hit");
@@ -421,7 +421,7 @@ public class PlayerScreenController extends BaseController {
                         n.getStyleClass().add("ship-hit");
                         break;
                     case MINE_HIT:
-                        n.getStyleClass().add("ship-hit");
+                        n.getStyleClass().add("mine-hit");
                         break;
                 }
 
