@@ -13,7 +13,6 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
@@ -328,35 +327,13 @@ public class PlayerScreenController extends BaseController {
 
     private void renderShipsBoard(GridPoint highlightPoint) {
         BoardType[][] board = game.getCurrentPlayer().getShipsBoard().printBoard();
-        this.ships_board.getChildren().clear();
-
+        ships_board.getChildren().clear();
 
         for (int row = 1; row < board.length; row++) {
-            Label labelRow = new Label();
-            labelRow.setLayoutY((row + 1) * 30  - 30);
-            labelRow.setLayoutX(0);
-            labelRow.setPrefHeight(30);
-            labelRow.setPrefWidth(20);
-            labelRow.setAlignment(Pos.CENTER);
-            labelRow.setText(String.valueOf(row));
-
-            Label labelCol = new Label();
-            labelCol.setLayoutY(0);
-            labelCol.setLayoutX((row + 1) * 30  - 30);
-            labelCol.setPrefHeight(30);
-            labelCol.setPrefWidth(20);
-            labelCol.setAlignment(Pos.CENTER);
-            labelCol.setText(String.valueOf(row));
-
-            this.ships_board.getChildren().addAll(labelRow, labelCol);
+            renderTableLabels(ships_board, row);
 
             for (int col = 1; col < board.length; col++) {
-                Button n = new Button();
-                n.minWidth(15);
-                n.minHeight(15);
-                n.setLayoutX((col + 1) * 30 - 30);
-                n.setLayoutY((row + 1) * 30 - 30);
-                n.setText(" ");
+                Button n = renderCellButton(row, col);
                 //n.setDisable(true);
 
                 switch (board[row][col]) {
@@ -424,33 +401,14 @@ public class PlayerScreenController extends BaseController {
     }
 
     private void renderAttackBoard(GridPoint highlightPoint) {
-        this.attack_board.getChildren().clear();
         BoardType[][] board = game.getCurrentPlayer().getAttackBoard().printBoard();
+        attack_board.getChildren().clear();
+
         for (int row = 1; row < board.length; row++) {
-            Label labelRow = new Label();
-            labelRow.setLayoutY((row + 1) * 30  - 30);
-            labelRow.setLayoutX(0);
-            labelRow.setPrefHeight(30);
-            labelRow.setPrefWidth(20);
-            labelRow.setAlignment(Pos.CENTER);
-            labelRow.setText(String.valueOf(row));
+            renderTableLabels(attack_board, row);
 
-            Label labelCol = new Label();
-            labelCol.setLayoutY(0);
-            labelCol.setLayoutX((row + 1) * 30  - 30);
-            labelCol.setPrefHeight(30);
-            labelCol.setPrefWidth(20);
-            labelCol.setAlignment(Pos.CENTER);
-            labelCol.setText(String.valueOf(row));
-
-            this.attack_board.getChildren().addAll(labelRow, labelCol);
             for (int col = 1; col < board.length; col++) {
-                Button n = new Button();
-                n.minWidth(15);
-                n.minHeight(15);
-                n.setLayoutX((col + 1) * 30 - 30);
-                n.setLayoutY((row + 1) * 30 - 30);
-                n.setText(" ");
+                Button n = renderCellButton(row, col);
 
                 switch (board[row][col]) {
                     case MISS:
@@ -489,6 +447,52 @@ public class PlayerScreenController extends BaseController {
                 this.attack_board.getChildren().add(n);
             }
         }
+    }
+
+    private void renderTableLabels(AnchorPane board, int row) {
+        Label labelRow = new Label();
+        labelRow.setLayoutY((row + 1) * 30  - 30);
+        labelRow.setLayoutX(0);
+        labelRow.setPrefHeight(30);
+        labelRow.setPrefWidth(20);
+        labelRow.setAlignment(Pos.CENTER);
+        labelRow.setText(String.valueOf(row));
+
+        Label labelRow2 = new Label();
+        labelRow2.setLayoutY((row + 1) * 30  - 30);
+        labelRow2.setLayoutX((game.getBoardSize() + 2) * 30  - 30);
+        labelRow2.setPrefHeight(30);
+        labelRow2.setPrefWidth(20);
+        labelRow2.setAlignment(Pos.CENTER);
+        labelRow2.setText(String.valueOf(row));
+
+        Label labelCol = new Label();
+        labelCol.setLayoutY(0);
+        labelCol.setLayoutX((row + 1) * 30  - 30);
+        labelCol.setPrefHeight(30);
+        labelCol.setPrefWidth(20);
+        labelCol.setAlignment(Pos.CENTER);
+        labelCol.setText(String.valueOf(row));
+
+        Label labelCol2 = new Label();
+        labelCol2.setLayoutY((game.getBoardSize() + 2) * 30  - 30);
+        labelCol2.setLayoutX((row + 1) * 30  - 30);
+        labelCol2.setPrefHeight(30);
+        labelCol2.setPrefWidth(20);
+        labelCol2.setAlignment(Pos.CENTER);
+        labelCol2.setText(String.valueOf(row));
+
+        board.getChildren().addAll(labelRow, labelRow2, labelCol, labelCol2);
+    }
+
+    private Button renderCellButton(int row, int col) {
+        Button n = new Button();
+        n.minWidth(15);
+        n.minHeight(15);
+        n.setLayoutX((col + 1) * 30 - 30);
+        n.setLayoutY((row + 1) * 30 - 30);
+        n.setText(" ");
+        return n;
     }
 
     private void renderHistoryMoves(GameTurn untilTurn) {
