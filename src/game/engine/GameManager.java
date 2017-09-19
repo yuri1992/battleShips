@@ -335,6 +335,7 @@ public class GameManager {
                 addScoreToPlayer = nextPlayer;
 
                 // Marking attack of the mine
+                currPlayer.getShipsBoard().hit(pt);
                 nextPlayer.getAttackBoard().setShoot(pt, hitType);
             }
 
