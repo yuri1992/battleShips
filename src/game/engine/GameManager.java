@@ -256,25 +256,29 @@ public class GameManager {
                 Ship hitShip = null;
                 Player reduceScoreFromPlayer = null;
 
-                if (hitType == HitType.HIT) {
-                    hitShip = nextPlayer.getShipsBoard().getShipByPoint(pt);
-                    reduceScoreFromPlayer = currPlayer;
-                } else if (hitType == HitType.HIT_MINE) {
-                    hitShip = currPlayer.getShipsBoard().getShipByPoint(pt);
-                    reduceScoreFromPlayer = nextPlayer;
+                if (hitType == HitType.PLACE_MINE) {
+                    currentPlayer.getShipsBoard().removeMine(pt);
+                } else {
+                    if (hitType == HitType.HIT) {
+                        hitShip = nextPlayer.getShipsBoard().getShipByPoint(pt);
+                        reduceScoreFromPlayer = currPlayer;
+                    } else if (hitType == HitType.HIT_MINE) {
+                        hitShip = currPlayer.getShipsBoard().getShipByPoint(pt);
+                        reduceScoreFromPlayer = nextPlayer;
 
-                    // Marking attack of the mine
-                    nextPlayer.getAttackBoard().setUnShoot(pt);
-                    currPlayer.getShipsBoard().unHit(pt);
+                        // Marking attack of the mine
+                        nextPlayer.getAttackBoard().setUnShoot(pt);
+                        currPlayer.getShipsBoard().unHit(pt);
+                    }
+
+                    if (hitShip != null && hitShip.isDrowned()) {
+                        reduceScoreFromPlayer.updateScore(-hitShip.getPoints());
+                    }
+
+                    // un-hit and un-mark
+                    nextPlayer.getShipsBoard().unHit(pt);
+                    currPlayer.unmarkAttack(pt);
                 }
-
-                if (hitShip != null && hitShip.isDrowned()) {
-                    reduceScoreFromPlayer.updateScore(-hitShip.getPoints());
-                }
-
-                // un-hit and un-mark
-                nextPlayer.getShipsBoard().unHit(pt);
-                currPlayer.unmarkAttack(pt);
                 replayCurrentDisplayIndex--;
             }
 
@@ -327,7 +331,10 @@ public class GameManager {
             Ship hitShip = null;
             Player addScoreToPlayer = null;
 
-            if (hitType == HitType.HIT) {
+            if (hitType == HitType.PLACE_MINE) {
+                currentPlayer.getShipsBoard().setMine(pt);
+                return true;
+            } else if (hitType == HitType.HIT) {
                 hitShip = nextPlayer.getShipsBoard().getShipByPoint(pt);
                 addScoreToPlayer = currPlayer;
             } else if (hitType == HitType.HIT_MINE) {

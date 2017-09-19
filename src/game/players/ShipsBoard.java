@@ -190,6 +190,18 @@ public class ShipsBoard implements Board {
         return true;
     }
 
+    public boolean removeMine(GridPoint gridPoint) {
+        if (board[gridPoint.x][gridPoint.y] != BoardType.MINE || getPyPoint(gridPoint) == null ||
+                !(getPyPoint(gridPoint) instanceof Mine)) {
+            return false;
+        }
+
+        mines.remove(map.get(gridPoint));
+        map.remove(gridPoint);
+        board[gridPoint.x][gridPoint.y] = BoardType.EMPTY;
+        return true;
+    }
+
     public List<Ship> getRemainShips() {
         List<Ship> remain = new ArrayList<>();
         for (Ship ship : ships) {
