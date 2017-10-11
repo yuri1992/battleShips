@@ -1,14 +1,14 @@
 package runners.javafx.controllers;
 
-import game.engine.GameManager;
-import game.engine.GameState;
-import game.engine.GameTurn;
-import game.engine.HitType;
-import game.model.boards.BoardType;
-import game.model.boards.GridPoint;
-import game.model.boards.Player;
-import game.model.boards.PlayerStatistics;
-import game.model.ships.Ship;
+import engine.managers.game.GameManager;
+import engine.managers.game.GameState;
+import engine.managers.game.GameTurn;
+import engine.managers.game.HitType;
+import engine.model.boards.BoardType;
+import engine.model.boards.GridPoint;
+import engine.model.boards.Player;
+import engine.model.boards.PlayerStatistics;
+import engine.model.ships.Ship;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -595,7 +595,7 @@ public class PlayerScreenController extends BaseController {
 
     private void handleGameOver(boolean byResign) {
 
-        String reason = (byResign ? this.game.getCurrentPlayer() + " resigned from the game.\n" : "");
+        String reason = (byResign ? this.game.getCurrentPlayer() + " resigned from the managers.\n" : "");
         String winner = "The Winner is " + this.game.getWinner() + "!\n";
         StringBuilder scores = new StringBuilder();
         for (Player p : this.game.getPlayerList()) {

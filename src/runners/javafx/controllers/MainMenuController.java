@@ -1,10 +1,10 @@
 package runners.javafx.controllers;
 
-import game.engine.GameManager;
-import game.engine.GameManagerFactory;
-import game.engine.GameState;
-import game.exceptions.GameSettingsInitializationException;
-import game.exceptions.InvalidFileFormatException;
+import engine.managers.game.GameManager;
+import engine.managers.game.GameManagerFactory;
+import engine.managers.game.GameState;
+import engine.exceptions.GameSettingsInitializationException;
+import engine.exceptions.InvalidFileFormatException;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -71,13 +71,13 @@ public class MainMenuController {
 
     public boolean handleResignGamePressed() {
         if (!isGameInProgress()) {
-            AlertBoxController.displayAlert("Illegal Action", "Player can't resign if a game is not in progress...");
+            AlertBoxController.displayAlert("Illegal Action", "Player can't resign if a managers is not in progress...");
             return false;
         }
 
         boolean res = false;
         res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to\n" +
-                        "resign from the game?");
+                        "resign from the managers?");
         if (res) {
             this.game.resignGame();
         }
@@ -89,7 +89,7 @@ public class MainMenuController {
     }
 
     public void handleAboutButtonPressed() {
-        AlertBoxController.displayAlert("About this game", "This game was developed for\n" +
+        AlertBoxController.displayAlert("About this managers", "This managers was developed for\n" +
                 "MTA's Java class by:\n" +
                 "Yuri Ritvin and Amir Shavit");
     }
