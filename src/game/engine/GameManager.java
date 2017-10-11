@@ -1,10 +1,10 @@
 package game.engine;
 
-import game.players.GridPoint;
-import game.players.Player;
-import game.players.PlayerStatistics;
-import game.players.ships.Ship;
-import game.players.ships.ShipType;
+import game.model.boards.GridPoint;
+import game.model.boards.Player;
+import game.model.boards.PlayerStatistics;
+import game.model.ships.Ship;
+import game.model.ships.ShipType;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,7 +114,7 @@ public class GameManager {
     }
 
     /*
-        Return true, when game is over, meaning that one of the players was defeated.
+        Return true, when game is over, meaning that one of the model was defeated.
      */
     public boolean isGameOver() {
         for (Player p : playerList) {

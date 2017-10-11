@@ -3,9 +3,9 @@ package game.engine;
 import descriptor.BattleShipGame;
 import descriptor.Board;
 import game.exceptions.*;
-import game.players.Player;
-import game.players.ships.Ship;
-import game.players.ships.ShipType;
+import game.model.boards.Player;
+import game.model.ships.Ship;
+import game.model.ships.ShipType;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -69,7 +69,7 @@ public class GameManagerFactory {
         for (int i = 0; i < playerList.size(); ++i) {
             descriptor.Board descBoard = playerList.get(i);
 
-            List<game.players.ships.Ship> ships = new ArrayList<>();
+            List<game.model.ships.Ship> ships = new ArrayList<>();
 
             for (descriptor.Ship item : descBoard.getShip()) {
                 String shipTypeId = item.getShipTypeId();
@@ -106,7 +106,7 @@ public class GameManagerFactory {
         }
     }
 
-    static private void validateShipDirections(List<game.players.ships.Ship> ships) throws GameSettingsInitializationException {
+    static private void validateShipDirections(List<game.model.ships.Ship> ships) throws GameSettingsInitializationException {
         for (Ship ship : ships) {
             if (ship.getDirection().getCategory() != ship.getMeta().getCategory()) {
                 throw new GameSettingsInitializationException("Ship direction configuration does not fit");

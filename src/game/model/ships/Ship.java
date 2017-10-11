@@ -1,10 +1,8 @@
-package game.players.ships;
+package game.model.ships;
 
 import descriptor.Position;
-import game.players.GridEntity;
-import game.players.GridPoint;
-import game.players.ships.ShipDirection;
-import game.players.ships.ShipType;
+import game.model.boards.GridEntity;
+import game.model.boards.GridPoint;
 
 import java.util.ArrayList;
 

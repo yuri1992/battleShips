@@ -1,4 +1,4 @@
-package game.players.ships;
+package game.model.ships;
 
 /**
  * Created by amirshavit on 9/14/17.

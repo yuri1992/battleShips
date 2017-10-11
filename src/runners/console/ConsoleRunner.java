@@ -3,9 +3,9 @@ package runners.console;
 import game.engine.*;
 import game.exceptions.InvalidFileFormatException;
 import game.exceptions.GameSettingsInitializationException;
-import game.players.BoardType;
-import game.players.Player;
-import game.players.GridPoint;
+import game.model.boards.BoardType;
+import game.model.boards.Player;
+import game.model.boards.GridPoint;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;

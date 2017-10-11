@@ -1,10 +1,10 @@
-package game.players;
+package game.model.boards;
 
 import game.engine.HitType;
 import game.exceptions.BoardBuilderException;
 import game.exceptions.ShipsLocatedTooClose;
 import game.exceptions.ShipsOffBoardException;
-import game.players.ships.Ship;
+import game.model.ships.Ship;
 
 import java.util.ArrayList;
 import java.util.HashMap;

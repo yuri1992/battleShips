@@ -1,7 +1,7 @@
 package game.engine;
 
-import game.players.GridPoint;
-import game.players.Player;
+import game.model.boards.GridPoint;
+import game.model.boards.Player;
 import runners.console.ConsoleUtils;
 
 import java.util.Date;

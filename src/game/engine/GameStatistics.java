@@ -1,7 +1,6 @@
 package game.engine;
 
-import game.players.Player;
-import game.players.PlayerStatistics;
+import game.model.boards.PlayerStatistics;
 
 import java.util.ArrayList;
 import java.util.Date;

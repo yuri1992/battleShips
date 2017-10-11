@@ -1,11 +1,9 @@
-package game.players;
+package game.model.boards;
 
-import game.engine.GameTurn;
 import game.engine.HitType;
 import game.exceptions.BoardBuilderException;
-import game.players.ships.Ship;
+import game.model.ships.Ship;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
