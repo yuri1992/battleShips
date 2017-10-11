@@ -75,7 +75,7 @@ public class ConsoleRunner {
 
     private void loadGame() {
         if (this.game != null && game.getState() == GameState.IN_PROGRESS) {
-            System.out.println("Game is already running, we can't load xml settings during a managers.");
+            System.out.println("Game is already running, we can't load xml settings during a game.");
             return;
         }
 
@@ -120,7 +120,7 @@ public class ConsoleRunner {
 
     private void showGameStatus() {
         if (game == null) {
-            System.out.println("Game status is not available before starting the managers");
+            System.out.println("Game status is not available before starting the game");
             System.out.println();
             return;
         }
@@ -166,7 +166,7 @@ public class ConsoleRunner {
 
     private void playTurn() {
         if (game == null) {
-            System.out.println("You must to initialize the managers by providing XML file.");
+            System.out.println("You must to initialize the game by providing XML file.");
             System.out.println();
             return;
         }
@@ -196,7 +196,7 @@ public class ConsoleRunner {
 
     private void showStatistics() {
         if (this.game == null) {
-            System.out.println("Statistics are available when managers started.");
+            System.out.println("Statistics are available when game started.");
             System.out.println();
             return;
         }
@@ -221,7 +221,7 @@ public class ConsoleRunner {
 
     private void resignGame() {
         if (game == null || !this.isGameRunning) {
-            System.out.println("Player can't resign if a managers is not in progress...");
+            System.out.println("Player can't resign if a game is not in progress...");
             System.out.println();
             return;
         }
@@ -230,7 +230,7 @@ public class ConsoleRunner {
 
         System.out.println("------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-----");
         System.out.println("-----------------------------------------------------------------------------------");
-        System.out.println("Player " + this.game.getCurrentPlayer() + " resigned from the managers.");
+        System.out.println("Player " + this.game.getCurrentPlayer() + " resigned from the game.");
         System.out.println("The Winner is " + this.game.getWinner() + " Congratulations");
 
         for (Player p : game.getPlayerList()) {
@@ -270,7 +270,7 @@ public class ConsoleRunner {
         this.isGameRunning = false;
         if (this.game != null && game.getState() == GameState.IN_PROGRESS)
             this.game.finishGame();
-        System.out.println("You decided to exited the managers, hope to see you soon.");
+        System.out.println("You decided to exited the game, hope to see you soon.");
     }
 
     private void printGameMenu() {

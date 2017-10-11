@@ -595,7 +595,7 @@ public class PlayerScreenController extends BaseController {
 
     private void handleGameOver(boolean byResign) {
 
-        String reason = (byResign ? this.game.getCurrentPlayer() + " resigned from the managers.\n" : "");
+        String reason = (byResign ? this.game.getCurrentPlayer() + " resigned from the game.\n" : "");
         String winner = "The Winner is " + this.game.getWinner() + "!\n";
         StringBuilder scores = new StringBuilder();
         for (Player p : this.game.getPlayerList()) {

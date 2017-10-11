@@ -94,7 +94,7 @@ public class GameManagerFactory {
         for (ShipType st : types) {
             if (mode == GameMode.BASIC && st.getCategory().getGameMode() == GameMode.ADVANCE) {
                 throw new GameSettingsInitializationException("Ship type " + st.getCategory() + " is not " +
-                        "supported on " + mode + "engine");
+                        "supported on " + mode + " game");
             }
 
             // Make sure each type is declared just once
@@ -148,7 +148,7 @@ public class GameManagerFactory {
         try {
             GameMode.valueOf(gameType);
         } catch (IllegalArgumentException e) {
-            throw new BoardBuilderException("Illegal managers type provided");
+            throw new BoardBuilderException("Illegal game type provided");
         }
     }
 

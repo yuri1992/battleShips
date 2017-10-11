@@ -71,13 +71,13 @@ public class MainMenuController {
 
     public boolean handleResignGamePressed() {
         if (!isGameInProgress()) {
-            AlertBoxController.displayAlert("Illegal Action", "Player can't resign if a managers is not in progress...");
+            AlertBoxController.displayAlert("Illegal Action", "Player can't resign if a game is not in progress...");
             return false;
         }
 
         boolean res = false;
         res = ConfirmBoxController.displayAlert("Are you sure?", "Are you sure you want to\n" +
-                        "resign from the managers?");
+                        "resign from the game?");
         if (res) {
             this.game.resignGame();
         }
@@ -89,7 +89,7 @@ public class MainMenuController {
     }
 
     public void handleAboutButtonPressed() {
-        AlertBoxController.displayAlert("About this managers", "This managers was developed for\n" +
+        AlertBoxController.displayAlert("About this game", "This managers was developed for\n" +
                 "MTA's Java class by:\n" +
                 "Yuri Ritvin and Amir Shavit");
     }

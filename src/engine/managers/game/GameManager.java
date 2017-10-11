@@ -114,7 +114,7 @@ public class GameManager {
     }
 
     /*
-        Return true, when managers is over, meaning that one of the model was defeated.
+        Return true, when game is over, meaning that one of the players was defeated.
      */
     public boolean isGameOver() {
         for (Player p : playerList) {
@@ -165,7 +165,7 @@ public class GameManager {
     }
 
     public Player getNextPlayer() {
-        // Todo: make this function more fancy and flexible to support multi user managers.
+        // Todo: make this function more fancy and flexible to support multi user game.
         return playerList.get(0) != this.getCurrentPlayer() ? playerList.get(0) : playerList.get(1);
     }
 
@@ -293,7 +293,7 @@ public class GameManager {
             }
             return true;
         } else {
-            /// TODO: Amir: Implement undo in the middle of the managers
+            /// TODO: Amir: Implement undo in the middle of the game
             System.out.println("Not impl yet");
         }
         return false;
@@ -301,7 +301,7 @@ public class GameManager {
 
     public boolean redoTurn() {
         if (state != GameState.REPLAY) {
-            System.out.println("redo not supported in real managers");
+            System.out.println("redo not supported in real game");
             return false;
         }
 

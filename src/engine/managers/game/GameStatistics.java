@@ -8,7 +8,7 @@ import java.util.List;
 
 /*
     Total Number of turns.
-    Total Time of the managers.
+    Total Time of the game.
     For Each Player:
         - How many hits
         - How many misses.
