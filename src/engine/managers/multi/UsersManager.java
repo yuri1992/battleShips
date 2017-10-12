@@ -15,11 +15,18 @@ import java.util.stream.Collectors;
  */
 public class UsersManager {
 
+    private static UsersManager instance;
     private final Set<User> activeUsers;
     private static int userIndex = 0;
 
-    public UsersManager() {
+    private UsersManager() {
         this.activeUsers = new HashSet<>();
+    }
+
+    public UsersManager sharedInstance() {
+        if (instance == null)
+            instance = new UsersManager();
+        return instance;
     }
 
     public void addUser(String username) throws UserNameTakenException {
