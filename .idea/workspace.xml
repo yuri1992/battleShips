@@ -1,7 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="298b0707-046f-4b9b-8273-489e8c6fc8cf" name="Default" comment="" />
+    <list default="true" id="298b0707-046f-4b9b-8273-489e8c6fc8cf" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/BattleShipsMain/src/META-INF/MANIFEST.MF" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/META-INF/MANIFEST.MF" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/BattleShipsJavafx.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BattleShipsMain/.gitignore" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/.idea/artifacts/BattleShipsJavafx.xml" afterPath="$PROJECT_DIR$/BattleShipsMain/.idea/artifacts/BattleShipsJavafx.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/.idea/description.html" afterPath="$PROJECT_DIR$/BattleShipsMain/.idea/description.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/.idea/misc.xml" afterPath="$PROJECT_DIR$/BattleShipsMain/.idea/misc.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/.idea/modules.xml" afterPath="$PROJECT_DIR$/BattleShipsMain/.idea/modules.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/.idea/project-template.xml" afterPath="$PROJECT_DIR$/BattleShipsMain/.idea/project-template.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/BattleShipsMain/.idea/uiDesigner.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/.idea/vcs.xml" afterPath="$PROJECT_DIR$/BattleShipsMain/.idea/vcs.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/BattleShipGame.xsd" afterPath="$PROJECT_DIR$/BattleShipsMain/BattleShipGame.xsd" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/BattleShipsConsole.iml" afterPath="$PROJECT_DIR$/BattleShipsMain/BattleShipsConsole.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/BattleShipsMain/META-INF/MANIFEST.MF" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/battleShips.iml" afterPath="$PROJECT_DIR$/BattleShipsMain/BattleShipsMain.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/BattleShipGame.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/BattleShipGame.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/BattleShipGame.xsd" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/BattleShipGame.xsd" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/Board.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/Board.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/Boards.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/Boards.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/Mine.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/Mine.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/ObjectFactory.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/ObjectFactory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/Position.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/Position.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/Ship.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/Ship.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/ShipType.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/ShipType.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/descriptor/ShipTypes.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/descriptor/ShipTypes.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/BoardBuilderException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/BoardBuilderException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/DuplicatedShipTypesDecleared.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/DuplicatedShipTypesDecleared.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/GameSettingsInitializationException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/GameSettingsInitializationException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/InvalidBoardSizeException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/InvalidBoardSizeException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/InvalidFileFormatException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/InvalidFileFormatException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/MatchException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/MatchException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/MatchInsufficientRightsException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/MatchInsufficientRightsException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/MatchNameTakenException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/MatchNameTakenException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/MatchNotFoundException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/MatchNotFoundException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/NotEnoughShipsLocated.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/NotEnoughShipsLocated.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/NotRecognizedShipType.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/NotRecognizedShipType.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/ShipTypeNotDeclared.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/ShipTypeNotDeclared.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/ShipsLocatedTooClose.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/ShipsLocatedTooClose.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/ShipsOffBoardException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/ShipsOffBoardException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/UserException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/UserException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/UserNameTakenException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/UserNameTakenException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/UserNotFoundException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/UserNotFoundException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/exceptions/UserNotInMatchException.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/exceptions/UserNotInMatchException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/GameManager.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/GameManager.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/GameManagerFactory.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/GameManagerFactory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/GameMode.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/GameMode.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/GameState.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/GameState.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/GameStatistics.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/GameStatistics.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/GameTurn.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/GameTurn.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/HitType.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/HitType.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/game/JAXBGameParser.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/game/JAXBGameParser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/multi/MatchManager.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/multi/MatchManager.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/managers/multi/UsersManager.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/managers/multi/UsersManager.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/AttackBoard.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/AttackBoard.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/Board.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/Board.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/BoardType.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/BoardType.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/GridEntity.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/GridEntity.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/GridPoint.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/GridPoint.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/GridState.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/GridState.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/Mine.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/Mine.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/Player.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/Player.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/PlayerStatistics.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/PlayerStatistics.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/boards/ShipsBoard.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/boards/ShipsBoard.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/multi/Match.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/multi/Match.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/multi/User.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/multi/User.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/ships/Ship.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/ships/Ship.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/ships/ShipCategory.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/ships/ShipCategory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/ships/ShipDirection.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/ships/ShipDirection.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/engine/model/ships/ShipType.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/engine/model/ships/ShipType.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/console/ConsoleMenu.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/console/ConsoleMenu.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/console/ConsoleRunner.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/console/ConsoleRunner.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/console/ConsoleUtils.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/console/ConsoleUtils.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/console/Main.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/console/Main.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/Main.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/Main.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/controllers/AlertBoxController.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/controllers/AlertBoxController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/controllers/BaseController.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/controllers/BaseController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/controllers/ConfirmBoxController.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/controllers/ConfirmBoxController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/controllers/MainMenuController.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/controllers/MainMenuController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/controllers/PlayerScreenController.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/controllers/PlayerScreenController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/PlayerScreen.css" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/PlayerScreen.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/explode.png" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/explode.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/fire.png" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/fire.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/game_of_thrones.jpg" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/game_of_thrones.jpg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/mine.png" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/mine.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/miss.png" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/miss.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/sea.png" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/sea.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/css/ship.png" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/css/ship.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/fxml/AlertBox.fxml" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/fxml/AlertBox.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/fxml/ConfirmBox.fxml" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/fxml/ConfirmBox.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/fxml/PlayerScreen.fxml" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/fxml/PlayerScreen.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/models/BaseModel.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/models/BaseModel.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/battleShips/src/runners/javafx/models/MainModel.java" afterPath="$PROJECT_DIR$/BattleShipsMain/src/runners/javafx/models/MainModel.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/BattleShipGame.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/BattleShipGame.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/BattleShipGame.xsd" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/BattleShipGame.xsd" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/Board.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/Board.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/Boards.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/Boards.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/Mine.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/Mine.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/ObjectFactory.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/ObjectFactory.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/Position.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/Position.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/Ship.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/Ship.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/ShipType.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/ShipType.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/descriptor/ShipTypes.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/descriptor/ShipTypes.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/BoardBuilderException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/BoardBuilderException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/DuplicatedShipTypesDecleared.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/DuplicatedShipTypesDecleared.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/GameSettingsInitializationException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/GameSettingsInitializationException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/InvalidBoardSizeException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/InvalidBoardSizeException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/InvalidFileFormatException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/InvalidFileFormatException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/MatchException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/MatchException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/MatchInsufficientRightsException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/MatchInsufficientRightsException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/MatchNameTakenException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/MatchNameTakenException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/MatchNotFoundException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/MatchNotFoundException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/NotEnoughShipsLocated.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/NotEnoughShipsLocated.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/NotRecognizedShipType.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/NotRecognizedShipType.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/ShipTypeNotDeclared.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/ShipTypeNotDeclared.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/ShipsLocatedTooClose.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/ShipsLocatedTooClose.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/ShipsOffBoardException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/ShipsOffBoardException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/UserException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/UserException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/UserNameTakenException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/UserNameTakenException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/UserNotFoundException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/UserNotFoundException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/exceptions/UserNotInMatchException.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/exceptions/UserNotInMatchException.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/GameManager.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/GameManager.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/GameManagerFactory.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/GameManagerFactory.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/GameMode.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/GameMode.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/GameState.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/GameState.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/GameStatistics.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/GameStatistics.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/GameTurn.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/GameTurn.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/HitType.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/HitType.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/game/JAXBGameParser.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/game/JAXBGameParser.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/multi/MatchManager.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/multi/MatchManager.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/managers/multi/UsersManager.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/managers/multi/UsersManager.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/AttackBoard.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/AttackBoard.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/Board.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/Board.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/BoardType.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/BoardType.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/GridEntity.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/GridEntity.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/GridPoint.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/GridPoint.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/GridState.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/GridState.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/Mine.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/Mine.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/Player.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/Player.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/PlayerStatistics.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/PlayerStatistics.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/boards/ShipsBoard.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/boards/ShipsBoard.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/multi/Match.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/multi/Match.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/multi/User.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/multi/User.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/ships/Ship$1.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/ships/Ship$1.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/ships/Ship.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/ships/Ship.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/ships/ShipCategory.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/ships/ShipCategory.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/ships/ShipDirection.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/ships/ShipDirection.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/engine/model/ships/ShipType.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/engine/model/ships/ShipType.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/console/ConsoleMenu.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/console/ConsoleMenu.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/console/ConsoleRunner$1.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/console/ConsoleRunner$1.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/console/ConsoleRunner.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/console/ConsoleRunner.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/console/ConsoleUtils.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/console/ConsoleUtils.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/console/Main.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/console/Main.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/Main.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/Main.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/AlertBoxController.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/AlertBoxController.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/BaseController.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/BaseController.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/ConfirmBoxController.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/ConfirmBoxController.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/MainMenuController$1.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/MainMenuController$1.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/MainMenuController.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/MainMenuController.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/PlayerScreenController$1.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/PlayerScreenController$1.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/PlayerScreenController$2.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/PlayerScreenController$2.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/controllers/PlayerScreenController.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/controllers/PlayerScreenController.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/PlayerScreen.css" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/PlayerScreen.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/explode.png" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/explode.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/fire.png" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/fire.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/game_of_thrones.jpg" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/game_of_thrones.jpg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/mine.png" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/mine.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/miss.png" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/miss.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/sea.png" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/sea.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/css/ship.png" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/css/ship.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/fxml/AlertBox.fxml" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/fxml/AlertBox.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/fxml/ConfirmBox.fxml" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/fxml/ConfirmBox.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/fxml/PlayerScreen.fxml" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/fxml/PlayerScreen.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/models/BaseModel.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/models/BaseModel.class" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/out/production/battleShips/runners/javafx/models/MainModel.class" afterPath="$PROJECT_DIR$/out/production/BattleShipsMain/runners/javafx/models/MainModel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +214,9 @@
     <option name="width" value="1638" />
     <option name="height" value="1027" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -53,7 +232,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -62,7 +243,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="battleShips" />
+              <option name="myItemId" value="BattleShipsMain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -72,7 +253,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="battleShips" />
+              <option name="myItemId" value="BattleShipsMain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -90,7 +271,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="battleShips" />
+              <option name="myItemId" value="BattleShipsMain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -112,7 +293,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="battleShips" />
+              <option name="myItemId" value="BattleShipsMain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -122,15 +303,13 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.13850415" />
     <property name="project.structure.side.proportion" value="0.24716553" />
   </component>
@@ -168,7 +347,7 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="battleShips" />
+      <module name="BattleShipsMain" />
       <envs />
       <method />
     </configuration>
@@ -188,7 +367,7 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="battleShips" />
+      <module name="BattleShipsMain" />
       <envs />
       <method />
     </configuration>
@@ -275,10 +454,10 @@
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -596,8 +775,8 @@
     </list>
     <recent_temporary>
       <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.Main Console" />
-        <item index="1" class="java.lang.String" itemvalue="Application.MainJavaFx" />
+        <item index="0" class="java.lang.String" itemvalue="Application.MainJavaFx" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Main Console" />
       </list>
     </recent_temporary>
   </component>
@@ -615,24 +794,36 @@
       <workItem from="1507787959800" duration="184000" />
       <workItem from="1507788219953" duration="307000" />
       <workItem from="1507874833258" duration="822000" />
+      <workItem from="1507876757562" duration="944000" />
+      <workItem from="1507877747370" duration="59000" />
+      <workItem from="1507877820920" duration="35000" />
+      <workItem from="1507877936215" duration="474000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1518000" />
+    <option name="totallyTimeSpent" value="3030000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="42" y="23" width="1638" height="1027" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34438503" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -640,7 +831,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2725564" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29385966" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -651,6 +842,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34438503" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -677,10 +869,11 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>battleShips:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.24716553" />
               </list>
             </option>
           </splitter-proportions>
@@ -692,7 +885,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.24716553" />
               </list>
             </option>
           </splitter-proportions>
@@ -703,7 +896,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.24716553" />
               </list>
             </option>
           </splitter-proportions>
@@ -715,7 +908,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.24716553" />
               </list>
             </option>
           </splitter-proportions>
@@ -723,11 +916,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>battleShips</last-edited>
+          <last-edited>BattleShipsMain</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.24716553" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
