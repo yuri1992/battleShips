@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         User user = SessionUtils.getSessionUser(req);
-        if (user != null) { // User already loggid in
+        if (user != null) { // User already logged id in
             resp.sendRedirect(GAME_HUB_URL);
             return;
         }
@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
                 user = ServletUtils.getUserManager().addUser(userName);
                 SessionUtils.setSessionUser(req, user);
                 resp.sendRedirect(GAME_HUB_URL);
+                return;
             } catch (UserNameTakenException e) {
                 /// TODO: Amir: Handle name taken
             }

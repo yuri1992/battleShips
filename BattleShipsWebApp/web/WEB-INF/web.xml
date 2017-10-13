@@ -13,4 +13,13 @@
         <url-pattern>/pages/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/pages/logout</url-pattern>
+    </servlet-mapping>
+
 </web-app>
