@@ -1,6 +1,8 @@
 package servlets;
 
+import engine.exceptions.UserNameTakenException;
 import engine.model.multi.User;
+import utils.ServletUtils;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;
@@ -28,16 +30,23 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        String userName = req.getParameter(USERNAME);
-        if (userName == null || userName.isEmpty()) {
-            resp.sendRedirect(SIGN_IN_URL);
-            return;
+        String userName = validateUserName(req.getParameter(USERNAME));
+        if (userName != null) {
+            try {
+                user = ServletUtils.getUserManager().addUser(userName);
+                SessionUtils.setSessionUser(req, user);
+                resp.sendRedirect(GAME_HUB_URL);
+            } catch (UserNameTakenException e) {
+                /// TODO: Amir: Handle name taken
+            }
+        } else {
+            /// TODO: Amir: Handle empty name
         }
 
-
-
-
+        resp.sendRedirect(SIGN_IN_URL);
     }
+
+    //<editor-fold defaultstate="collapsed" desc="HttpServlet Overrides"
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,4 +62,14 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return this.getClass().toString();
     }
+
+    //</editor-fold>
+
+    private String validateUserName(String un) {
+        /// TODO: Amir: Consider name/char validation
+        if (un != null && !un.isEmpty())
+            return un.trim();
+        else return null;
+    }
 }
+

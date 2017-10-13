@@ -26,6 +26,10 @@ public class SessionUtils {
         return null;
     }
 
+    public static void setSessionUser(HttpServletRequest request, User user) {
+        request.getSession().setAttribute(Constants.SESSION_USER_ID, user.getId());
+    }
+
     public static void clearSession (HttpServletRequest request) {
         request.getSession().invalidate();
     }
@@ -42,6 +46,4 @@ public class SessionUtils {
         }
         return PARAMETER_ERROR_INT;
     }
-
-
 }
