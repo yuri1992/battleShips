@@ -6,8 +6,10 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="BattleShipsWebApp" />
+          <element id="module-output" name="BattleShipsMain" />
         </element>
       </element>
+      <element id="module-output" name="BattleShipsMain" />
     </root>
   </artifact>
 </component>

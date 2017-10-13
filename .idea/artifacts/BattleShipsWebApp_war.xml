@@ -3,6 +3,12 @@
     <output-path>$PROJECT_DIR$/out/artifacts/BattleShipsWebApp_war</output-path>
     <root id="archive" name="BattleShipsWebApp_war.war">
       <element id="artifact" artifact-name="BattleShipsWebApp:war exploded" />
+      <element id="module-output" name="BattleShipsMain" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="BattleShipsMain" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>
