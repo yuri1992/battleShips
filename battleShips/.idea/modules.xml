@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/battleShips/battleShips.iml" filepath="$PROJECT_DIR$/battleShips/battleShips.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BattleShipsConsole.iml" filepath="$PROJECT_DIR$/BattleShipsConsole.iml" />
     </modules>
   </component>
 </project>

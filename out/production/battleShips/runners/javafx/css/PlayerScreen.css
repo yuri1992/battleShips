@@ -1,0 +1,129 @@
+.empty {
+    -fx-background-color: transparent;
+    -fx-background-image: url(sea.png);
+    -fx-background-size: 30px 30px;
+}
+
+.ship {
+    -fx-background-color: transparent;
+    -fx-background-image: url(ship.png);
+    -fx-background-size: 30px 30px;
+}
+
+.ship-hit {
+    -fx-background-color: transparent;
+    -fx-background-image: url(fire.png);
+    -fx-background-size: 30px 30px;
+}
+
+.mine-hit {
+    -fx-background-color: transparent;
+    -fx-background-image: url(explode.png);
+    -fx-background-size: 30px 30px;
+}
+
+.miss {
+    -fx-background-color: transparent;
+    -fx-background-image: url(miss.png);
+    -fx-background-size: 30px 30px;
+}
+
+.highlight-border {
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+}
+
+.mine {
+    -fx-background-color: transparent;
+    -fx-background-image: url(mine.png);
+    -fx-background-size: 30px 30px;
+}
+
+.text-winner {
+    -fx-border-color: gold;
+    -fx-font-size: 24px;
+    -fx-color: red;
+}
+
+.text-remaining {
+
+}
+
+.grey-border {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+}
+
+.text-header {
+    -fx-font-size: 24px;
+    -fx-text-fill:#000;
+}
+
+.theme-dracula .text-header {
+    -fx-font-size: 24px;
+    -fx-text-fill: #fff;
+}
+
+.theme-dracula .text-regular {
+    -fx-text-fill: #fff;
+}
+.theme-dracula .grey-border {
+    -fx-border-color: #fff;
+    -fx-border-width: 1px;
+}
+
+.theme-dracula .remain-box {
+    -fx-background-color: #fff;
+}
+
+.theme-dracula {
+    -fx-background-color: #000000;
+}
+
+
+
+.theme-white .text-header {
+    -fx-font-size: 24px;
+    -fx-text-fill: #008000;
+}
+
+.theme-white .text-regular {
+    -fx-text-fill: #0000FF;
+}
+.theme-white .grey-border {
+    -fx-border-color: #555555;
+    -fx-border-width: 1px;
+}
+
+.theme-white .remain-box {
+    -fx-background-color: #fff;
+}
+
+.theme-white {
+    -fx-background-color: #fff;
+}
+
+
+.theme-games .text-header {
+    -fx-font-size: 24px;
+    -fx-text-fill: #fff;
+}
+
+.theme-games .text-regular {
+    -fx-text-fill: #0000FF;
+}
+.theme-games .grey-border {
+    -fx-border-color: #555555;
+    -fx-border-width: 1px;
+}
+
+.theme-games .remain-box {
+    -fx-background-color: #fff;
+}
+
+.theme-games {
+    -fx-background-color: #fff;
+    -fx-background-image: url("game_of_thrones.jpg");
+    -fx-background-size: 100% 100%;
+}
+

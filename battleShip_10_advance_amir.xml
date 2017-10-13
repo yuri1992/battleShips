@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<BattleShipGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BattleShipGame.xsd">
+<BattleShipGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="battleShips/BattleShipGame.xsd">
     <GameType>ADVANCE</GameType>
     <boardSize>15</boardSize>
     <shipTypes>
