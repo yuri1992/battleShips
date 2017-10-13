@@ -32,7 +32,7 @@ public class MatchManager {
         this.matchSet = new HashSet<>();
     }
 
-    public MatchManager sharedInstance() {
+    public static MatchManager sharedInstance() {
         if (instance == null)
             instance = new MatchManager();
         return instance;

@@ -23,7 +23,7 @@ public class UsersManager {
         this.activeUsers = new HashSet<>();
     }
 
-    public UsersManager sharedInstance() {
+    public static UsersManager sharedInstance() {
         if (instance == null)
             instance = new UsersManager();
         return instance;
@@ -38,7 +38,7 @@ public class UsersManager {
     }
 
     public void removeUser(int userId) throws UserNotFoundException {
-        User u = getUserById(userId);
+        User u = getUser(userId);
         activeUsers.remove(u);
     }
 
@@ -46,7 +46,7 @@ public class UsersManager {
         return Collections.unmodifiableSet(activeUsers);
     }
 
-    private User getUserById(int userId) throws UserNotFoundException {
+    public User getUser(int userId) throws UserNotFoundException {
         List<User> list = getUsers().stream().filter(u -> u.getId() == userId).collect(Collectors.toList());
         if (list.size() == 0)
             throw new UserNotFoundException(userId);
