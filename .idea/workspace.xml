@@ -1,98 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="298b0707-046f-4b9b-8273-489e8c6fc8cf" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/artifacts/BattleShipsJavafx.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/description.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/project-template.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BattleShipGame.xsd" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BattleShipsConsole.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/BattleShipGame.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/BattleShipGame.xsd" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/Board.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/Boards.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/Mine.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/ObjectFactory.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/Position.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/Ship.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/ShipType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/descriptor/ShipTypes.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/BoardBuilderException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/DuplicatedShipTypesDecleared.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/GameSettingsInitializationException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/InvalidBoardSizeException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/InvalidFileFormatException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/MatchException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/MatchInsufficientRightsException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/MatchNameTakenException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/MatchNotFoundException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/NotEnoughShipsLocated.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/NotRecognizedShipType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/ShipTypeNotDeclared.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/ShipsLocatedTooClose.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/ShipsOffBoardException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/UserException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/UserNameTakenException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/UserNotFoundException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/exceptions/UserNotInMatchException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/GameManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/GameManagerFactory.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/GameMode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/GameState.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/GameStatistics.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/GameTurn.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/HitType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/game/JAXBGameParser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/multi/MatchManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/managers/multi/UsersManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/AttackBoard.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/Board.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/BoardType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/GridEntity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/GridPoint.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/GridState.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/Mine.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/Player.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/PlayerStatistics.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/boards/ShipsBoard.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/multi/Match.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/multi/User.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/ships/Ship.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/ships/ShipCategory.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/ships/ShipDirection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/engine/model/ships/ShipType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/console/ConsoleMenu.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/console/ConsoleRunner.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/console/ConsoleUtils.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/console/Main.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/Main.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/controllers/AlertBoxController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/controllers/BaseController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/controllers/ConfirmBoxController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/controllers/MainMenuController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/controllers/PlayerScreenController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/PlayerScreen.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/explode.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/fire.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/game_of_thrones.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/mine.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/miss.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/sea.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/css/ship.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/fxml/AlertBox.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/fxml/ConfirmBox.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/fxml/PlayerScreen.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/models/BaseModel.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/runners/javafx/models/MainModel.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/battleShip_10_advance_amir.xml" afterPath="$PROJECT_DIR$/battleShip_10_advance_amir.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/battleShip_5_basic.xml" afterPath="$PROJECT_DIR$/battleShip_5_basic.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/battleShip_5_basic_advance.xml" afterPath="$PROJECT_DIR$/battleShip_5_basic_advance.xml" />
-    </list>
+    <list default="true" id="298b0707-046f-4b9b-8273-489e8c6fc8cf" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -157,6 +66,60 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battleShips" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battleShips" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runners" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battleShips" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battleShips" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runners" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="console" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battleShips" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battleShips" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
@@ -197,6 +160,26 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="runners.javafx.Main" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="battleShips" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Main Console" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="runners.console.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="runners.console.Main" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
@@ -607,12 +590,14 @@
     <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Application.MainJavaFx" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Main Console" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.MainJavaFx" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Application.Main Console" />
+        <item index="1" class="java.lang.String" itemvalue="Application.MainJavaFx" />
       </list>
     </recent_temporary>
   </component>
@@ -629,12 +614,12 @@
       <workItem from="1507787316450" duration="205000" />
       <workItem from="1507787959800" duration="184000" />
       <workItem from="1507788219953" duration="307000" />
-      <workItem from="1507874833258" duration="721000" />
+      <workItem from="1507874833258" duration="822000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1417000" />
+    <option name="totallyTimeSpent" value="1518000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="42" y="23" width="1638" height="1027" extended-state="6" />
@@ -649,13 +634,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34438503" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2725564" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2725564" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
