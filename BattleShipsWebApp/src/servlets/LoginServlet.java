@@ -7,6 +7,7 @@ import engine.model.multi.User;
 import utils.ServletUtils;
 import utils.SessionUtils;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +22,8 @@ public class LoginServlet extends HttpServlet {
 
     public static final String USERNAME = "username";
 
-    private final String GAME_HUB_URL = "../pages/gamehub.html";
-    private final String SIGN_IN_URL = "../pages/signin.html";
+    private final String GAME_HUB_URL = "../pages/gamehub.jsp";
+    private final String SI = "../pages/signup.jsp";
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -59,7 +60,7 @@ public class LoginServlet extends HttpServlet {
         out.flush();
     }
 
-    private void processRequestRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void processRequestRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
         User user = SessionUtils.getSessionUser(req);
         if (user != null) { // User already logged id in
@@ -81,7 +82,9 @@ public class LoginServlet extends HttpServlet {
             /// TODO: Amir: Handle empty name
         }
 
-        resp.sendRedirect(SIGN_IN_URL);
+        // Fowarding to signup page
+        RequestDispatcher rd = req.getRequestDispatcher("signup.jsp");
+        rd.forward(req, resp);
     }
 
     //<editor-fold defaultstate="collapsed" desc="HttpServlet Overrides"
