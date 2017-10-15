@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class LogoutServlet extends HttpServlet {
 
-    private final String SIGN_IN_URL = "../pages/signin.html";
+    private final String SIGN_IN_URL = "../pages/signin.jsp";
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User user = SessionUtils.getSessionUser(req);
