@@ -12,7 +12,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="/pages/signup">Signup</a></li>
+
             </ul>
         </div><!--/.navbar-collapse -->
     </div>

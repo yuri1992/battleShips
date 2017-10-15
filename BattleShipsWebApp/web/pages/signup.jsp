@@ -9,4 +9,5 @@
 <jsp:include page="/pages/base.jsp">
     <jsp:param name="content" value="signup.html"/>
     <jsp:param name="title" value="Book Form"/>
+    <jsp:param name="jsFile" value="signup.js"/>
 </jsp:include>

@@ -21,13 +21,19 @@
 <jsp:include page="/pages/header.jsp"/>
 <div class="container">
     <jsp:include page="/pages/html/${param.content}"/>
+
+    <div class="row">
+        <div class="col-xs-12" id="js-messages">
+        </div>
+    </div>
 </div>
 <jsp:include page="/pages/footer.jsp"/>
 
 <!-- Vendor Scripts -->
 <script src="../static/js/vendor/jquery.min.js"></script>
 <script src="../static/js/vendor/bootstrap.min.js"></script>
-<script src="../static/js/signup.js"></script>
+<script src="../static/js/common.js"></script>
+<script src="../static/js/${param.jsFile}"></script>
 
 </body>
 </html>

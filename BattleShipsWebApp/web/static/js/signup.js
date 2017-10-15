@@ -24,20 +24,6 @@ $(function ($) {
             this.$form.submit(f);
         },
 
-        addMessage: function (text, level) {
-            var messageHtml = $('<div class="alert" role="alert">' +
-                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
-                '  <span aria-hidden="true">&times;</span>\n' +
-                '</button>' + text + '</div>');
-
-            if (level === 'error') {
-                messageHtml.addClass('alert-danger');
-            } else
-                messageHtml.addClass('alert-success');
-
-            $('.js-messages').append(messageHtml);
-        },
-
         isEmailValid: function () {
             return /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(this.$email.val());
         },
@@ -89,6 +75,7 @@ $(function ($) {
 
                 $.ajax({
                     method: "POST",
+                    url: "/api/users",
                     data: {
                         username: this.$username.val(),
                         email: this.$email.val(),
@@ -98,19 +85,22 @@ $(function ($) {
                     beforeSend: function () {
                         var btn = self.$form.find('button');
                         btn.attr('disabled');
-                        btn.append('<span class="glyphicon-refresh-animate"/>');
+                        btn.append('<span class="glyphicon-refresh-animate glyphicon glyphicon-refresh"/>');
                         $('.js-messages .alert').remove();
                     },
-                    always: function () {
-                        self.$form.find('button').removeAttr('disabled');
-                    }
+
                 }).done(function (data, text) {
-                    self.addMessage("Welcome, you will be redirected in a few seconds...");
-                    setTimeout(function() {
-                        window.location = 'pages/gamehub.jsp';
+                    CommonUtils.addMessage("Welcome, you will be redirected in a few seconds...");
+                    setTimeout(function () {
+                        window.location = 'pages/game.jsp';
                     }, 2000);
                 }).fail(function (xhr, text, status) {
-                    self.addMessage("Email and Password didn't match, please try again", 'error');
+                    CommonUtils.clearMessages();
+                    CommonUtils.addMessage("Email and Password didn't match, please try again", 'error');
+                }).always(function () {
+                    console.log(self.$form.find('.glyphicon-refresh-animate'));
+                    self.$form.find('.glyphicon-refresh-animate').remove();
+                    self.$form.find('button').removeAttr('disabled');
                 })
 
             } else {
