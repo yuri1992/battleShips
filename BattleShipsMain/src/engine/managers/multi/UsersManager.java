@@ -29,11 +29,11 @@ public class UsersManager {
         return instance;
     }
 
-    public User addUser(String username) throws UserNameTakenException {
+    public User addUser(String username, String email, String password) throws UserNameTakenException {
         if (isUserNameTaken(username))
             throw new UserNameTakenException(username);
 
-        User res = new User(userIndex, username);
+        User res = new User(userIndex, username, email, password);
         activeUsers.add(res);
         userIndex++;
         return res;
