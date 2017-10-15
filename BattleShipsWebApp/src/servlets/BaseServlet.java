@@ -1,5 +1,9 @@
 package servlets;
 
+import com.google.gson.JsonObject;
+import engine.model.multi.User;
+import utils.SessionUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +21,13 @@ public abstract class BaseServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json;charset=UTF-8");
         processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json;charset=UTF-8");
         processRequest(req, resp);
     }
 
@@ -32,4 +38,18 @@ public abstract class BaseServlet extends HttpServlet{
     }
 
     //</editor-fold>
+
+    protected boolean isSessionValid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = SessionUtils.getSessionUser(request);
+        if (user == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            JsonObject obj = new JsonObject();
+            obj.addProperty("desc", "User not logged in");
+            response.getWriter().println(obj);
+            response.getWriter().flush();
+            return false;
+        }
+        return true;
+    }
+
 }
