@@ -3,6 +3,7 @@ $(function ($) {
         this.$gameList = $('#js-game-list');
         this.$playerList = $('#js-player-list');
         this.$createBtn = $('#create-game');
+        this.$modal = $('#create-game-modal');
 
         this.games = [];
         this.users = [];
@@ -12,16 +13,53 @@ $(function ($) {
 
     GameList.prototype = {
         init: function () {
+            // Todo: Auto Pooling
             this.loadGames();
             this.loadPlayers();
 
-            this.$createBtn.click(function () {
-                self.onGameClick();
+            var self = this;
+            this.$createBtn.click(function (e) {
+                self.onCreateGameClick(e);
+            });
+
+            this.$modal.find('form').submit(function (e) {
+                e.preventDefault();
+                self.submitNewGame(e);
             })
         },
 
-        onGameClick: function (event) {
+        onCreateGameClick: function (event) {
+            this.$modal.modal('show');
+        },
 
+        submitNewGame: function (event) {
+            var $form = $(event.target);
+            var formData = new FormData();
+
+            // add assoc key values, this will be posts values
+            var file = $form.find('#xml-file').get(0).files[0];
+            console.log(file, file.name)
+            formData.append("file", file, file.name);
+            formData.append("name", $form.find('#name').val());
+
+            $.ajax({
+                url: "/api/games",
+                method: "POST",
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $form.find('.btn-success').attr('disabled');
+                    $form.find('.btn-success').append('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>');
+                }
+            }).done(function (data, text) {
+                console.log(data);
+            }).fail(function (xhr, text, status) {
+                console.log('handle errors', xhr, text)
+            }).always(function () {
+                $form.find('.btn-success').find('.glyphicon-refresh-animate').remove();
+            })
         },
 
         loadGames: function () {

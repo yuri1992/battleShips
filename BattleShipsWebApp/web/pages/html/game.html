@@ -16,3 +16,38 @@
         </ul>
     </div>
 </div>
+
+
+<div class="modal fade" id="create-game-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <h2 class="modal-title" id="myModalLabel">Create New Batlle</h2>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group" id="form-group-gamename">
+                        <label for="name" class="sr-only">Game Name</label>
+                        <input type="name" id="name" class="form-control  input-md" placeholder="Game Name" required
+                               autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xml-file">XML Settings File</label>
+                        <input type="file" name="file" id="xml-file">
+                        <p class="help-block">Select XML settings file</p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success pull-left">Create Game</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

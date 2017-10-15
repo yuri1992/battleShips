@@ -7,14 +7,19 @@ import utils.ServletUtils;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Set;
 
 
 public class APIGameServlet extends JsonServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Todo: Should create a game
-        // Handle XML upload
+        String description = request.getParameter("name");
+        Part filePart = request.getPart("file");
+        String fileName = Paths.get(filePart.getName()).getFileName().toString();
+        InputStream fileContent = filePart.getInputStream();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
