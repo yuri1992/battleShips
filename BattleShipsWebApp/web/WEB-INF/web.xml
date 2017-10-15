@@ -9,7 +9,6 @@
     </welcome-file-list>
 
 
-
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlets.LoginServlet</servlet-class>
@@ -36,6 +35,15 @@
     <servlet-mapping>
         <servlet-name>GameServlet</servlet-name>
         <url-pattern>/pages/game</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UsersServlet</servlet-name>
+        <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/pages/users</url-pattern>
     </servlet-mapping>
 
 </web-app>

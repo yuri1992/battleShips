@@ -18,14 +18,15 @@ import java.io.PrintWriter;
 /**
  * Created by amirshavit on 10/13/17.
  */
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends BaseServlet {
 
     public static final String USERNAME = "username";
 
     private final String GAME_HUB_URL = "../pages/gamehub.jsp";
     private final String SI = "../pages/signup.jsp";
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
