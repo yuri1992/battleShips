@@ -4,14 +4,21 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <welcome-file-list>
+        <welcome-file>pages/signup</welcome-file>
+    </welcome-file-list>
+
+
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/pages/login</url-pattern>
+        <url-pattern>/pages/signup</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
@@ -20,6 +27,15 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/pages/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GameServlet</servlet-name>
+        <servlet-class>servlets.GameServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GameServlet</servlet-name>
+        <url-pattern>/pages/game</url-pattern>
     </servlet-mapping>
 
 </web-app>
