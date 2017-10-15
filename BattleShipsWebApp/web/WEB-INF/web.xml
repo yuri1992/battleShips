@@ -18,16 +18,6 @@
         <url-pattern>/pages/signup</url-pattern>
     </servlet-mapping>
 
-
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>servlets.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/pages/logout</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>GameServlet</servlet-name>
         <servlet-class>servlets.GameServlet</servlet-class>
@@ -39,12 +29,20 @@
 
 
     <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>servlets.APILogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/api/logout</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>servlets.UserServlet</servlet-class>
+        <servlet-class>servlets.APIUserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UsersServlet</servlet-name>
-        <url-pattern>/pages/users</url-pattern>
+        <url-pattern>/api/users</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -53,17 +51,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>APIGameServlet</servlet-name>
-        <url-pattern>/api/games/</url-pattern>
+        <url-pattern>/api/games</url-pattern>
     </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>APIGamePlayServlet</servlet-name>
-        <servlet-class>servlets.APIGamePlayServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>APIGamePlayServlet</servlet-name>
-        <url-pattern>/api/game/play</url-pattern>
-    </servlet-mapping>
-
 </web-app>
