@@ -37,6 +37,7 @@
         <url-pattern>/pages/game</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <servlet-name>UsersServlet</servlet-name>
         <servlet-class>servlets.UserServlet</servlet-class>
@@ -44,6 +45,25 @@
     <servlet-mapping>
         <servlet-name>UsersServlet</servlet-name>
         <url-pattern>/pages/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>APIGameServlet</servlet-name>
+        <servlet-class>servlets.APIGameServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>APIGameServlet</servlet-name>
+        <url-pattern>/api/games/</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>APIGamePlayServlet</servlet-name>
+        <servlet-class>servlets.APIGamePlayServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>APIGamePlayServlet</servlet-name>
+        <url-pattern>/api/game/play</url-pattern>
     </servlet-mapping>
 
 </web-app>

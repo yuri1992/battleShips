@@ -107,7 +107,7 @@ $(function ($) {
                 }).done(function (data, text) {
                     self.addMessage("Welcome, you will be redirected in a few seconds...");
                     setTimeout(function() {
-                        window.location = 'pages/profile.html';
+                        window.location = 'pages/gamehub.jsp';
                     }, 2000);
                 }).fail(function (xhr, text, status) {
                     self.addMessage("Email and Password didn't match, please try again", 'error');

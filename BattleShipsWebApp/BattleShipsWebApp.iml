@@ -23,5 +23,6 @@
     <orderEntry type="module" module-name="BattleShipsMain" />
     <orderEntry type="library" name="gson-2.1" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
   </component>
 </module>
