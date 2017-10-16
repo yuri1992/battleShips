@@ -1,10 +1,19 @@
 .form-signin {
-    max-width:480px;
+    max-width: 480px;
     margin: auto;
 }
 
 #js-messages {
-    margin-top:20px;
+    margin-top: 20px;
+}
+
+
+h1 .glyphicon-refresh-animate {
+    float:right;
+    font-size:16px;
+}
+.actions .glyphicon-play {
+    color: green;
 }
 
 .glyphicon-refresh-animate {
@@ -15,16 +24,28 @@
 }
 
 @keyframes spin {
-    from { transform: scale(1) rotate(0deg);}
-    to { transform: scale(1) rotate(360deg);}
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
 }
 
 @-webkit-keyframes spinw {
-    from { -webkit-transform: rotate(0deg);}
-    to { -webkit-transform: rotate(360deg);}
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @-moz-keyframes spinm {
-    from { -moz-transform: rotate(0deg);}
-    to { -moz-transform: rotate(360deg);}
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
 }

@@ -16,11 +16,14 @@ $(function () {
             else
                 dest.append(messageHtml)
         },
-        clearMessages:function(dest) {
+        clearMessages: function (dest) {
             if (dest === undefined)
                 $('#js-messages').children('.alert').remove();
             else
                 dest.children('.alert').remove();
+        },
+        isLoggedIn: function () {
+
         }
     }
 });
