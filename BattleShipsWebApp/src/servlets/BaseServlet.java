@@ -21,6 +21,7 @@ public abstract class BaseServlet extends HttpServlet {
             response.getWriter().flush();
             return false;
         }
+        request.setAttribute("userLoggedIn", true);
         return true;
     }
 

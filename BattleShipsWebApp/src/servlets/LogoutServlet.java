@@ -13,11 +13,11 @@ import java.io.IOException;
 /**
  * Created by amirshavit on 10/13/17.
  */
-public class APILogoutServlet extends JsonServlet {
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doPost(request, response);
+public class LogoutServlet extends BaseServlet {
+    private static final String PAGE_SIGNUP_JSP = "/pages/signup";
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = SessionUtils.getSessionUser(request);
         if (user != null) {
             try {
@@ -27,7 +27,7 @@ public class APILogoutServlet extends JsonServlet {
             }
         }
 
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        response.sendRedirect(PAGE_SIGNUP_JSP);
     }
 
 }

@@ -27,14 +27,13 @@
         <url-pattern>/pages/game</url-pattern>
     </servlet-mapping>
 
-
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>servlets.APILogoutServlet</servlet-class>
+        <servlet-class>servlets.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/api/logout</url-pattern>
+        <url-pattern>/pages/logout</url-pattern>
     </servlet-mapping>
 
     <servlet>
