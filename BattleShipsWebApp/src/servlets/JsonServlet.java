@@ -21,10 +21,4 @@ public abstract class JsonServlet extends BaseServlet {
         resp.setContentType("application/json;charset=UTF-8");
     }
 
-    @Override
-    public String getServletInfo() {
-        return this.getClass().toString();
-    }
-
-
 }

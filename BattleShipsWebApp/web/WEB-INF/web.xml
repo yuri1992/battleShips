@@ -36,6 +36,7 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/api/logout</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>UsersServlet</servlet-name>
         <servlet-class>servlets.APIUserServlet</servlet-class>
@@ -53,4 +54,5 @@
         <servlet-name>APIGameServlet</servlet-name>
         <url-pattern>/api/games</url-pattern>
     </servlet-mapping>
+
 </web-app>

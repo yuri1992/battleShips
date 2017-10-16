@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class LoginServlet extends BaseServlet {
 
-    public static final String SIGNUP_JSP = "signup.jsp";
+    private static final String SIGNUP_JSP = "signup.jsp";
     private final String GAME_HUB_URL = "../pages/game";
 
     @Override
@@ -29,9 +29,5 @@ public class LoginServlet extends BaseServlet {
         rd.forward(req, resp);
     }
 
-    @Override
-    public String getServletInfo() {
-        return this.getClass().toString();
-    }
 }
 

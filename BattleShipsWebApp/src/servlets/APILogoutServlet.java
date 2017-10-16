@@ -30,5 +30,4 @@ public class APILogoutServlet extends JsonServlet {
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 
-
 }

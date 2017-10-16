@@ -15,6 +15,7 @@ import java.util.Set;
 
 
 public class APIGameServlet extends JsonServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String description = request.getParameter("name");
         Part filePart = request.getPart("file");
@@ -31,7 +32,7 @@ public class APIGameServlet extends JsonServlet {
         response.getWriter().flush();
     }
 
-
+    //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
     private class GameListResponse {
 
         final private Set<Match> matches;
@@ -40,4 +41,5 @@ public class APIGameServlet extends JsonServlet {
             this.matches = matches;
         }
     }
+    //</editor-fold>
 }

@@ -67,6 +67,7 @@ public class APIUserServlet extends JsonServlet {
         out.flush();
     }
 
+    // <editor-fold defaultstate="collapsed" desc="User Response Object">
     private class UsersResponse {
 
         final private Set<User> users;
@@ -77,6 +78,7 @@ public class APIUserServlet extends JsonServlet {
             this.size = users.size();
         }
     }
+    // </editor-fold>
 
     private String validateUserName(String un) {
         /// TODO: Amir: Consider name/char validation

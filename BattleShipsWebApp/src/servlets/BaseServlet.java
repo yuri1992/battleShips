@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public abstract class BaseServlet extends HttpServlet {
+
     protected boolean isSessionValid(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = SessionUtils.getSessionUser(request);
         if (user == null) {
@@ -22,4 +23,10 @@ public abstract class BaseServlet extends HttpServlet {
         }
         return true;
     }
+
+    @Override
+    public String getServletInfo() {
+        return this.getClass().toString();
+    }
+
 }
