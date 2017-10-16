@@ -8,11 +8,13 @@ import engine.managers.game.GameManager;
 import engine.managers.game.GameManagerFactory;
 import engine.model.multi.Match;
 import engine.model.multi.User;
+import jdk.internal.util.xml.impl.Input;
 
 import javax.naming.InsufficientResourcesException;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -47,9 +49,19 @@ public class MatchManager {
             throw new MatchNameTakenException(matchName);
 
         GameManager gm = GameManagerFactory.loadGameManager(xml);
-
         matchSet.add(new Match(matchCounter, matchName, submittedBy, gm));
         matchCounter++;
+    }
+
+    public Match addMatch(String matchName, User submittedBy, InputStream xml) throws MatchNameTakenException, FileNotFoundException, JAXBException, GameSettingsInitializationException {
+        if (isMatchNameTaken(matchName))
+            throw new MatchNameTakenException(matchName);
+
+        GameManager gm = GameManagerFactory.loadGameManager(xml);
+        Match out = new Match(matchCounter, matchName, submittedBy, gm);
+        matchSet.add(out);
+        matchCounter++;
+        return out;
     }
 
     public void removeMatch(int matchId, User removedBy) throws MatchNotFoundException, MatchInsufficientRightsException {
