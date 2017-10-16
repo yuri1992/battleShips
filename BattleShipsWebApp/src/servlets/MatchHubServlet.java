@@ -12,22 +12,21 @@ import java.io.IOException;
 /**
  * Created by amirshavit on 10/13/17.
  */
-public class LoginServlet extends BaseServlet {
+public class MatchHubServlet extends BaseServlet {
 
-    private static final String SIGNUP_JSP = "signup.jsp";
-    private final String MATCH_HUB_URL = "../pages/matchhub";
+    private static final String PAGE_SIGNUP_JSP = "/pages/signup";
+    private static final String MATCH_HUB_JSP = "matchhub.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = SessionUtils.getSessionUser(req);
-        if (user != null) { // User already logged id in
-            resp.sendRedirect(MATCH_HUB_URL);
+        if (user == null) { // User already logged id in
+            resp.sendRedirect(PAGE_SIGNUP_JSP);
             return;
         }
-        // Fowarding to signup page
-        RequestDispatcher rd = req.getRequestDispatcher(SIGNUP_JSP);
+
+        RequestDispatcher rd = req.getRequestDispatcher(MATCH_HUB_JSP);
         rd.forward(req, resp);
     }
-
 }
 

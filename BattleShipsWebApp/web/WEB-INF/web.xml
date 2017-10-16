@@ -8,7 +8,7 @@
         <welcome-file>pages/signup</welcome-file>
     </welcome-file-list>
 
-
+    <!-- Pages Servlet -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlets.LoginServlet</servlet-class>
@@ -19,12 +19,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>GameServlet</servlet-name>
-        <servlet-class>servlets.GameServlet</servlet-class>
+        <servlet-name>MatchHubServlet</servlet-name>
+        <servlet-class>servlets.MatchHubServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GameServlet</servlet-name>
-        <url-pattern>/pages/game</url-pattern>
+        <servlet-name>MatchHubServlet</servlet-name>
+        <url-pattern>/pages/matchhub</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -35,6 +35,18 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/pages/logout</url-pattern>
     </servlet-mapping>
+    s
+    <servlet>
+        <servlet-name>GameServlet</servlet-name>
+        <servlet-class>servlets.GameServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GameServlet</servlet-name>
+        <url-pattern>/pages/game</url-pattern>
+    </servlet-mapping>
+
+    <!-- End of Pages Servlet -->
+
 
     <servlet>
         <servlet-name>UsersServlet</servlet-name>
