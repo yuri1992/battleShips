@@ -10,6 +10,7 @@ import engine.model.ships.ShipType;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -23,6 +24,13 @@ public class GameManagerFactory {
     static public GameManager loadGameManager(String fileName) throws FileNotFoundException,
             JAXBException, GameSettingsInitializationException {
         BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromXML(fileName);
+        GameManager game = parseXmlDescriptor(gameDescriptor);
+        return game;
+    }
+
+    static public GameManager loadGameManager(InputStream stream) throws FileNotFoundException,
+            JAXBException, GameSettingsInitializationException {
+        BattleShipGame gameDescriptor = JAXBGameParser.loadGameFromStream(stream);
         GameManager game = parseXmlDescriptor(gameDescriptor);
         return game;
     }

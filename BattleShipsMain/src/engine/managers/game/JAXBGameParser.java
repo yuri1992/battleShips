@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class JAXBGameParser {
 
@@ -25,6 +26,13 @@ public class JAXBGameParser {
         JAXBContext jaxbContext = JAXBContext.newInstance(BattleShipGame.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         BattleShipGame game = (BattleShipGame) jaxbUnmarshaller.unmarshal(file);
+        return game;
+    }
+
+    public static BattleShipGame loadGameFromStream(InputStream stream) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(BattleShipGame.class);
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        BattleShipGame game = (BattleShipGame) jaxbUnmarshaller.unmarshal(stream);
         return game;
     }
 
