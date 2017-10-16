@@ -38,7 +38,7 @@ $(function ($) {
         },
 
         isPasswordValid: function () {
-            return this.$password.val().length > 5;
+            return this.$password.val().length > 4;
         },
 
         validatePassword: function () {

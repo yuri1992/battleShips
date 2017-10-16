@@ -32,7 +32,7 @@ $(function ($) {
             this.$modal.modal('show');
         },
         validateCreateGameForm: function () {
-
+            return true;
         },
 
         submitNewGame: function (event) {
@@ -53,16 +53,21 @@ $(function ($) {
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        $form.find('.btn-success').attr('disabled');
+                        $form.find('.btn-success').attr('disabled', 'disabled');
                         $form.find('.btn-success').append('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>');
                     }
                 }).done(function (data, text) {
                     console.log(data);
-                }).fail(function (xhr, text, status) {
+                }).fail(function (xhr, error, status) {
+                    var text = '';
+                    if (xhr.responseJSON) {
+                        text = xhr.responseJSON.desc;
+                    }
                     var $modal = $('.modal-body');
                     CommonUtils.clearMessages($modal);
                     CommonUtils.addMessage("Error Uploading Xml File: " + text, 'error', $modal)
                 }).always(function () {
+                    $form.find('.btn-success').removeAttr('disabled');
                     $form.find('.btn-success').find('.glyphicon-refresh-animate').remove();
                 })
             }
@@ -118,7 +123,9 @@ $(function ($) {
             if (this.games.length === 0) {
                 this.$gameList.append("<li class=\"list-group-item\">No Games Found.</li>")
             } else {
-
+                for (var i in this.users) {
+                    this.$gameList.append("<li class=\"list-group-item\">" + this.games[i].matchId + " " + this.games[i].matchName + "" + "</li>");
+                }
             }
         },
 
