@@ -63,7 +63,7 @@ public class MatchManager {
         matchSet.remove(m);
     }
 
-    private Match getMatchById(int matchId) throws MatchNotFoundException {
+    public Match getMatchById(int matchId) throws MatchNotFoundException {
         List<Match> list = getMatchList().stream().filter(m -> m.getMatchId() == matchId).collect(Collectors.toList());
         if (list.size() == 0)
             throw new MatchNotFoundException(matchId);

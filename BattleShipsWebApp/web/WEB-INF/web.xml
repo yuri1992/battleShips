@@ -63,7 +63,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>APIGameServlet</servlet-name>
-        <url-pattern>/api/games</url-pattern>
+        <url-pattern>/api/games/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
