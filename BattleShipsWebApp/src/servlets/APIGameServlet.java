@@ -28,50 +28,34 @@ public class APIGameServlet extends JsonServlet {
         super.doPost(request, response);
         PrintWriter out = response.getWriter();
 
-
-        String description = request.getParameter("name");
-        if (description == null) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            JsonObject obj = new JsonObject();
-            obj.addProperty("desc", "Game name is required");
-            out.println(obj);
+        String gameName = request.getParameter("name");
+        if (gameName == null || gameName.isEmpty() || gameName.trim().isEmpty()) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Game name is required");
             return;
         }
 
         Part filePart = request.getPart("file");
         if (filePart == null) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            JsonObject obj = new JsonObject();
-            obj.addProperty("desc", "File does not selected");
-            out.println(obj);
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "File was not selected");
             return;
         }
 
-        String fileName = Paths.get(filePart.getName()).getFileName().toString();
+        gameName = gameName.trim();
         InputStream fileContent = filePart.getInputStream();
 
         try {
-            Match match = ServletUtils.getMatchManager().addMatch(description, getSessionUser(request), fileContent);
+            Match match = ServletUtils.getMatchManager().addMatch(gameName, getSessionUser(request), fileContent);
             response.setStatus(HttpServletResponse.SC_OK);
             out.println(new Gson().toJson(match));
-            return;
         } catch (MatchNameTakenException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            JsonObject obj = new JsonObject();
-            obj.addProperty("desc", "Match name already exists");
-            out.println(obj);
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Match name already exists");
         } catch (JAXBException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            JsonObject obj = new JsonObject();
-            obj.addProperty("desc", "Invalid XML format");
-            out.println(obj);
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid XML format");
         } catch (GameSettingsInitializationException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            JsonObject obj = new JsonObject();
-            obj.addProperty("desc", e.toString());
-            out.println(obj);
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
 
+        out.flush();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,9 +71,11 @@ public class APIGameServlet extends JsonServlet {
     private class GameListResponse {
 
         final private Set<Match> matches;
+        final private int size;
 
         public GameListResponse(Set<Match> matches) {
             this.matches = matches;
+            this.size = matches.size();
         }
     }
     //</editor-fold>

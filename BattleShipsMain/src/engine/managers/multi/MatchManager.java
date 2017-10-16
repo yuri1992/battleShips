@@ -44,15 +44,6 @@ public class MatchManager {
         return Collections.unmodifiableSet(matchSet);
     }
 
-    public void addMatch(String matchName, User submittedBy, File xml) throws MatchNameTakenException, FileNotFoundException, JAXBException, GameSettingsInitializationException {
-        if (isMatchNameTaken(matchName))
-            throw new MatchNameTakenException(matchName);
-
-        GameManager gm = GameManagerFactory.loadGameManager(xml);
-        matchSet.add(new Match(matchCounter, matchName, submittedBy, gm));
-        matchCounter++;
-    }
-
     public Match addMatch(String matchName, User submittedBy, InputStream xml) throws MatchNameTakenException, FileNotFoundException, JAXBException, GameSettingsInitializationException {
         if (isMatchNameTaken(matchName))
             throw new MatchNameTakenException(matchName);
