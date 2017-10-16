@@ -29,6 +29,5 @@ public class GameServlet extends BaseServlet {
         RequestDispatcher rd = req.getRequestDispatcher(GAME_JSP);
         rd.forward(req, resp);
     }
-
 }
 
