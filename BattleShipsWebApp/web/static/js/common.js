@@ -1,6 +1,6 @@
 $(function () {
     window.CommonUtils = {
-        addMessage: function (text, level) {
+        addMessage: function (text, level, dest) {
             var messageHtml = $('<div class="alert" role="alert">' +
                 '<button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
                 '  <span aria-hidden="true">&times;</span>\n' +
@@ -11,10 +11,16 @@ $(function () {
             } else
                 messageHtml.addClass('alert-success');
 
-            $('#js-messages').append(messageHtml);
+            if (dest === undefined)
+                $('#js-messages').append(messageHtml);
+            else
+                dest.append(messageHtml)
         },
         clearMessages:function() {
-            $('#js-messages').children().remove();
+            if (dest === undefined)
+                $('#js-messages').children('alert').remove();
+            else
+                dest.children('alert').remove();
         }
     }
 });

@@ -31,35 +31,41 @@ $(function ($) {
         onCreateGameClick: function (event) {
             this.$modal.modal('show');
         },
+        validateCreateGameForm: function () {
+
+        },
 
         submitNewGame: function (event) {
             var $form = $(event.target);
-            var formData = new FormData();
 
-            // add assoc key values, this will be posts values
-            var file = $form.find('#xml-file').get(0).files[0];
-            console.log(file, file.name)
-            formData.append("file", file, file.name);
-            formData.append("name", $form.find('#name').val());
+            if (this.validateCreateGameForm()) {
+                var formData = new FormData();
+                // add assoc key values, this will be posts values
+                var file = $form.find('#xml-file').get(0).files[0];
+                formData.append("file", file, file.name);
+                formData.append("name", $form.find('#name').val());
 
-            $.ajax({
-                url: "/api/games",
-                method: "POST",
-                dataType: "json",
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function () {
-                    $form.find('.btn-success').attr('disabled');
-                    $form.find('.btn-success').append('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>');
-                }
-            }).done(function (data, text) {
-                console.log(data);
-            }).fail(function (xhr, text, status) {
-                console.log('handle errors', xhr, text)
-            }).always(function () {
-                $form.find('.btn-success').find('.glyphicon-refresh-animate').remove();
-            })
+                $.ajax({
+                    url: "/api/games",
+                    method: "POST",
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        $form.find('.btn-success').attr('disabled');
+                        $form.find('.btn-success').append('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>');
+                    }
+                }).done(function (data, text) {
+                    console.log(data);
+                }).fail(function (xhr, text, status) {
+                    var $modal = $('.modal-body');
+                    CommonUtils.clearMessages($modal);
+                    CommonUtils.addMessage("Error Uploading Xml File: " + text, 'error', $modal)
+                }).always(function () {
+                    $form.find('.btn-success').find('.glyphicon-refresh-animate').remove();
+                })
+            }
         },
 
         loadGames: function () {
@@ -94,8 +100,7 @@ $(function ($) {
                 beforeSend: function () {
                     var $waiting = $('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>');
                     self.$playerList.prepend($waiting);
-                },
-
+                }
             }).done(function (data, text) {
                 console.log(data);
                 self.users = data.users;
@@ -124,7 +129,6 @@ $(function ($) {
                 this.$playerList.append("<li class=\"list-group-item\">No Players Found.</li>")
             } else {
                 for (var i in this.users) {
-                    this.users[i]
                     this.$playerList.append("<li class=\"list-group-item\">" + this.users[i].name + " (" + this.users[i].email + ")" + "</li>")
                 }
             }

@@ -92,8 +92,8 @@ $(function ($) {
                 }).done(function (data, text) {
                     CommonUtils.addMessage("Welcome, you will be redirected in a few seconds...");
                     setTimeout(function () {
-                        window.location = 'pages/game.jsp';
-                    }, 2000);
+                        window.location = '/pages/game';
+                    }, 500 );
                 }).fail(function (xhr, text, status) {
                     CommonUtils.clearMessages();
                     CommonUtils.addMessage("Email and Password didn't match, please try again", 'error');
