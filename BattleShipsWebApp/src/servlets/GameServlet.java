@@ -1,8 +1,6 @@
 package servlets;
 
-import engine.exceptions.UserNameTakenException;
 import engine.model.multi.User;
-import utils.ServletUtils;
 import utils.SessionUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -18,14 +16,19 @@ import java.io.IOException;
 public class GameServlet extends HttpServlet {
 
 
-    //<editor-fold defaultstate="collapsed" desc="HttpServlet Overrides"
+    public static final String PAGE_SIGNUP_JSP = "/pages/signup";
+    public static final String GAME_JSP = "game.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Fowarding to signup page
-        RequestDispatcher rd = req.getRequestDispatcher("game.jsp");
-        rd.forward(req, resp);
+        User user = SessionUtils.getSessionUser(req);
+        if (user == null) { // User already logged id in
+            resp.sendRedirect(PAGE_SIGNUP_JSP);
+            return;
+        }
 
+        RequestDispatcher rd = req.getRequestDispatcher(GAME_JSP);
+        rd.forward(req, resp);
     }
 
     @Override

@@ -14,7 +14,8 @@ import java.io.IOException;
  */
 public class LoginServlet extends BaseServlet {
 
-    private final String GAME_HUB_URL = "../pages/game.jsp";
+    public static final String SIGNUP_JSP = "signup.jsp";
+    private final String GAME_HUB_URL = "../pages/game";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +25,7 @@ public class LoginServlet extends BaseServlet {
             return;
         }
         // Fowarding to signup page
-        RequestDispatcher rd = req.getRequestDispatcher("signup.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher(SIGNUP_JSP);
         rd.forward(req, resp);
     }
 
