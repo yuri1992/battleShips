@@ -12,14 +12,21 @@ import java.io.IOException;
  */
 public abstract class JsonServlet extends BaseServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
         resp.setContentType("application/json;charset=UTF-8");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
+        resp.setContentType("application/json;charset=UTF-8");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp);
         resp.setContentType("application/json;charset=UTF-8");
     }
 

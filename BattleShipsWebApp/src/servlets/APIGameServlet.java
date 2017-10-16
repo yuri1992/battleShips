@@ -2,10 +2,12 @@ package servlets;
 
 import com.google.gson.Gson;
 import engine.exceptions.GameSettingsInitializationException;
+import engine.exceptions.MatchInsufficientRightsException;
 import engine.exceptions.MatchNameTakenException;
 import engine.exceptions.MatchNotFoundException;
 import engine.model.multi.Match;
 import utils.ServletUtils;
+import utils.SessionUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -112,6 +114,23 @@ public class APIGameServlet extends JsonServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+        super.doDelete(request, response);
+        if (!isSessionValid(request, response)) return;
+
+        try {
+            RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
+            if (route.getId() != null) {
+                deleteSingleGame(request, response, route.getId().intValue());
+                return;
+            }
+        } catch (ServletException e) { }
+
+        setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
+    }
+
     private void getSingleGame(HttpServletResponse response, int matchId) throws IOException {
         try {
             Match match = ServletUtils.getMatchManager().getMatchById(matchId);
@@ -119,7 +138,7 @@ public class APIGameServlet extends JsonServlet {
             response.getWriter().println(new Gson().toJson(match));
             response.getWriter().flush();
         } catch (MatchNotFoundException e) {
-            setResponseError(response, HttpServletResponse.SC_NOT_FOUND, e.toString());
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
     }
 
@@ -128,6 +147,18 @@ public class APIGameServlet extends JsonServlet {
         response.getWriter().println(new Gson().toJson(new GameListResponse(ServletUtils.getMatchManager().getMatchList())));
         response.getWriter().flush();
     }
+
+    private void deleteSingleGame(HttpServletRequest request, HttpServletResponse response, int matchId)
+            throws IOException {
+        try {
+            ServletUtils.getMatchManager().removeMatch(matchId, SessionUtils.getSessionUser(request));
+        } catch (MatchNotFoundException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+        } catch (MatchInsufficientRightsException e) {
+            setResponseError(response, HttpServletResponse.SC_UNAUTHORIZED, e.toString());
+        }
+    }
+
 
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
     private class GameListResponse {
