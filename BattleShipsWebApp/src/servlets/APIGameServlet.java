@@ -116,12 +116,13 @@ public class APIGameServlet extends JsonServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doGet(request, response);
-
         if (!isSessionValid(request, response)) return;
 
         try {
             RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
-            if (route.getId() != null) {
+            if (route.getPathType() != APIGamesPathTypes.NONE) {
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for GET");
+            } else if (route.getId() != null) {
                 getSingleGame(response, route.getId().intValue());
             } else {
                 getAllGames(response);
@@ -139,13 +140,14 @@ public class APIGameServlet extends JsonServlet {
 
         try {
             RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
-            if (route.getId() != null) {
+            if (route.getId() != null && route.getPathType() == APIGamesPathTypes.NONE) {
                 deleteSingleGame(request, response, route.getId().intValue());
-                return;
+            } else {
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for DELETE");
             }
-        } catch (ServletException e) { }
-
-        setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
+        } catch (ServletException e) {
+            setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
+        }
     }
 
     private void getSingleGame(HttpServletResponse response, int matchId) throws IOException {
