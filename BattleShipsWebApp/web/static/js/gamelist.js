@@ -134,8 +134,31 @@ $(function ($) {
             })
         },
 
-        joinGame: function (matchId) {
-            console.log('Joing game ' + matchId);
+        joinGame: function (event, matchId) {
+
+            var self = this;
+            var $btn = $(event.target);
+
+            console.log(event, matchId, $btn);
+
+            $.ajax({
+                url: "/api/game/" + matchId + "/register",
+                method: "POST",
+                dataType: "json",
+                beforeSend: function () {
+                    $btn.attr('disabled', 'true');
+                    $btn.append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
+                }
+            }).done(function (data, text) {
+                CommonUtils.addMessage("Redirecting you to the game...");
+                window.location = '/pages/game';
+            }).fail(function (xhr, text, status) {
+                CommonUtils.clearMessages();
+                CommonUtils.addMessage("Error fetching player list, try again later", 'error');
+            }).always(function () {
+                $btn.removeAttr('disabled');
+                $btn.find('.glyphicon-refresh-animate').remove();
+            })
         },
 
         renderGames: function () {
@@ -146,10 +169,10 @@ $(function ($) {
                 this.$gameList.append("<tr><td colspan='8'>No Games Found.</td></tr>")
             } else {
                 for (var i in this.games) {
-                    var $joinGame = $("<a href='#' class='glyphicon glyphicon-play'></a>");
+                    var $joinGame = $("<button href='#' class='glyphicon glyphicon-play'></button>");
                     $joinGame.click(function (e) {
                         e.preventDefault();
-                        self.joinGame(self.games[i].matchId)
+                        self.joinGame(e, self.games[i].matchId)
                     });
 
                     var isWaitingPlayers = this.games[i].gameManager.state === "LOADED";
