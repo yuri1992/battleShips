@@ -3,6 +3,7 @@ package servlets;
 import com.google.gson.Gson;
 import engine.exceptions.*;
 import engine.model.multi.Match;
+import models.MatchForJson;
 import utils.ServletUtils;
 import utils.SessionUtils;
 
@@ -15,6 +16,7 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.Set;
 
 import static utils.SessionUtils.getSessionUser;
@@ -139,7 +141,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             Match match = ServletUtils.getMatchManager().getMatchById(matchId);
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().println(new Gson().toJson(match));
+            response.getWriter().println(new Gson().toJson(new MatchForJson(match)));
             response.getWriter().flush();
         } catch (MatchNotFoundException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
@@ -184,7 +186,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             Match match = ServletUtils.getMatchManager().addMatch(gameName, getSessionUser(request), fileContent);
             response.setStatus(HttpServletResponse.SC_OK);
-            out.println(new Gson().toJson(match));
+            out.println(new Gson().toJson(new MatchForJson(match)));
         } catch (MatchNameTakenException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Match name already exists");
         } catch (JAXBException e) {
@@ -230,12 +232,14 @@ public class APIGamesHubServlet extends JsonServlet {
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
     private class GameListResponse {
 
-        final private Set<Match> matches;
+        final private Set<MatchForJson> matches = new HashSet<>();
         final private int size;
 
         public GameListResponse(Set<Match> matches) {
-            this.matches = matches;
-            this.size = matches.size();
+            for (Match match : matches) {
+                this.matches.add(new MatchForJson(match));
+            }
+            this.size = this.matches.size();
         }
     }
     //</editor-fold>

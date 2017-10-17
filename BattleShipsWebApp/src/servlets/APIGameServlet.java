@@ -2,6 +2,7 @@ package servlets;
 
 import com.google.gson.Gson;
 import engine.model.multi.Match;
+import models.MatchForJson;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,7 @@ public class APIGameServlet extends JsonServlet  {
         Match match = SessionUtils.getSessionMatch(request);
         if (match != null) {
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().println(new Gson().toJson(match));
+            response.getWriter().println(new Gson().toJson(new MatchForJson(match)));
             response.getWriter().flush();
         } else {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "User is not registered to any match");
