@@ -58,11 +58,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>APIGameServlet</servlet-name>
-        <servlet-class>servlets.APIGameServlet</servlet-class>
+        <servlet-name>APIGamesHubServlet</servlet-name>
+        <servlet-class>servlets.APIGamesHubServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>APIGameServlet</servlet-name>
+        <servlet-name>APIGamesHubServlet</servlet-name>
         <url-pattern>/api/games/*</url-pattern>
     </servlet-mapping>
 

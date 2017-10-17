@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 import static utils.SessionUtils.getSessionUser;
 
 @MultipartConfig
-public class APIGameServlet extends JsonServlet {
+public class APIGamesHubServlet extends JsonServlet {
 
     private enum APIGamesPathTypes {
         NONE,
