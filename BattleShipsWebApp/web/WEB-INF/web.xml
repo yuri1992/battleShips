@@ -35,7 +35,7 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/pages/logout</url-pattern>
     </servlet-mapping>
-    s
+
     <servlet>
         <servlet-name>GameServlet</servlet-name>
         <servlet-class>servlets.GameServlet</servlet-class>
@@ -64,6 +64,15 @@
     <servlet-mapping>
         <servlet-name>APIGamesHubServlet</servlet-name>
         <url-pattern>/api/games/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>APIGameServlet</servlet-name>
+        <servlet-class>servlets.APIGameServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>APIGameServlet</servlet-name>
+        <url-pattern>/api/game/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
