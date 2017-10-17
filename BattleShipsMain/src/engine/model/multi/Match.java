@@ -95,4 +95,9 @@ public class Match {
             }
         } else return false;
     }
+
+    public boolean isUserRegistered(User user) {
+        return (user != null &&
+                (user.equals(player1) || user.equals(player2)));
+    }
 }

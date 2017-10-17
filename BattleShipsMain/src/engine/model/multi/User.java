@@ -32,4 +32,15 @@ public class User {
     public int getId() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj != null && obj instanceof User) {
+            User other = (User)obj;
+            result = other.getId() == getId();
+        }
+
+        return result;
+    }
 }
