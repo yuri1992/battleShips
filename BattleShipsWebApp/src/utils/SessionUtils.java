@@ -50,7 +50,15 @@ public class SessionUtils {
         request.getSession().setAttribute(Constants.SESSION_MATCH_ID, match.getMatchId());
     }
 
-    public static void clearSession (HttpServletRequest request) {
+    public static void setSessionMatch(HttpServletRequest request, int matchId) {
+        request.getSession().setAttribute(Constants.SESSION_MATCH_ID, matchId);
+    }
+
+    public static void clearSessionMatch(HttpServletRequest request) {
+        request.getSession().removeAttribute(Constants.SESSION_MATCH_ID);
+    }
+
+    public static void clearSession(HttpServletRequest request) {
         request.getSession().invalidate();
     }
 

@@ -75,14 +75,12 @@ public class MatchManager {
 
     public boolean registerUserToMatch(int matchId, User user) throws MatchNotFoundException {
         Match match = getMatchById(matchId);
-        match.addUserToMatch(user);
-        return true;
+        return match.addUserToMatch(user);
     }
 
     public boolean removeUserFromMatch(int matchId, User user) throws MatchNotFoundException, UserNotInMatchException {
         Match match = getMatchById(matchId);
-        match.removeUserFromMatch(user);
-        return true;
+        return match.removeUserFromMatch(user);
     }
 
 }

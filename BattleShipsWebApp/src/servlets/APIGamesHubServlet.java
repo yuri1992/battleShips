@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import static utils.SessionUtils.getSessionUser;
 
@@ -201,18 +200,27 @@ public class APIGamesHubServlet extends JsonServlet {
             IOException {
         try {
             ServletUtils.getMatchManager().registerUserToMatch(matchId, SessionUtils.getSessionUser(request));
+            SessionUtils.setSessionMatch(request, matchId);
         } catch (MatchNotFoundException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
     }
 
+    /// TODO: Amir: Change to join and leave to differ from resign/forfeit
     private void postResignFromGame(HttpServletRequest request, HttpServletResponse response, int matchId)
             throws IOException {
+        SessionUtils.clearSessionMatch(request);
+
         try {
-            ServletUtils.getMatchManager().removeUserFromMatch(matchId, SessionUtils.getSessionUser(request));
+            if (ServletUtils.getMatchManager().removeUserFromMatch(matchId, SessionUtils.getSessionUser(request))) {
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                return;
+            }
         } catch (MatchException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
+
+        setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not leave game");
     }
 
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
