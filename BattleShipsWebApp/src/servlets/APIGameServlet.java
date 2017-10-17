@@ -82,36 +82,22 @@ public class APIGameServlet extends JsonServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doPost(request, response);
-        PrintWriter out = response.getWriter();
-
-        String gameName = request.getParameter("name");
-        if (gameName == null || gameName.isEmpty() || gameName.trim().isEmpty()) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Game name is required");
-            return;
-        }
-
-        Part filePart = request.getPart("file");
-        if (filePart == null) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "File was not selected");
-            return;
-        }
-
-        gameName = gameName.trim();
-        InputStream fileContent = filePart.getInputStream();
+        if (!isSessionValid(request, response)) return;
 
         try {
-            Match match = ServletUtils.getMatchManager().addMatch(gameName, getSessionUser(request), fileContent);
-            response.setStatus(HttpServletResponse.SC_OK);
-            out.println(new Gson().toJson(match));
-        } catch (MatchNameTakenException e) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Match name already exists");
-        } catch (JAXBException e) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid XML format");
-        } catch (GameSettingsInitializationException e) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+            RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
+            if (route.getPathType() == APIGamesPathTypes.NONE && route.getId() == null) {
+                postNewGame(request, response);
+            } else if (route.getPathType() == APIGamesPathTypes.REGISTER) {
+                postRegisterToGame(request, response, route.getId().intValue());
+            } else if (route.getPathType() == APIGamesPathTypes.RESIGN) {
+                postResignFromGame(request, response, route.getId().intValue());
+            } else {
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for POST");
+            }
+        } catch (ServletException e) {
+            setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
         }
-
-        out.flush();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -178,6 +164,56 @@ public class APIGameServlet extends JsonServlet {
         }
     }
 
+    private void postNewGame(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        PrintWriter out = response.getWriter();
+
+        String gameName = request.getParameter("name");
+        if (gameName == null || gameName.isEmpty() || gameName.trim().isEmpty()) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Game name is required");
+            return;
+        }
+
+        Part filePart = request.getPart("file");
+        if (filePart == null) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "File was not selected");
+            return;
+        }
+
+        gameName = gameName.trim();
+        InputStream fileContent = filePart.getInputStream();
+
+        try {
+            Match match = ServletUtils.getMatchManager().addMatch(gameName, getSessionUser(request), fileContent);
+            response.setStatus(HttpServletResponse.SC_OK);
+            out.println(new Gson().toJson(match));
+        } catch (MatchNameTakenException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Match name already exists");
+        } catch (JAXBException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid XML format");
+        } catch (GameSettingsInitializationException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+        }
+
+        out.flush();
+    }
+
+    private void postRegisterToGame(HttpServletRequest request, HttpServletResponse response, int matchId) throws
+            IOException {
+        try {
+            ServletUtils.getMatchManager().registerUserToMatch(matchId, SessionUtils.getSessionUser(request));
+        } catch (MatchNotFoundException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+        }
+    }
+
+    private void postResignFromGame(HttpServletRequest request, HttpServletResponse response, int matchId)
+            throws IOException {
+        try {
+            ServletUtils.getMatchManager().removeUserFromMatch(matchId, SessionUtils.getSessionUser(request));
+        } catch (MatchException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+        }
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
     private class GameListResponse {
