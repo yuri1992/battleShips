@@ -1,9 +1,6 @@
 package engine.managers.multi;
 
-import engine.exceptions.GameSettingsInitializationException;
-import engine.exceptions.MatchInsufficientRightsException;
-import engine.exceptions.MatchNameTakenException;
-import engine.exceptions.MatchNotFoundException;
+import engine.exceptions.*;
 import engine.managers.game.GameManager;
 import engine.managers.game.GameManagerFactory;
 import engine.model.multi.Match;
@@ -74,6 +71,18 @@ public class MatchManager {
         List<Match> list = getMatchList().stream().filter(m -> m.getMatchName().equals(matchName)).collect(Collectors
                 .toList());
         return list.size() > 0;
+    }
+
+    public boolean registerUserToMatch(int matchId, User user) throws MatchNotFoundException {
+        Match match = getMatchById(matchId);
+        match.addUserToMatch(user);
+        return true;
+    }
+
+    public boolean removeUserFromMatch(int matchId, User user) throws MatchNotFoundException, UserNotInMatchException {
+        Match match = getMatchById(matchId);
+        match.removeUserFromMatch(user);
+        return true;
     }
 
 }
