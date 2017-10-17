@@ -74,13 +74,4 @@
         <url-pattern>/api/games/*</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>APIGameServlet</servlet-name>
-        <servlet-class>servlets.APIGameServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>APIGameServlet</servlet-name>
-        <url-pattern>/api/games/*</url-pattern>
-    </servlet-mapping>
-
 </web-app>
