@@ -85,7 +85,7 @@ public class APIGameServlet extends JsonServlet  {
                     System.out.println("APIGameServlet.doGet() with statistics path");
                     break;
                 default:
-                    setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for GET");
+                    setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported GET request");
             }
         } catch (ServletException e) {
             setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");

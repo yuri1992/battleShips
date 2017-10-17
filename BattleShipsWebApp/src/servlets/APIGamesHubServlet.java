@@ -94,7 +94,7 @@ public class APIGamesHubServlet extends JsonServlet {
             } else if (route.getPathType() == APIGamesPathTypes.RESIGN) {
                 postResignFromGame(request, response, route.getId().intValue());
             } else {
-                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for POST");
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported POST request");
             }
         } catch (ServletException e) {
             setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
@@ -108,7 +108,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
             if (route.getPathType() != APIGamesPathTypes.NONE) {
-                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for GET");
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported GET request");
             } else if (route.getId() != null) {
                 getSingleGame(response, route.getId().intValue());
             } else {
@@ -130,7 +130,7 @@ public class APIGamesHubServlet extends JsonServlet {
             if (route.getId() != null && route.getPathType() == APIGamesPathTypes.NONE) {
                 deleteSingleGame(request, response, route.getId().intValue());
             } else {
-                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for DELETE");
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported DELETE request");
             }
         } catch (ServletException e) {
             setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
