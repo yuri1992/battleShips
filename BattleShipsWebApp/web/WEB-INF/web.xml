@@ -56,7 +56,6 @@
         <servlet-name>UsersServlet</servlet-name>
         <url-pattern>/api/users</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>SessionServlet</servlet-name>
         <servlet-class>servlets.APISessionServlet</servlet-class>
@@ -64,6 +63,15 @@
     <servlet-mapping>
         <servlet-name>SessionServlet</servlet-name>
         <url-pattern>/api/session</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>APIGamesHubServlet</servlet-name>
+        <servlet-class>servlets.APIGamesHubServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>APIGamesHubServlet</servlet-name>
+        <url-pattern>/api/games/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
