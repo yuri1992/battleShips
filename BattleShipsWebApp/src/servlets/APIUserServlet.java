@@ -22,6 +22,8 @@ public class APIUserServlet extends JsonServlet {
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
 
+    /// TODO: Amir: Add GET /me instead of session servlet
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!isSessionValid(request, response)) return;
