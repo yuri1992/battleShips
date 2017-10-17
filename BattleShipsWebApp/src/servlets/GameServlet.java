@@ -16,7 +16,7 @@ import java.io.IOException;
 public class GameServlet extends BaseServlet {
 
     private static final String PAGE_SIGNUP_JSP = "/pages/signup";
-    private static final String GAME_JSP = "game.jsp";
+    private static final String GAME_JSP = "match.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

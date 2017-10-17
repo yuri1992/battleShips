@@ -7,13 +7,35 @@
     margin-top: 20px;
 }
 
-
 h1 .glyphicon-refresh-animate {
-    float:right;
-    font-size:16px;
+    float: right;
+    font-size: 16px;
 }
+
 .actions .glyphicon-play {
     color: green;
+}
+
+.actions .glyphicon-remove {
+    color: red;
+}
+
+.box {
+    min-height: 350px;
+}
+
+.c-loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    height: 200px;
+    font-size: 72px;
+    z-index: 1050;
 }
 
 .glyphicon-refresh-animate {
