@@ -16,6 +16,10 @@ h1 .glyphicon-refresh-animate {
     color: green;
 }
 
+.actions .glyphicon-remove {
+    color: red;
+}
+
 .box {
     min-height: 350px;
 }

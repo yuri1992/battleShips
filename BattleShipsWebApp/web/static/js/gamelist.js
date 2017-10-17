@@ -142,19 +142,44 @@ $(function ($) {
             console.log(event, matchId, $btn);
 
             $.ajax({
-                url: "/api/game/" + matchId + "/register",
+                url: "/api/games/" + matchId + "/register",
                 method: "POST",
-                dataType: "json",
+                dataType: "text",
                 beforeSend: function () {
                     $btn.attr('disabled', 'true');
                     $btn.append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
             }).done(function (data, text) {
                 CommonUtils.addMessage("Redirecting you to the game...");
-                window.location = '/pages/game';
+                window.location = '/pages/game?matchId=' + matchId;
+            }).fail(function (xhr, text, status) {
+                console.log(xhr, text, status);
+                CommonUtils.clearMessages();
+                CommonUtils.addMessage("Error register to endpoint", 'error');
+            }).always(function () {
+                $btn.removeAttr('disabled');
+                $btn.find('.glyphicon-refresh-animate').remove();
+            })
+        },
+
+        removeGame: function (event, matchId) {
+
+            var self = this;
+            var $btn = $(event.target);
+
+            $.ajax({
+                url: "/api/games/" + matchId,
+                method: "DELETE",
+                dataType: "text",
+                beforeSend: function () {
+                    $btn.attr('disabled', 'true');
+                    $btn.append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
+                }
+            }).done(function (data, text) {
+                CommonUtils.addMessage("Game deleted successfully");
             }).fail(function (xhr, text, status) {
                 CommonUtils.clearMessages();
-                CommonUtils.addMessage("Error fetching player list, try again later", 'error');
+                CommonUtils.addMessage("Error deleting the games", 'error');
             }).always(function () {
                 $btn.removeAttr('disabled');
                 $btn.find('.glyphicon-refresh-animate').remove();
@@ -169,10 +194,18 @@ $(function ($) {
                 this.$gameList.append("<tr><td colspan='8'>No Games Found.</td></tr>")
             } else {
                 for (var i in this.games) {
+
+
                     var $joinGame = $("<button href='#' class='glyphicon glyphicon-play'></button>");
                     $joinGame.click(function (e) {
                         e.preventDefault();
                         self.joinGame(e, self.games[i].matchId)
+                    });
+
+                    var $removeGame = $("<button href='#' class='glyphicon glyphicon-remove'></button>");
+                    $removeGame.click(function (e) {
+                        e.preventDefault();
+                        self.removeGame(e, self.games[i].matchId)
                     });
 
                     var isWaitingPlayers = this.games[i].gameManager.state === "LOADED";
@@ -188,6 +221,7 @@ $(function ($) {
                         "</tr>");
 
                     $row.find('.actions').append(isWaitingPlayers ? $joinGame : '');
+                    $row.find('.actions').append(CommonUtils.getCurrentUser().id === this.games[i].submittingUser.id ? $removeGame : '');
                     this.$gameList.append($row);
                 }
             }
