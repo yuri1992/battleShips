@@ -1,10 +1,7 @@
 package servlets;
 
 import com.google.gson.Gson;
-import engine.exceptions.GameSettingsInitializationException;
-import engine.exceptions.MatchInsufficientRightsException;
-import engine.exceptions.MatchNameTakenException;
-import engine.exceptions.MatchNotFoundException;
+import engine.exceptions.*;
 import engine.model.multi.Match;
 import utils.ServletUtils;
 import utils.SessionUtils;
@@ -26,31 +23,50 @@ import static utils.SessionUtils.getSessionUser;
 @MultipartConfig
 public class APIGameServlet extends JsonServlet {
 
+    private enum APIGamesPathTypes {
+        NONE,
+        REGISTER,
+        RESIGN
+    }
+
+    // Accommodate several REST requests for same endpoint
     private class RouteRestRequest {
-        // Accommodate two requests, one for all resources, another for a specific resource
-        private Pattern regExAllPattern = Pattern.compile("/");
-        private Pattern regExIdPattern = Pattern.compile("/([0-9]*)");
+        private final String registerPath = "register";
+        private final String resignPath = "resign";
 
         private Integer id = null;
+        private APIGamesPathTypes pathType = APIGamesPathTypes.NONE;
 
-        private RouteRestRequest(String pathInfo) throws ServletException {
+        private RouteRestRequest(String pathInfoOriginal) throws ServletException {
 
-            // Check for ID case first, since the All pattern would also match
-            try {
-                if (regExIdPattern.matcher(pathInfo).find()) {
-                    String idStr = pathInfo.substring(1);
-                    if (idStr.endsWith("/")) {
-                        idStr = idStr.substring(0, idStr.length()-1);
-                    }
-                    id = Integer.parseInt(idStr);
-                    return;
-                } else if (regExAllPattern.matcher(pathInfo).find()) {
-                    return;
-                } else {
+            // Remove open / if exist
+            String pathInfo = pathInfoOriginal;
+            if (pathInfo != null && pathInfo.startsWith("/"))
+                pathInfo = pathInfo.substring(1);
+            String[] tokens = (pathInfo != null ? pathInfo.split("/") : null);
+
+            // Check for ID case first
+            if (tokens != null && tokens.length > 0 && !tokens[0].isEmpty()) {
+                // token has at least 1, and it is not empty. try to extract match id from 1st token
+                try {
+                    id = Integer.parseInt(tokens[0]);
+                } catch (NumberFormatException e) {
                     throw new ServletException("Invalid URI");
                 }
-            } catch (Exception e) {
-                throw new ServletException("Invalid URI");
+
+                // Extracted id, now check if has more path
+                if (tokens.length == 2) {
+                    // check 2nd token
+                    if (registerPath.equals(tokens[1]))
+                        pathType = APIGamesPathTypes.REGISTER;
+                    else if (resignPath.equals(tokens[1]))
+                        pathType = APIGamesPathTypes.RESIGN;
+                    else
+                        throw new ServletException("Invalid URI");
+                } else if (tokens.length > 2) {
+                    // to many tokens
+                    throw new ServletException("Invalid URI");
+                }
             }
         }
 
@@ -58,9 +74,10 @@ public class APIGameServlet extends JsonServlet {
             return id;
         }
 
-        public void setId(Integer id) {
-            this.id = id;
+        public APIGamesPathTypes getPathType() {
+            return pathType;
         }
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
