@@ -209,18 +209,22 @@ public class APIGamesHubServlet extends JsonServlet {
     /// TODO: Amir: Change to join and leave to differ from resign/forfeit
     private void postResignFromGame(HttpServletRequest request, HttpServletResponse response, int matchId)
             throws IOException {
-        SessionUtils.clearSessionMatch(request);
-
         try {
             if (ServletUtils.getMatchManager().removeUserFromMatch(matchId, SessionUtils.getSessionUser(request))) {
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                SessionUtils.clearSessionMatch(request);
                 return;
+            } else {
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not leave game");
             }
-        } catch (MatchException e) {
+        } catch (UserNotInMatchException e) {
+            SessionUtils.clearSessionMatch(request);
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+        } catch (MatchNotFoundException e) {
+            SessionUtils.clearSessionMatch(request);
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
 
-        setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not leave game");
     }
 
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
