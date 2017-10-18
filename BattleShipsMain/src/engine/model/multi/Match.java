@@ -4,6 +4,9 @@ import engine.exceptions.UserNotInMatchException;
 import engine.managers.game.GameManager;
 import engine.managers.game.GameMode;
 import engine.managers.game.GameState;
+import engine.model.boards.Player;
+
+import java.util.List;
 
 /**
  * Created by amirshavit on 10/11/17.
@@ -100,5 +103,13 @@ public class Match {
     public boolean isUserRegistered(User user) {
         return (user != null &&
                 (user.equals(player1) || user.equals(player2)));
+    }
+
+    public Player getGamePlayer(User user) {
+        if (!isUserRegistered(user)) return null;
+
+        List<Player> list = getGameManager().getPlayerList();
+        if (user.equals(player1)) return list.get(0);
+        else return list.get(1);
     }
 }

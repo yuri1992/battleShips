@@ -2,6 +2,7 @@ package servlets;
 
 import com.google.gson.Gson;
 import engine.model.boards.GridPoint;
+import engine.model.boards.Player;
 import engine.model.multi.Match;
 import engine.model.multi.User;
 import models.GameStatisticsObj;
@@ -167,8 +168,14 @@ public class APIGameServlet extends JsonServlet  {
         }
     }
 
-    private void postPlayMineTurn(Match match, User user, GridPoint gp, HttpServletResponse response) {
-
+    private void postPlayMineTurn(Match match, User user, GridPoint gp, HttpServletResponse response) throws
+            IOException {
+        Player p = match.getGamePlayer(user);
+        if (match.getGameManager().placeMine(gp)) {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } else {
+            setResponseError(response, HttpServletResponse.SC_CONFLICT, "You can not put mine in that place");
+        }
     }
 
     private void postPlayAttackTurn(Match match, User user, GridPoint gp, HttpServletResponse response) {
