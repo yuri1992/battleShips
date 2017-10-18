@@ -1,9 +1,12 @@
 package servlets;
 
 import com.google.gson.Gson;
+import engine.model.boards.GridPoint;
 import engine.model.multi.Match;
+import engine.model.multi.User;
 import models.GameStatisticsObj;
 import models.GameStatusObj;
+import utils.ServletUtils;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;
@@ -18,6 +21,12 @@ public class APIGameServlet extends JsonServlet  {
         STATISTICS,
         TURN
     }
+
+    private static final String PARAM_KEY_TURN_TYPE = "type";
+    private static final String PARAM_VAL_ATTACK_TYPE = "attack";
+    private static final String PARAM_VAL_MINE_TYPE = "mine";
+    private static final String PARAM_KEY_ROW = "row";
+    private static final String PARAM_KEY_COL = "col";
 
     // Accommodate several REST requests for same endpoint
     private class RouteRestRequest {
@@ -122,6 +131,57 @@ public class APIGameServlet extends JsonServlet  {
     private void postPlayTurn(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("Got to POST a move");
 
+        String turnType = request.getParameter(PARAM_KEY_TURN_TYPE);
+        String rowStr = request.getParameter(PARAM_KEY_ROW);
+        String colStr = request.getParameter(PARAM_KEY_COL);
+        if (turnType == null || turnType.isEmpty() || turnType.trim().isEmpty() ||
+                rowStr == null || rowStr.isEmpty() || rowStr.trim().isEmpty() ||
+                colStr == null || colStr.isEmpty() || colStr.trim().isEmpty()) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Missing params");
+            return;
+        }
+
+        int row;
+        int col;
+        try {
+            row = Integer.parseInt(rowStr);
+            col = Integer.parseInt(colStr);
+        } catch (NumberFormatException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Bad points params");
+            return;
+        }
+
+        /// TODO: Amir: Make sure it is user's turn
+
+        Match match = SessionUtils.getSessionMatch(request);
+        User user = SessionUtils.getSessionUser(request);
+
+        GridPoint gp = new GridPoint(row, col);
+        if (PARAM_VAL_ATTACK_TYPE.equals(turnType)) {
+            postPlayAttackTurn(match, user, gp, response);
+        } else if (PARAM_VAL_MINE_TYPE.equals(turnType)) {
+            postPlayMineTurn(match, user, gp, response);
+        } else {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Illegal turn type");
+            return;
+        }
     }
 
+    private void postPlayMineTurn(Match match, User user, GridPoint gp, HttpServletResponse response) {
+
+    }
+
+    private void postPlayAttackTurn(Match match, User user, GridPoint gp, HttpServletResponse response) {
+    }
+
+
+    @Override
+    protected boolean isSessionValid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (!super.isSessionValid(request, response)) return false;
+
+        // Make sure user is registered to game
+        Match match = SessionUtils.getSessionMatch(request);
+        User user = SessionUtils.getSessionUser(request);
+        return (match.isUserRegistered(user));
+    }
 }
