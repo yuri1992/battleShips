@@ -16,13 +16,13 @@ public class APIGameServlet extends JsonServlet  {
     private enum APIGamePathTypes {
         NONE,
         STATISTICS,
-        PLAY
+        TURN
     }
 
     // Accommodate several REST requests for same endpoint
     private class RouteRestRequest {
         private final String statisticsPath = "statistics";
-        private final String playPath = "play";
+        private final String turnPath = "turn";
 
         private APIGamePathTypes pathType = APIGamePathTypes.NONE;
 
@@ -41,8 +41,8 @@ public class APIGameServlet extends JsonServlet  {
                 // check 2nd token
                 if (statisticsPath.equals(tokens[0]))
                     pathType = APIGamePathTypes.STATISTICS;
-                else if (playPath.equals(tokens[0]))
-                    pathType = APIGamePathTypes.PLAY;
+                else if (turnPath.equals(tokens[0]))
+                    pathType = APIGamePathTypes.TURN;
                 else
                     throw new ServletException("Invalid URI");
             } else {
@@ -58,11 +58,21 @@ public class APIGameServlet extends JsonServlet  {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*
-            handle move
-         */
+        super.doPost(request, response);
+        if (!isSessionValid(request, response)) return;
 
-
+        try {
+            RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
+            switch (route.getPathType()) {
+                case TURN:
+                    postPlayTurn(request, response);
+                    break;
+                default:
+                    setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported GET request");
+            }
+        } catch (ServletException e) {
+            setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -107,6 +117,11 @@ public class APIGameServlet extends JsonServlet  {
         } else {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "User is not registered to any match");
         }
+    }
+
+    private void postPlayTurn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Got to POST a move");
+
     }
 
 }
