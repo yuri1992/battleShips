@@ -27,6 +27,7 @@ public class GameStatusObj {
     private final int score;
     private final PlayerStatistics statistics;
     private final List<GameTurn> turns;
+    private final int minesLeft;
 
     public GameStatusObj(Match match, User sessionUser) {
 
@@ -43,6 +44,7 @@ public class GameStatusObj {
         this.shipsBoard = player.getShipsBoard();
         this.attackBoard = player.getAttackBoard();
         this.score = player.getScore();
+        this.minesLeft = shipsBoard.getAvailableMines();
 
         this.turns = match.getGameManager().getPlayerMoves(player);
         this.statistics = match.getGameManager().getPlayerStatistics(player, null);
