@@ -96,7 +96,7 @@ $(function ($) {
                     }, 500 );
                 }).fail(function (xhr, text, status) {
                     CommonUtils.clearMessages();
-                    CommonUtils.addMessage("Email and Password didn't match, please try again", 'error');
+                    CommonUtils.addMessage("Username is already taken, please choose another user", 'error');
                 }).always(function () {
                     console.log(self.$form.find('.glyphicon-refresh-animate'));
                     self.$form.find('.glyphicon-refresh-animate').remove();
