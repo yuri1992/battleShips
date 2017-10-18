@@ -24,6 +24,9 @@ import static utils.SessionUtils.getSessionUser;
 @MultipartConfig
 public class APIGamesHubServlet extends JsonServlet {
 
+    private static final String PARAM_GAME_NAME = "name";
+    private static final String PARAM_FILE_DATA = "file";
+
     private enum APIGamesPathTypes {
         NONE,
         REGISTER,
@@ -168,13 +171,13 @@ public class APIGamesHubServlet extends JsonServlet {
     private void postNewGame(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
 
-        String gameName = request.getParameter("name");
+        String gameName = request.getParameter(PARAM_GAME_NAME);
         if (gameName == null || gameName.isEmpty() || gameName.trim().isEmpty()) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Game name is required");
             return;
         }
 
-        Part filePart = request.getPart("file");
+        Part filePart = request.getPart(PARAM_FILE_DATA);
         if (filePart == null) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "File was not selected");
             return;
