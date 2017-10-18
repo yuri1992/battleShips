@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by amirshavit on 10/17/17.
  */
-public class MatchDataForJson {
+public class GameStatusObj {
 
     private final int matchId;
     private final String matchName;
@@ -26,7 +26,7 @@ public class MatchDataForJson {
     private final PlayerStatistics statistics;
     private final List<GameTurn> turns;
 
-    public MatchDataForJson(Match match, User sessionUser) {
+    public GameStatusObj(Match match, User sessionUser) {
 
         int playerIndex = match.getPlayer1() == sessionUser ? 0 : 1;
         List<Player> playerList = match.getGameManager().getPlayerList();

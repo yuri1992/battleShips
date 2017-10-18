@@ -2,8 +2,8 @@ package servlets;
 
 import com.google.gson.Gson;
 import engine.model.multi.Match;
-import models.MatchDataForJson;
-import models.MatchMetaForJson;
+import models.GameStatisticsObj;
+import models.GameStatusObj;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;
@@ -15,14 +15,12 @@ public class APIGameServlet extends JsonServlet  {
 
     private enum APIGamePathTypes {
         NONE,
-        STATUS,
         STATISTICS,
         PLAY
     }
 
     // Accommodate several REST requests for same endpoint
     private class RouteRestRequest {
-        private final String statusPath = "status";
         private final String statisticsPath = "statistics";
         private final String playPath = "play";
 
@@ -41,9 +39,7 @@ public class APIGameServlet extends JsonServlet  {
             // Check for ID case first
             if (tokens.length == 1) {
                 // check 2nd token
-                if (statusPath.equals(tokens[0]))
-                    pathType = APIGamePathTypes.STATUS;
-                else if (statisticsPath.equals(tokens[0]))
+                if (statisticsPath.equals(tokens[0]))
                     pathType = APIGamePathTypes.STATISTICS;
                 else if (playPath.equals(tokens[0]))
                     pathType = APIGamePathTypes.PLAY;
@@ -77,13 +73,10 @@ public class APIGameServlet extends JsonServlet  {
             RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
             switch (route.getPathType()) {
                 case NONE:
-                    getMatchMetaData(request, response);
-                    break;
-                case STATUS:
-                    System.out.println("APIGameServlet.doGet() with status path");
+                    getGameStatusData(request, response);
                     break;
                 case STATISTICS:
-                    System.out.println("APIGameServlet.doGet() with statistics path");
+                    getGameStatisticsData(request, response);
                     break;
                 default:
                     setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported GET request");
@@ -93,16 +86,27 @@ public class APIGameServlet extends JsonServlet  {
         }
     }
 
-    private void getMatchMetaData(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void getGameStatusData(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Match match = SessionUtils.getSessionMatch(request);
-
         if (match != null) {
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().println(new Gson().toJson(new MatchDataForJson(match, SessionUtils.getSessionUser(request))));
+            response.getWriter().println(new Gson().toJson(new GameStatusObj(match, SessionUtils.getSessionUser(request))));
             response.getWriter().flush();
         } else {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "User is not registered to any match");
         }
     }
-    
+
+    private void getGameStatisticsData(HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
+        Match match = SessionUtils.getSessionMatch(request);
+        if (match != null) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println(new Gson().toJson(new GameStatisticsObj(match)));
+            response.getWriter().flush();
+        } else {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "User is not registered to any match");
+        }
+    }
+
 }
