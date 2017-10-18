@@ -7,7 +7,6 @@ $(function ($) {
 
         this.isMyTurn = false;
         this.game = null;
-        this.playerIndex = 0;
 
         this.gameId = CommonUtils.getUrlParameter('matchId');
         if (this.gameId === null) {
@@ -25,7 +24,7 @@ $(function ($) {
         loadGame: function () {
             var self = this;
             $.ajax({
-                url: "/api/games/" + this.gameId,
+                url: "/api/game/",
                 method: "GET",
                 dataType: "json",
                 beforeSend: function () {
@@ -57,16 +56,16 @@ $(function ($) {
         },
 
         renderShipsBoard: function () {
-            var data = this.game.gameManager.playerList[this.playerIndex];
+            var data = this.game.shipsBoard;
             var result = $("<table class='ship-table'></table>");
-            for (var x in data.shipsBoard.board) {
+            for (var x in data.board) {
                 if (x == 0)
                     continue;
                 var tr = $("<tr></tr>");
-                for (var y in data.shipsBoard.board[x]) {
+                for (var y in data.board[x]) {
                     if (y == 0)
                         continue;
-                    tr.append("<td class='" + data.shipsBoard.board[x][y].toLowerCase() + "'></td>");
+                    tr.append("<td class='" + data.board[x][y].toLowerCase() + "'></td>");
                 }
                 result.append(tr);
             }
@@ -79,16 +78,16 @@ $(function ($) {
 
         },
         renderAttackBoard: function () {
-            var data = this.game.gameManager.playerList[this.playerIndex];
+            var data = this.game.attackBoard;
             var result = $("<table class='ship-table'></table>");
-            for (var x in data.attackBoard.board) {
+            for (var x in data.board) {
                 if (x == 0)
                     continue;
                 var tr = $("<tr></tr>");
-                for (var y in data.attackBoard.board[x]) {
+                for (var y in data.board[x]) {
                     if (y == 0)
                         continue;
-                    tr.append("<td class='" + data.attackBoard.board[x][y].toLowerCase() + "'></td>");
+                    tr.append("<td class='" + data.board[x][y].toLowerCase() + "'></td>");
                 }
                 result.append(tr);
             }
