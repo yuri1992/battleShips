@@ -1,7 +1,9 @@
 package utils;
 
 import constants.Constants;
+import engine.exceptions.MatchNotFoundException;
 import engine.exceptions.UserNotFoundException;
+import engine.model.multi.Match;
 import engine.model.multi.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,7 @@ import static constants.Constants.PARAMETER_ERROR_INT;
  */
 public class SessionUtils {
 
-    public static User getSessionUser (HttpServletRequest request) {
+    public static User getSessionUser(HttpServletRequest request) {
         int userId = getSessionIntParameter(request.getSession(false), Constants.SESSION_USER_ID);
         if (userId != PARAMETER_ERROR_INT) {
             try {
@@ -30,7 +32,33 @@ public class SessionUtils {
         request.getSession().setAttribute(Constants.SESSION_USER_ID, user.getId());
     }
 
-    public static void clearSession (HttpServletRequest request) {
+    public static Match getSessionMatch(HttpServletRequest request) {
+        User user = getSessionUser(request);
+        int matchId = getSessionIntParameter(request.getSession(false), Constants.SESSION_MATCH_ID);
+        if (user != null && matchId != PARAMETER_ERROR_INT) {
+            try {
+                Match match = ServletUtils.getMatchManager().getMatchById(matchId);
+                if (match.isUserRegistered(user)) {
+                    return match;
+                }
+            } catch (MatchNotFoundException e) { }
+        }
+        return null;
+    }
+
+    public static void setSessionMatch(HttpServletRequest request, Match match) {
+        request.getSession().setAttribute(Constants.SESSION_MATCH_ID, match.getMatchId());
+    }
+
+    public static void setSessionMatch(HttpServletRequest request, int matchId) {
+        request.getSession().setAttribute(Constants.SESSION_MATCH_ID, matchId);
+    }
+
+    public static void clearSessionMatch(HttpServletRequest request) {
+        request.getSession().removeAttribute(Constants.SESSION_MATCH_ID);
+    }
+
+    public static void clearSession(HttpServletRequest request) {
         request.getSession().invalidate();
     }
 

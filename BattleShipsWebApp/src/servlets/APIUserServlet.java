@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import engine.exceptions.UserNameTakenException;
 import engine.model.multi.User;
+import models.UserForJson;
 import utils.ServletUtils;
 import utils.SessionUtils;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,6 +23,8 @@ public class APIUserServlet extends JsonServlet {
     public static final String USERNAME = "username";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+
+    /// TODO: Amir: Add GET /me instead of session servlet
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +44,7 @@ public class APIUserServlet extends JsonServlet {
         User user = SessionUtils.getSessionUser(request);
         if (user != null) { // User already logged id in
             response.setStatus(HttpServletResponse.SC_OK);
-            out.print(new Gson().toJson(user));
+            out.print(new Gson().toJson(new UserForJson(user)));
         } else {
 
             String userName = validateUserName(request.getParameter(USERNAME));
@@ -49,7 +53,7 @@ public class APIUserServlet extends JsonServlet {
                     user = ServletUtils.getUserManager().addUser(userName, request.getParameter(EMAIL), request.getParameter(PASSWORD));
                     SessionUtils.setSessionUser(request, user);
                     response.setStatus(HttpServletResponse.SC_OK);
-                    out.println(new Gson().toJson(user));
+                    out.println(new Gson().toJson(new UserForJson(user)));
                 } catch (UserNameTakenException e) {
                     response.setStatus(HttpServletResponse.SC_CONFLICT);
                     JsonObject obj = new JsonObject();
@@ -70,12 +74,14 @@ public class APIUserServlet extends JsonServlet {
     // <editor-fold defaultstate="collapsed" desc="User Response Object">
     private class UsersResponse {
 
-        final private Set<User> users;
+        final private Set<UserForJson> users = new HashSet<>();;
         final private int size;
 
         public UsersResponse(Set<User> users) {
-            this.users = users;
-            this.size = users.size();
+            for (User user: users) {
+                this.users.add(new UserForJson(user));
+            }
+            this.size = this.users.size();
         }
     }
     // </editor-fold>

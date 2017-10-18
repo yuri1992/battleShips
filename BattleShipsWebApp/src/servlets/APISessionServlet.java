@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import engine.exceptions.UserNameTakenException;
 import engine.model.multi.User;
+import models.UserForJson;
 import utils.ServletUtils;
 import utils.SessionUtils;
 
@@ -24,7 +25,7 @@ public class APISessionServlet extends JsonServlet {
         if (!isSessionValid(request, response)) return;
 
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println(new Gson().toJson(SessionUtils.getSessionUser(request)));
+        response.getWriter().println(new Gson().toJson(new UserForJson(SessionUtils.getSessionUser(request))));
         response.getWriter().flush();
     }
 }

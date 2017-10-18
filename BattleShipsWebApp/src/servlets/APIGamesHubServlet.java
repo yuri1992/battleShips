@@ -3,6 +3,7 @@ package servlets;
 import com.google.gson.Gson;
 import engine.exceptions.*;
 import engine.model.multi.Match;
+import models.MatchForJson;
 import utils.ServletUtils;
 import utils.SessionUtils;
 
@@ -15,8 +16,8 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import static utils.SessionUtils.getSessionUser;
 
@@ -93,7 +94,7 @@ public class APIGamesHubServlet extends JsonServlet {
             } else if (route.getPathType() == APIGamesPathTypes.RESIGN) {
                 postResignFromGame(request, response, route.getId().intValue());
             } else {
-                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for POST");
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported POST request");
             }
         } catch (ServletException e) {
             setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
@@ -107,7 +108,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             RouteRestRequest route = new RouteRestRequest(request.getPathInfo());
             if (route.getPathType() != APIGamesPathTypes.NONE) {
-                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for GET");
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported GET request");
             } else if (route.getId() != null) {
                 getSingleGame(response, route.getId().intValue());
             } else {
@@ -129,7 +130,7 @@ public class APIGamesHubServlet extends JsonServlet {
             if (route.getId() != null && route.getPathType() == APIGamesPathTypes.NONE) {
                 deleteSingleGame(request, response, route.getId().intValue());
             } else {
-                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Path not supported for DELETE");
+                setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported DELETE request");
             }
         } catch (ServletException e) {
             setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
@@ -140,7 +141,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             Match match = ServletUtils.getMatchManager().getMatchById(matchId);
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().println(new Gson().toJson(match));
+            response.getWriter().println(new Gson().toJson(new MatchForJson(match)));
             response.getWriter().flush();
         } catch (MatchNotFoundException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
@@ -185,7 +186,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             Match match = ServletUtils.getMatchManager().addMatch(gameName, getSessionUser(request), fileContent);
             response.setStatus(HttpServletResponse.SC_OK);
-            out.println(new Gson().toJson(match));
+            out.println(new Gson().toJson(new MatchForJson(match)));
         } catch (MatchNameTakenException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Match name already exists");
         } catch (JAXBException e) {
@@ -201,29 +202,44 @@ public class APIGamesHubServlet extends JsonServlet {
             IOException {
         try {
             ServletUtils.getMatchManager().registerUserToMatch(matchId, SessionUtils.getSessionUser(request));
+            SessionUtils.setSessionMatch(request, matchId);
         } catch (MatchNotFoundException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
     }
 
+    /// TODO: Amir: Change to join and leave to differ from resign/forfeit
     private void postResignFromGame(HttpServletRequest request, HttpServletResponse response, int matchId)
             throws IOException {
         try {
-            ServletUtils.getMatchManager().removeUserFromMatch(matchId, SessionUtils.getSessionUser(request));
-        } catch (MatchException e) {
+            if (ServletUtils.getMatchManager().removeUserFromMatch(matchId, SessionUtils.getSessionUser(request))) {
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                SessionUtils.clearSessionMatch(request);
+                return;
+            } else {
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not leave game");
+            }
+        } catch (UserNotInMatchException e) {
+            SessionUtils.clearSessionMatch(request);
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+        } catch (MatchNotFoundException e) {
+            SessionUtils.clearSessionMatch(request);
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
+
     }
 
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
     private class GameListResponse {
 
-        final private Set<Match> matches;
+        final private Set<MatchForJson> matches = new HashSet<>();
         final private int size;
 
         public GameListResponse(Set<Match> matches) {
-            this.matches = matches;
-            this.size = matches.size();
+            for (Match match : matches) {
+                this.matches.add(new MatchForJson(match));
+            }
+            this.size = this.matches.size();
         }
     }
     //</editor-fold>

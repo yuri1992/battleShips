@@ -81,6 +81,7 @@ public class Match {
         } else return false;
     }
 
+    /// TODO: Amir: verify game not started instead of able to join
     public boolean removeUserFromMatch(User user) throws UserNotInMatchException {
         if (isMatchAvailableToJoin()) {
             synchronized (this) { // Lock and double check
@@ -94,5 +95,10 @@ public class Match {
                 else return false;
             }
         } else return false;
+    }
+
+    public boolean isUserRegistered(User user) {
+        return (user != null &&
+                (user.equals(player1) || user.equals(player2)));
     }
 }
