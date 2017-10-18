@@ -18,8 +18,10 @@ public class GameStatusObj {
 
     private final int matchId;
     private final String matchName;
-    private final UserForJson player;
     private final GameState state;
+    private final GameStatus gameStatus;
+
+    private final UserForJson player;
     private final ShipsBoard shipsBoard;
     private final AttackBoard attackBoard;
     private final int score;
@@ -28,21 +30,35 @@ public class GameStatusObj {
 
     public GameStatusObj(Match match, User sessionUser) {
 
-        int playerIndex = match.getPlayer1() == sessionUser ? 0 : 1;
-        List<Player> playerList = match.getGameManager().getPlayerList();
-
         this.matchId = match.getMatchId();
         this.matchName = match.getMatchName();
-        this.player = new UserForJson(sessionUser);
+        this.state = match.getGameManager().getState();
 
+        this.player = new UserForJson(sessionUser);
+        int playerIndex = match.getPlayer1().equals(sessionUser) ? 0 : 1;
+
+        List<Player> playerList = match.getGameManager().getPlayerList();
         Player player = playerList.get(playerIndex);
+
         this.shipsBoard = player.getShipsBoard();
         this.attackBoard = player.getAttackBoard();
         this.score = player.getScore();
-        this.state = match.getGameManager().getState();
 
         this.turns = match.getGameManager().getPlayerMoves(player);
         this.statistics = match.getGameManager().getPlayerStatistics(player, null);
+
+        if (state == GameState.IN_PROGRESS) {
+            if (player == match.getGameManager().getCurrentPlayer())
+                this.gameStatus = GameStatus.PLAYER_TURN;
+            else
+                this.gameStatus = GameStatus.OPONENT_TURN;
+        } else if (state == GameState.REPLAY) {
+            this.gameStatus = GameStatus.ENDED;
+        } else if (match.getPlayer2() == null) {
+            this.gameStatus = GameStatus.WAITING_FOR_SECOND_PLAYER_TO_JOIN;
+        } else {
+            this.gameStatus = GameStatus.UNDEFINED;
+        }
     }
 
 }
