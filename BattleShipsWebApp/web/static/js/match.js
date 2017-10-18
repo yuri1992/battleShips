@@ -58,7 +58,7 @@ $(function ($) {
 
         renderShipsBoard: function () {
             var data = this.game.gameManager.playerList[this.playerIndex];
-            var result = $("<table></table>");
+            var result = $("<table class='ship-table'></table>");
             for (var x in data.shipsBoard.board) {
                 if (x == 0)
                     continue;
@@ -66,7 +66,7 @@ $(function ($) {
                 for (var y in data.shipsBoard.board[x]) {
                     if (y == 0)
                         continue;
-                    tr.append("<td>" + data.shipsBoard.board[x][y] + "</td>");
+                    tr.append("<td class='" + data.shipsBoard.board[x][y].toLowerCase() + "'></td>");
                 }
                 result.append(tr);
             }
@@ -80,15 +80,15 @@ $(function ($) {
         },
         renderAttackBoard: function () {
             var data = this.game.gameManager.playerList[this.playerIndex];
-            var result = $("<table></table>");
+            var result = $("<table class='ship-table'></table>");
             for (var x in data.attackBoard.board) {
                 if (x == 0)
                     continue;
                 var tr = $("<tr></tr>");
-                for (var y in data.shipsBoard.board[x]) {
+                for (var y in data.attackBoard.board[x]) {
                     if (y == 0)
                         continue;
-                    tr.append("<td>" + data.shipsBoard.board[x][y] + "</td>");
+                    tr.append("<td class='" + data.attackBoard.board[x][y].toLowerCase() + "'></td>");
                 }
                 result.append(tr);
             }

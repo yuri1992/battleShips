@@ -24,6 +24,43 @@ h1 .glyphicon-refresh-animate {
     min-height: 350px;
 }
 
+.ship-table td {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    color: transparent;
+}
+
+.ship-table .empty {
+    background: url('/static/images/sea.png') no-repeat center;
+    background-size: 35px 35px;
+}
+
+.ship-table .ship {
+    background: url('/static/images/ship.png') no-repeat center;
+    background-size: 35px 35px;
+}
+
+.ship-table .mine {
+    background: url('/static/images/mine.png') no-repeat center;
+    background-size: 35px 35px;
+}
+
+.ship-table .miss {
+    background: url('/static/images/miss.png') no-repeat center;
+    background-size: 35px 35px;
+}
+
+.ship-table .fire {
+    background: url('/static/images/fire.png') no-repeat center;
+    background-size: 35px 35px;
+}
+
+.ship-table .explode {
+    background: url('/static/images/explode.png') no-repeat center;
+    background-size: 35px 35px;
+}
+
 .c-loading {
     position: absolute;
     top: 0;
