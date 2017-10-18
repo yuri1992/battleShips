@@ -208,14 +208,14 @@ $(function ($) {
                         self.removeGame(e, self.games[i].matchId)
                     });
 
-                    var isWaitingPlayers = this.games[i].gameManager.state === "LOADED";
+                    var isWaitingPlayers = this.games[i].state === "LOADED";
                     var $row = $("<tr>" +
                         "<td>" + this.games[i].matchId + " </td>" +
                         "<td>" + this.games[i].matchName + " </td>" +
                         "<td>" + this.games[i].submittingUser.name + " </td>" +
-                        "<td>" + this.games[i].gameManager.mode + " </td>" +
-                        "<td>" + this.games[i].gameManager.boardSize + " </td>" +
-                        "<td>" + 0 + " </td>" +
+                        "<td>" + this.games[i].gameMode + " </td>" +
+                        "<td>" + this.games[i].boardSize + " </td>" +
+                        "<td>" + this.games[i].playersCount + " </td>" +
                         "<td>" + (isWaitingPlayers ? "<span class='label label-info'>Waiting</span>" : "<span class='label label-success'>Playing</span>") + " </td>" +
                         "<td class='actions'></td>" +
                         "</tr>");
