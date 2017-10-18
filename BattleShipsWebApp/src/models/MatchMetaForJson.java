@@ -7,7 +7,7 @@ import engine.model.multi.Match;
 /**
  * Created by amirshavit on 10/17/17.
  */
-public class MatchForJson {
+public class MatchMetaForJson {
 
     private final int matchId;
     private final String matchName;
@@ -19,7 +19,7 @@ public class MatchForJson {
     private final int playersCount;
     private final GameState state;
 
-    public MatchForJson(Match match) {
+    public MatchMetaForJson(Match match) {
 
         this.matchId = match.getMatchId();
         this.matchName = match.getMatchName();

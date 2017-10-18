@@ -3,7 +3,7 @@ package servlets;
 import com.google.gson.Gson;
 import engine.exceptions.*;
 import engine.model.multi.Match;
-import models.MatchForJson;
+import models.MatchMetaForJson;
 import utils.ServletUtils;
 import utils.SessionUtils;
 
@@ -141,7 +141,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             Match match = ServletUtils.getMatchManager().getMatchById(matchId);
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().println(new Gson().toJson(new MatchForJson(match)));
+            response.getWriter().println(new Gson().toJson(new MatchMetaForJson(match)));
             response.getWriter().flush();
         } catch (MatchNotFoundException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
@@ -186,7 +186,7 @@ public class APIGamesHubServlet extends JsonServlet {
         try {
             Match match = ServletUtils.getMatchManager().addMatch(gameName, getSessionUser(request), fileContent);
             response.setStatus(HttpServletResponse.SC_OK);
-            out.println(new Gson().toJson(new MatchForJson(match)));
+            out.println(new Gson().toJson(new MatchMetaForJson(match)));
         } catch (MatchNameTakenException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Match name already exists");
         } catch (JAXBException e) {
@@ -232,12 +232,12 @@ public class APIGamesHubServlet extends JsonServlet {
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
     private class GameListResponse {
 
-        final private Set<MatchForJson> matches = new HashSet<>();
+        final private Set<MatchMetaForJson> matches = new HashSet<>();
         final private int size;
 
         public GameListResponse(Set<Match> matches) {
             for (Match match : matches) {
-                this.matches.add(new MatchForJson(match));
+                this.matches.add(new MatchMetaForJson(match));
             }
             this.size = this.matches.size();
         }
