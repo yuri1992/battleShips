@@ -161,10 +161,10 @@ public class APIGamesHubServlet extends JsonServlet {
             throws IOException {
         try {
             ServletUtils.getMatchManager().removeMatch(matchId, SessionUtils.getSessionUser(request));
-        } catch (MatchNotFoundException e) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         } catch (MatchInsufficientRightsException e) {
             setResponseError(response, HttpServletResponse.SC_UNAUTHORIZED, e.toString());
+        } catch (MatchException e) {
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
     }
 

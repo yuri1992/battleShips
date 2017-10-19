@@ -52,9 +52,11 @@ public class MatchManager {
         return out;
     }
 
-    public void removeMatch(int matchId, User removedBy) throws MatchNotFoundException, MatchInsufficientRightsException {
+    public void removeMatch(int matchId, User removedBy) throws MatchException {
         Match m = getMatchById(matchId);
-        if (m.getSubmittingUser().getId() != removedBy.getId()) {
+        if (m.getPlayer1() != null) {
+            throw new MatchException("Cannot remove a game when users are playing");
+        } else if (m.getSubmittingUser().getId() != removedBy.getId()) {
             throw new MatchInsufficientRightsException();
         }
         matchSet.remove(m);
