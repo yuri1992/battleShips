@@ -220,7 +220,6 @@ public class APIGameServlet extends JsonServlet  {
 
     private void postPlayMineTurn(Match match, User user, GridPoint gp, HttpServletResponse response) throws
             IOException {
-        Player p = match.getGamePlayer(user);
         if (match.getGameManager().placeMine(gp)) {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } else {
