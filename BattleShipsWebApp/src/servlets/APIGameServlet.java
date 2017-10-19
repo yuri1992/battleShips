@@ -1,13 +1,13 @@
 package servlets;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import engine.managers.game.HitType;
 import engine.model.boards.GridPoint;
-import engine.model.boards.Player;
 import engine.model.multi.Match;
 import engine.model.multi.User;
 import models.GameStatisticsObj;
 import models.GameStatusObj;
-import utils.ServletUtils;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;
@@ -114,6 +114,7 @@ public class APIGameServlet extends JsonServlet  {
                 return;
             }
 
+            // Check path is supported
             if (PARAM_VAL_ATTACK_TYPE.equals(turnTypeStr)) {
                 turnType = APIGameTurnType.ATTACK;
             } else if (PARAM_VAL_MINE_TYPE.equals(turnTypeStr)) {
@@ -209,27 +210,42 @@ public class APIGameServlet extends JsonServlet  {
         if (!turn.isLegal()) return;
 
         Match match = SessionUtils.getSessionMatch(request);
-        User user = SessionUtils.getSessionUser(request);
 
         if (turn.getTurnType() == APIGameTurnType.ATTACK) {
-            postPlayAttackTurn(match, user, turn.getGridPoiont(), response);
+            postPlayAttackTurn(match, turn.getGridPoiont(), response);
         } else if (turn.getTurnType() == APIGameTurnType.MINE) {
-            postPlayMineTurn(match, user, turn.getGridPoiont(), response);
+            postPlayMineTurn(match, turn.getGridPoiont(), response);
         }
     }
 
-    private void postPlayMineTurn(Match match, User user, GridPoint gp, HttpServletResponse response) throws
+    private void postPlayMineTurn(Match match, GridPoint gp, HttpServletResponse response) throws
             IOException {
         if (match.getGameManager().placeMine(gp)) {
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            setTurnResultResponse(response, HitType.PLACE_MINE);
         } else {
             setResponseError(response, HttpServletResponse.SC_CONFLICT, "You can not put mine in that place");
         }
     }
 
-    private void postPlayAttackTurn(Match match, User user, GridPoint gp, HttpServletResponse response) {
+    private void postPlayAttackTurn(Match match, GridPoint gp, HttpServletResponse response) throws
+            IOException {
+        HitType attackResult = match.getGameManager().playAttack(gp);
+        if (attackResult == HitType.NOT_EMPTY) {
+            setResponseError(response, HttpServletResponse.SC_CONFLICT, "Cell was already attacked");
+        } else if (attackResult == HitType.PLACE_MINE) {
+            setResponseError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unexpected attack occurred");
+        } else {
+            this.setTurnResultResponse(response, attackResult);
+        }
     }
 
+    private void setTurnResultResponse(HttpServletResponse response, HitType turnResult) throws IOException {
+        response.setStatus(HttpServletResponse.SC_OK);
+        JsonObject obj = new JsonObject();
+        obj.addProperty("result", turnResult.toString());
+        response.getWriter().println(obj);
+        response.getWriter().flush();
+    }
 
     @Override
     protected boolean isSessionValid(HttpServletRequest request, HttpServletResponse response) throws IOException {
