@@ -23,6 +23,14 @@ public class APIGameServlet extends JsonServlet  {
         TURN
     }
 
+    private enum APIGameTurnType {
+        ATTACK,
+        MINE,
+        UNDEFINED
+    }
+
+    //<editor-fold desc="Private Data Models" defaultstate="collapsed">
+
     private static final String PARAM_KEY_TURN_TYPE = "type";
     private static final String PARAM_VAL_ATTACK_TYPE = "attack";
     private static final String PARAM_VAL_MINE_TYPE = "mine";
@@ -66,6 +74,71 @@ public class APIGameServlet extends JsonServlet  {
         }
     }
 
+    private class PlayTurnData {
+
+        private APIGameTurnType turnType = APIGameTurnType.UNDEFINED;
+        private GridPoint gridPoiont;
+        private boolean isLegal;
+
+        private PlayTurnData(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            isLegal = true;
+            String turnTypeStr = request.getParameter(PARAM_KEY_TURN_TYPE);
+            String rowStr = request.getParameter(PARAM_KEY_ROW);
+            String colStr = request.getParameter(PARAM_KEY_COL);
+            if (turnTypeStr == null || turnTypeStr.isEmpty() || turnTypeStr.trim().isEmpty() ||
+                    rowStr == null || rowStr.isEmpty() || rowStr.trim().isEmpty() ||
+                    colStr == null || colStr.isEmpty() || colStr.trim().isEmpty()) {
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Missing params");
+                isLegal = false;
+                return;
+            }
+
+            int row;
+            int col;
+            try {
+                row = Integer.parseInt(rowStr);
+                col = Integer.parseInt(colStr);
+                gridPoiont = new GridPoint(row, col);
+            } catch (NumberFormatException e) {
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Bad points params");
+                isLegal = false;
+                return;
+            }
+
+            // Make sure it is user's turn
+            Match match = SessionUtils.getSessionMatch(request);
+            User user = SessionUtils.getSessionUser(request);
+            if (!match.isUserTurn(user)) {
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Not user's turn");
+                isLegal = false;
+                return;
+            }
+
+            if (PARAM_VAL_ATTACK_TYPE.equals(turnTypeStr)) {
+                turnType = APIGameTurnType.ATTACK;
+            } else if (PARAM_VAL_MINE_TYPE.equals(turnTypeStr)) {
+                turnType = APIGameTurnType.MINE;
+            } else {
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Illegal turn type");
+                isLegal = false;
+                return;
+            }
+        }
+
+        public APIGameTurnType getTurnType() {
+            return turnType;
+        }
+
+        public GridPoint getGridPoiont() {
+            return gridPoiont;
+        }
+
+        public boolean isLegal() {
+            return isLegal;
+        }
+    }
+
+    //</editor-fold>
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doPost(request, response);
@@ -132,39 +205,16 @@ public class APIGameServlet extends JsonServlet  {
     private void postPlayTurn(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("Got to POST a move");
 
-        String turnType = request.getParameter(PARAM_KEY_TURN_TYPE);
-        String rowStr = request.getParameter(PARAM_KEY_ROW);
-        String colStr = request.getParameter(PARAM_KEY_COL);
-        if (turnType == null || turnType.isEmpty() || turnType.trim().isEmpty() ||
-                rowStr == null || rowStr.isEmpty() || rowStr.trim().isEmpty() ||
-                colStr == null || colStr.isEmpty() || colStr.trim().isEmpty()) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Missing params");
-            return;
-        }
-
-        int row;
-        int col;
-        try {
-            row = Integer.parseInt(rowStr);
-            col = Integer.parseInt(colStr);
-        } catch (NumberFormatException e) {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Bad points params");
-            return;
-        }
-
-        /// TODO: Amir: Make sure it is user's turn
+        PlayTurnData turn = new PlayTurnData(request, response);
+        if (!turn.isLegal()) return;
 
         Match match = SessionUtils.getSessionMatch(request);
         User user = SessionUtils.getSessionUser(request);
 
-        GridPoint gp = new GridPoint(row, col);
-        if (PARAM_VAL_ATTACK_TYPE.equals(turnType)) {
-            postPlayAttackTurn(match, user, gp, response);
-        } else if (PARAM_VAL_MINE_TYPE.equals(turnType)) {
-            postPlayMineTurn(match, user, gp, response);
-        } else {
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Illegal turn type");
-            return;
+        if (turn.getTurnType() == APIGameTurnType.ATTACK) {
+            postPlayAttackTurn(match, user, turn.getGridPoiont(), response);
+        } else if (turn.getTurnType() == APIGameTurnType.MINE) {
+            postPlayMineTurn(match, user, turn.getGridPoiont(), response);
         }
     }
 
@@ -191,4 +241,5 @@ public class APIGameServlet extends JsonServlet  {
         User user = SessionUtils.getSessionUser(request);
         return (match.isUserRegistered(user));
     }
+
 }

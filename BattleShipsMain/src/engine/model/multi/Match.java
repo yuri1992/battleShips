@@ -105,7 +105,12 @@ public class Match {
                 (user.equals(player1) || user.equals(player2)));
     }
 
-    public Player getGamePlayer(User user) {
+    public boolean isUserTurn(User user) {
+        return (getGameManager().getState() == GameState.IN_PROGRESS &&
+                getGamePlayer(user) == getGameManager().getCurrentPlayer());
+    }
+
+    private Player getGamePlayer(User user) {
         if (!isUserRegistered(user)) return null;
 
         List<Player> list = getGameManager().getPlayerList();
