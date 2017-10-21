@@ -14,6 +14,11 @@ public class GridPoint extends java.awt.Point {
         this.y = pos.getY();
     }
 
+    public GridPoint(GridPoint pos) {
+        this.x = (int) pos.getX();
+        this.y = (int) pos.getY();
+    }
+
     public GridPoint() {
         x = 0;
         y = 0;
