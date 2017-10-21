@@ -1,9 +1,10 @@
 package engine.model.boards;
 
-import engine.managers.game.HitType;
 import engine.exceptions.BoardBuilderException;
+import engine.managers.game.HitType;
 import engine.model.ships.Ship;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -21,6 +22,16 @@ public class Player {
         this.ships = ships;
         shipsBoard = new ShipsBoard(ships, boardSize + 1, mine);
         attackBoard = new AttackBoard(boardSize + 1);
+    }
+
+    public Player(Player p) throws BoardBuilderException {
+        this.playerId = p.playerId;
+        this.ships = new ArrayList<>();
+        for (Ship s : p.getShips()) {
+            this.ships.add(new Ship(s));
+        }
+        shipsBoard = new ShipsBoard(ships, p.shipsBoard.getBoardSize(), p.getShipsBoard().getMinesAllowance());
+        attackBoard = new AttackBoard(p.shipsBoard.getBoardSize());
     }
 
     /*
