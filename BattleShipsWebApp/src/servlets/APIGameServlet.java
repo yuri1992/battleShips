@@ -220,12 +220,12 @@ public class APIGameServlet extends JsonServlet {
         if (!turn.isLegal()) return;
 
         Match match = SessionUtils.getSessionMatch(request);
-
         if (turn.getTurnType() == APIGameTurnType.ATTACK) {
             postPlayAttackTurn(match, turn.getGridPoiont(), response);
         } else if (turn.getTurnType() == APIGameTurnType.MINE) {
             postPlayMineTurn(match, turn.getGridPoiont(), response);
         }
+        match.getGameManager().isGameOver();
     }
 
     private void postPlayMineTurn(Match match, GridPoint gp, HttpServletResponse response) throws
@@ -259,14 +259,21 @@ public class APIGameServlet extends JsonServlet {
 
     private void postResignFromGame(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        Match match = SessionUtils.getSessionMatch(request);
+        User sessionUser = SessionUtils.getSessionUser(request);
         try {
-            Match match = SessionUtils.getSessionMatch(request);
-            if (match != null && ServletUtils.getMatchManager().removeUserFromMatch(match.getMatchId(), SessionUtils.getSessionUser(request))) {
+            if (match != null) {
+                if (match.getPlayer2() == null) {
+                    ServletUtils.getMatchManager().removeUserFromMatch(match.getMatchId(), SessionUtils.getSessionUser(request));
+                } else {
+                    // Todo: Need to return a game to game list.
+                    match.resignGame(sessionUser);
+                }
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 SessionUtils.clearSessionMatch(request);
                 return;
             } else {
-                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not leave game");
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not resign game");
             }
         } catch (UserNotInMatchException | MatchNotFoundException e) {
             SessionUtils.clearSessionMatch(request);
