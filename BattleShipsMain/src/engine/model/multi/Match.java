@@ -110,6 +110,10 @@ public class Match {
                 getGamePlayer(user) == getGameManager().getCurrentPlayer());
     }
 
+    public void resignGame(User user) {
+        this.getGameManager().resignGame(getGamePlayer(user));
+    }
+
     private Player getGamePlayer(User user) {
         if (!isUserRegistered(user)) return null;
 
