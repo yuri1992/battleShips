@@ -1,23 +1,38 @@
 <div class="row">
     <div class="col-xs-12">
-        <div class="btn-group btn-group-lg pull-right">
-            <button class="btn-danger btn" id="create-game">Resign Game</button>
+        <div class="btn-group btn-group-lg pull-right main-btns">
+            <button class="btn-danger btn" id="js-resign">Resign Game</button>
+        </div>
+
+        <h1 id="js-game-title"></h1>
+    </div>
+
+    <div class="col-xs-12" id="js-status">
+
+    </div>
+</div>
+
+<div class="c-player">
+    <div class="c-waiting"></div>
+    <div class="row">
+        <div class="col-xs-6 box" id="js-ships-board">
+            <h3>My Ships</h3>
+        </div>
+
+        <div class="col-xs-6 box" id="js-attack-board">
+            <h3>Attacks Board
+                <small>Click on cell to attack</small>
+            </h3>
+
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-6 box" id="js-history">
+            <h3>History</h3>
+        </div>
 
-    <div class="col-xs-6 box" id="js-ships-board">
-        <h1>My Ships</h1>
-    </div>
-
-    <div class="col-xs-6 box" id="js-attack-board">
-        <h1>Attacks Board</h1>
-    </div>
-
-    <div class="col-xs-6 box" id="js-history">
-        <h1>History</h1>
-    </div>
-
-    <div class="col-xs-6 box" id="js-statistics">
-        <h1>Statistics</h1>
+        <div class="col-xs-6 box" id="js-statistics">
+            <h3>Statistics</h3>
+        </div>
     </div>
 </div>

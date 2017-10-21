@@ -3,13 +3,17 @@
     margin: auto;
 }
 
-#js-messages {
+#js-messages, #js-status {
     margin-top: 20px;
 }
 
 h1 .glyphicon-refresh-animate {
     float: right;
     font-size: 16px;
+}
+
+.main-btns.btn-group {
+    margin-top: 15px;
 }
 
 .actions .glyphicon-play {
@@ -22,6 +26,15 @@ h1 .glyphicon-refresh-animate {
 
 .box {
     min-height: 350px;
+}
+
+.turns {
+    max-height: 186px;
+    overflow-y: scroll;
+}
+
+.ship-table {
+    clear: both;
 }
 
 .ship-table td {
@@ -41,17 +54,28 @@ h1 .glyphicon-refresh-animate {
     background-size: 35px 35px;
 }
 
-.ship-table .mine {
+.icon {
+    width: 35px;
+    height: 35px;
+}
+
+.mine-wrapper {
+    margin-top: 20px;
+    float: right;
+    margin-bottom: 0;
+}
+
+.mine {
     background: url('/static/images/mine.png') no-repeat center;
     background-size: 35px 35px;
 }
 
 .ship-table .miss {
     background: url('/static/images/miss.png') no-repeat center;
-    background-size: 35px 35px;
+    background-size: 25px 25px;
 }
 
-.ship-table .fire {
+.ship-table .ship_hit {
     background: url('/static/images/fire.png') no-repeat center;
     background-size: 35px 35px;
 }
@@ -59,6 +83,14 @@ h1 .glyphicon-refresh-animate {
 .ship-table .explode {
     background: url('/static/images/explode.png') no-repeat center;
     background-size: 35px 35px;
+}
+
+.c-player {
+    position: relative;
+}
+
+.c-player .modal-backdrop {
+    position: absolute;
 }
 
 .c-loading {
