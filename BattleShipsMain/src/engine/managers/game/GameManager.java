@@ -107,6 +107,11 @@ public class GameManager {
         finishGame();
     }
 
+    public void resignGame(Player player) {
+        setWinner(player);
+        finishGame();
+    }
+
     public void finishGame() {
         currentTurn = null;
         state = GameState.REPLAY;
