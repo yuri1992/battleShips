@@ -20,6 +20,7 @@ public class GameStatusObj {
     private final String matchName;
     private final GameState state;
     private final GameStatus gameStatus;
+    private final UserForJson winner;
 
     private final UserForJson player;
     private final ShipsBoard shipsBoard;
@@ -60,6 +61,15 @@ public class GameStatusObj {
             this.gameStatus = GameStatus.WAITING_FOR_SECOND_PLAYER_TO_JOIN;
         } else {
             this.gameStatus = GameStatus.UNDEFINED;
+        }
+
+        if (this.gameStatus == GameStatus.ENDED) {
+            if (match.getGameManager().getWinner() == player)
+                this.winner = new UserForJson(sessionUser);
+            else
+                this.winner = new UserForJson(match.getPlayer1() == sessionUser ? match.getPlayer2() : match.getPlayer1());
+        } else {
+            this.winner = null;
         }
     }
 
