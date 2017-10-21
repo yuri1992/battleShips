@@ -122,7 +122,8 @@ public class GameManager {
     }
 
     public void resignGame(Player player) {
-        setWinner(player);
+        // Marking the other player as winner
+        setWinner(this.getNextPlayer() == player ? getCurrentPlayer() : getNextPlayer());
         finishGame();
     }
 

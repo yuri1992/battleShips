@@ -146,7 +146,7 @@ $(function ($) {
         },
         onGameEnded: function () {
             this.$gameResign.attr('disabled', 'true');
-            this.$gameResign.parent().append($('<button class="btn-success btn" id="js-back">Go Back</button>'));
+            this.$gameResign.parent().append($('<a class="btn-success btn" id="js-back">Go Back</a>'));
             setTimeout(function () {
                 window.location = '/pages/matchhub';
             }, 5000)
