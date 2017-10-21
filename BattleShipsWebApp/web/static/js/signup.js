@@ -52,17 +52,17 @@ $(function ($) {
         },
 
 
-        isNameValid: function () {
+        isUsernameValid: function () {
             return this.$username.val().length > 2;
         },
 
         validateName: function () {
-            this.$passwordGroup.remove('has-success').remove('has-error');
-            if (this.isPasswordValid()) {
-                this.$passwordGroup.addClass('has-success');
+            this.$usernameGroup.remove('has-success').remove('has-error');
+            if (this.isUsernameValid()) {
+                this.$usernameGroup.addClass('has-success');
             } else {
-                this.$passwordGroup.addClass('has-error');
-                this.$passwordGroup.append('<p class="help-block ">Name is too short, should be at least 2 chars</p>')
+                this.$usernameGroup.addClass('has-error');
+                this.$usernameGroup.append('<p class="help-block ">Name is too short, should be at least 3 chars</p>')
             }
         },
 
@@ -70,7 +70,7 @@ $(function ($) {
             e.preventDefault();
             this.$form.find('.help-block').remove();
 
-            if (this.isPasswordValid() && this.isEmailValid() && this.isNameValid()) {
+            if (this.isPasswordValid() && this.isEmailValid() && this.isUsernameValid()) {
                 var self = this;
 
                 $.ajax({
