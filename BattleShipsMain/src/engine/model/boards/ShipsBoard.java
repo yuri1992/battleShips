@@ -1,9 +1,9 @@
 package engine.model.boards;
 
-import engine.managers.game.HitType;
 import engine.exceptions.BoardBuilderException;
 import engine.exceptions.ShipsLocatedTooClose;
 import engine.exceptions.ShipsOffBoardException;
+import engine.managers.game.HitType;
 import engine.model.ships.Ship;
 
 import java.util.ArrayList;
@@ -59,9 +59,17 @@ public class ShipsBoard implements Board {
         map.put(pt, ship);
     }
 
+    public int getBoardSize() {
+        return boardSize;
+    }
+
+    public int getMinesAllowance() {
+        return minesAllowance;
+    }
+
     /*
-        Verify ship is not off board
-     */
+            Verify ship is not off board
+         */
     private void validateShipLocation(ArrayList<GridPoint> positions) throws ShipsOffBoardException {
         for (GridPoint pt : positions) {
             if (pt.x < 1 || pt.x >= boardSize || pt.y < 1 || pt.y >= boardSize) {
