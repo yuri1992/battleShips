@@ -50,6 +50,10 @@ $(function () {
         },
         getCurrentUser: function () {
             return currentUser;
+        },
+        shallowEqual: function (objA, objB) {
+            // fastest way to achieve it.
+            return JSON.stringify(objA) === JSON.stringify(objB)
         }
     }
 });
