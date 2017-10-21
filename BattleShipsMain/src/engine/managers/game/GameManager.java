@@ -1,5 +1,6 @@
 package engine.managers.game;
 
+import engine.exceptions.BoardBuilderException;
 import engine.model.boards.GridPoint;
 import engine.model.boards.Player;
 import engine.model.boards.PlayerStatistics;
@@ -35,6 +36,19 @@ public class GameManager {
         this.shipTypes = shipTypes;
         this.playerList = players;
         this.allowMines = allowMines;
+        this.turnList = new ArrayList<>();
+        this.state = GameState.LOADED;
+    }
+
+    public GameManager(GameManager gm) throws BoardBuilderException {
+        this.mode = gm.mode;
+        this.boardSize = gm.boardSize;
+        this.shipTypes = gm.shipTypes;
+        this.playerList = new ArrayList<>();
+        for (Player p : gm.getPlayerList()) {
+            this.playerList.add(new Player(p));
+        }
+        this.allowMines = gm.allowMines;
         this.turnList = new ArrayList<>();
         this.state = GameState.LOADED;
     }
