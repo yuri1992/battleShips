@@ -23,6 +23,14 @@ public class Ship implements GridEntity {
         this.setPositions(markerPosition);
     }
 
+    public Ship(Ship ship) {
+        this.shipTypeId = ship.getShipType();
+        this.direction = ship.getDirection();
+        this.markerPosition = new GridPoint(ship.getPosition());
+        this.meta = ship.getMeta();
+        this.setPositions(ship.getPosition());
+    }
+
     private void setPositions(GridPoint position) {
         positions = new ArrayList<>();
         positions.add(position);
