@@ -9,7 +9,6 @@ $(function ($) {
         this.$gameResign = $('#js-resign');
         this.$waiting = $('.c-waiting');
 
-        this.isMyTurn = false;
         this.game = null;
         this.previousGame = null;
         this.shouldReload = true;
@@ -26,7 +25,7 @@ $(function ($) {
     Match.prototype = {
         init: function () {
             var self = this;
-            setInterval(function () {
+            this.intervalLoad = setInterval(function () {
                 if (self.shouldReload) {
                     self.loadGame();
                 }
@@ -53,7 +52,7 @@ $(function ($) {
                 }
             }).fail(function (xhr, text, status) {
                 CommonUtils.clearMessages();
-                CommonUtils.addMessage("Error fetching player list, try again later", 'error');
+                CommonUtils.addMessage("Error loading game data, try again later", 'error');
             }).always(function () {
                 self.shouldReload = true;
             })
@@ -63,6 +62,9 @@ $(function ($) {
 
             if (data !== "EMPTY") {
                 alert("You can't attacked this cell, you already attack it!");
+                return;
+            } else if (this.isGameEnded()) {
+                alert("The game is already ended.");
                 return;
             }
 
@@ -92,9 +94,14 @@ $(function ($) {
 
         },
         onMineDrop: function (row, col, e) {
-            console.log(row, col);
             e.preventDefault();
             var self = this;
+
+            if (this.isGameEnded()) {
+                alert("The game is already ended.");
+                return;
+            }
+
             if (this.game.shipsBoard.minesAllowance > 0) {
                 $.ajax({
                     url: "/api/game/turn/",
@@ -140,6 +147,16 @@ $(function ($) {
             }).always(function () {
                 self.shouldReload = true;
             })
+        },
+        onGameEnded: function () {
+            this.$gameResign.attr('disabled', 'true');
+            this.$gameResign.parent().append($('<button class="btn-success btn" id="js-back">Go Back</button>'));
+            setTimeout(function () {
+                window.location = '/pages/matchhub';
+            }, 5000)
+        },
+        isGameEnded: function () {
+            return this.game.gameStatus === 'ENDED';
         },
         clearWaitingStatus: function () {
             this.$waiting.children().remove();
@@ -272,7 +289,20 @@ $(function ($) {
             this.$attackBoard.append(result);
         },
         renderPageTitle: function () {
-            this.$title.text("Playing " + this.game.matchName);
+            if (this.game && this.game.gameStatus === 'ENDED') {
+                this.shouldReload = false;
+                this.$title.text("Game Ended " + this.game.matchName);
+                var result;
+                if (this.game.winner.id === CommonUtils.getCurrentUser().id) {
+                    result = $("<div class='alert alert-success'>Congratus, You Are the Winner</div>")
+                } else {
+                    result = $("<div class='alert alert-danger'>Sorry, but this time you loose the game.</div>")
+                }
+                this.$status.append(result);
+            } else {
+                this.$title.text("Playing " + this.game.matchName);
+            }
+
         },
         renderStatus: function () {
             if (this.game.gameStatus === "WAITING_FOR_SECOND_PLAYER_TO_JOIN") {
@@ -280,6 +310,8 @@ $(function ($) {
             } else if (this.game.gameStatus === 'OPONENT_TURN') {
                 this.setWaitingStatus("Waiting for other player to complete his turn...")
             } else if (this.game.gameStatus === 'PLAYER_TURN') {
+                this.clearWaitingStatus();
+            } else if (this.game.gameStatus === 'ENDED') {
                 this.clearWaitingStatus();
             }
         },
@@ -291,6 +323,9 @@ $(function ($) {
             this.renderAttackBoard();
             this.renderStatistics();
             this.renderHistoryList();
+            if (this.isGameEnded()) {
+                this.onGameEnded();
+            }
         }
     };
 

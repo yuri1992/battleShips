@@ -98,12 +98,14 @@ $(function ($) {
                 method: "GET",
                 dataType: "json",
                 beforeSend: function () {
+                    self.renderGames();
                     self.$gamesContainer.find('h1').append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
             }).done(function (data, text) {
-                console.log(data);
-                self.games = data.matches;
-                self.renderGames();
+                if (!CommonUtils.shallowEqual(self.games, data.matches)) {
+                    self.games = data.matches;
+                    self.renderGames();
+                }
             }).fail(function (xhr, text, status) {
                 CommonUtils.addMessage("Error fetching game list, try again later", 'error');
             }).always(function () {
@@ -123,9 +125,10 @@ $(function ($) {
                     self.$playersContainer.find('h1').append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
             }).done(function (data, text) {
-                console.log(data);
-                self.users = data.users;
-                self.renderUsers();
+                if (!CommonUtils.shallowEqual(self.users, data.users)) {
+                    self.users = data.users;
+                    self.renderUsers();
+                }
             }).fail(function (xhr, text, status) {
                 CommonUtils.addMessage("Error fetching player list, try again later", 'error');
             }).always(function () {
@@ -135,12 +138,8 @@ $(function ($) {
         },
 
         joinGame: function (event, matchId) {
-
             var self = this;
             var $btn = $(event.target);
-
-            console.log(event, matchId, $btn);
-
             $.ajax({
                 url: "/api/games/" + matchId + "/register",
                 method: "POST",
@@ -163,7 +162,6 @@ $(function ($) {
         },
 
         removeGame: function (event, matchId) {
-
             var self = this;
             var $btn = $(event.target);
 
@@ -191,7 +189,7 @@ $(function ($) {
             this.$gameList.children().remove();
 
             if (this.games.length === 0) {
-                this.$gameList.append("<tr><td colspan='8'>No Games Found.</td></tr>")
+                this.$gameList.append("<tr><td colspan='7'>No Games Found.</td></tr>")
             } else {
                 for (var i in this.games) {
 
@@ -210,7 +208,6 @@ $(function ($) {
 
                     var isWaitingPlayers = this.games[i].state === "LOADED";
                     var $row = $("<tr>" +
-                        "<td>" + this.games[i].matchId + " </td>" +
                         "<td>" + this.games[i].matchName + " </td>" +
                         "<td>" + this.games[i].submittingUser.name + " </td>" +
                         "<td>" + this.games[i].gameMode + " </td>" +
