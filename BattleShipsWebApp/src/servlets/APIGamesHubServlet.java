@@ -16,7 +16,8 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static utils.SessionUtils.getSessionUser;
@@ -208,11 +209,13 @@ public class APIGamesHubServlet extends JsonServlet {
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">
     private class GameListResponse {
 
-        final private Set<MatchMetaForJson> matches = new HashSet<>();
+        final private List<MatchMetaForJson> matches = new ArrayList<>();
         final private int size;
 
         public GameListResponse(Set<Match> matches) {
-            for (Match match : matches) {
+            List<Match> l = new ArrayList<Match>(matches);
+            l.sort((o1, o2) -> Integer.compare(o2.getMatchId(), o1.getMatchId()));
+            for (Match match : l) {
                 this.matches.add(new MatchMetaForJson(match));
             }
             this.size = this.matches.size();
