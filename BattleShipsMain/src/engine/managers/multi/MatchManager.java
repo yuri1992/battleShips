@@ -3,6 +3,7 @@ package engine.managers.multi;
 import engine.exceptions.*;
 import engine.managers.game.GameManager;
 import engine.managers.game.GameManagerFactory;
+import engine.managers.game.GameState;
 import engine.model.multi.Match;
 import engine.model.multi.User;
 
@@ -38,12 +39,24 @@ public class MatchManager {
         return Collections.unmodifiableSet(matchSet);
     }
 
+    public Set<Match> getActiveMatchList() {
+        return getMatchList().stream().filter(m -> m.getGameManager().getState() != GameState.REPLAY).collect(Collectors.toSet());
+    }
+
     public Match addMatch(String matchName, User submittedBy, InputStream xml) throws MatchNameTakenException, FileNotFoundException, JAXBException, GameSettingsInitializationException {
         if (isMatchNameTaken(matchName))
             throw new MatchNameTakenException(matchName);
 
         GameManager gm = GameManagerFactory.loadGameManager(xml);
         Match out = new Match(matchCounter, matchName, submittedBy, gm);
+        matchSet.add(out);
+        matchCounter++;
+        return out;
+    }
+
+    public Match addMatch(Match match) throws BoardBuilderException {
+        GameManager gm = new GameManager(match.getGameManager());
+        Match out = new Match(matchCounter, match.getMatchName(), match.getSubmittingUser(), gm);
         matchSet.add(out);
         matchCounter++;
         return out;
