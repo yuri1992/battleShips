@@ -24,6 +24,7 @@ $(function ($) {
                 if (!self.isLoadingGames)
                     self.loadGames();
             }, 2000);
+            self.renderGames();
             this.loadGames();
 
             this._intervalPlayer = setInterval(function () {
@@ -43,7 +44,7 @@ $(function ($) {
             })
         },
 
-        onCreateGameClick: function (event) {
+        onCreateGameClick: function () {
             this.$modal.modal('show');
         },
         validateCreateGameForm: function () {
@@ -71,11 +72,11 @@ $(function ($) {
                         $form.find('.btn-success').attr('disabled', 'disabled');
                         $form.find('.btn-success').append('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>');
                     }
-                }).done(function (data, text) {
+                }).done(function (data) {
                     self.games.push(data);
                     self.renderGames();
                     self.$modal.modal('hide');
-                }).fail(function (xhr, error, status) {
+                }).fail(function (xhr) {
                     var text = '';
                     if (xhr.responseJSON) {
                         text = xhr.responseJSON.desc;
@@ -98,15 +99,15 @@ $(function ($) {
                 method: "GET",
                 dataType: "json",
                 beforeSend: function () {
-                    self.renderGames();
                     self.$gamesContainer.find('h1').append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
-            }).done(function (data, text) {
+            }).done(function (data) {
                 if (!CommonUtils.shallowEqual(self.games, data.matches)) {
+
                     self.games = data.matches;
                     self.renderGames();
                 }
-            }).fail(function (xhr, text, status) {
+            }).fail(function (xhr) {
                 CommonUtils.addMessage("Error fetching game list, try again later", 'error');
             }).always(function () {
                 self.$gamesContainer.find('.glyphicon-refresh-animate').remove();
@@ -138,7 +139,6 @@ $(function ($) {
         },
 
         joinGame: function (event, matchId) {
-            var self = this;
             var $btn = $(event.target);
             $.ajax({
                 url: "/api/games/" + matchId + "/register",
@@ -148,7 +148,7 @@ $(function ($) {
                     $btn.attr('disabled', 'true');
                     $btn.append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
-            }).done(function (data, text) {
+            }).done(function () {
                 CommonUtils.addMessage("Redirecting you to the game...");
                 window.location = '/pages/game?matchId=' + matchId;
             }).fail(function (xhr, text, status) {
@@ -162,9 +162,7 @@ $(function ($) {
         },
 
         removeGame: function (event, matchId) {
-            var self = this;
             var $btn = $(event.target);
-
             $.ajax({
                 url: "/api/games/" + matchId,
                 method: "DELETE",
@@ -173,9 +171,9 @@ $(function ($) {
                     $btn.attr('disabled', 'true');
                     $btn.append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
-            }).done(function (data, text) {
+            }).done(function () {
                 CommonUtils.addMessage("Game deleted successfully");
-            }).fail(function (xhr, text, status) {
+            }).fail(function () {
                 CommonUtils.clearMessages();
                 CommonUtils.addMessage("Error deleting the games", 'error');
             }).always(function () {
@@ -218,7 +216,7 @@ $(function ($) {
                         "</tr>");
 
                     $row.find('.actions').append(isWaitingPlayers ? $joinGame : '');
-                    $row.find('.actions').append(CommonUtils.getCurrentUser().id === this.games[i].submittingUser.id ? $removeGame : '');
+                    $row.find('.actions').append(isWaitingPlayers && CommonUtils.getCurrentUser().id === this.games[i].submittingUser.id ? $removeGame : '');
                     this.$gameList.append($row);
                 }
             }

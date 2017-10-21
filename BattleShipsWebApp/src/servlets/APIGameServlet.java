@@ -2,6 +2,7 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import engine.exceptions.BoardBuilderException;
 import engine.exceptions.MatchNotFoundException;
 import engine.exceptions.UserNotInMatchException;
 import engine.managers.game.HitType;
@@ -225,7 +226,14 @@ public class APIGameServlet extends JsonServlet {
         } else if (turn.getTurnType() == APIGameTurnType.MINE) {
             postPlayMineTurn(match, turn.getGridPoiont(), response);
         }
-        match.getGameManager().isGameOver();
+
+
+        // When Game is over we are creating a replica of the game to be added to game list
+        if (match != null && match.isMatchOver()) {
+            try {
+                ServletUtils.getMatchManager().addMatch(match);
+            } catch (BoardBuilderException ignored) {}
+        }
     }
 
     private void postPlayMineTurn(Match match, GridPoint gp, HttpServletResponse response) throws
@@ -266,8 +274,12 @@ public class APIGameServlet extends JsonServlet {
                 if (match.getPlayer2() == null) {
                     ServletUtils.getMatchManager().removeUserFromMatch(match.getMatchId(), SessionUtils.getSessionUser(request));
                 } else {
-                    // Todo: Need to return a game to game list.
                     match.resignGame(sessionUser);
+                    if (match != null && match.isMatchOver()) {
+                        try {
+                            ServletUtils.getMatchManager().addMatch(match);
+                        } catch (BoardBuilderException ignored) {}
+                    }
                 }
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 SessionUtils.clearSessionMatch(request);

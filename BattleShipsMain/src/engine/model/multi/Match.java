@@ -78,8 +78,7 @@ public class Match {
                         gameManager.startGame();
                     }
                     return true;
-                }
-                else return false;
+                } else return false;
             }
         } else return false;
     }
@@ -92,10 +91,8 @@ public class Match {
                     if (player1 == user) {
                         player1 = null;
                         return true;
-                    }
-                    else throw new UserNotInMatchException(user);
-                }
-                else return false;
+                    } else throw new UserNotInMatchException(user);
+                } else return false;
             }
         } else return false;
     }
@@ -112,6 +109,7 @@ public class Match {
 
     public void resignGame(User user) {
         this.getGameManager().resignGame(getGamePlayer(user));
+
     }
 
     private Player getGamePlayer(User user) {
@@ -120,5 +118,14 @@ public class Match {
         List<Player> list = getGameManager().getPlayerList();
         if (user.equals(player1)) return list.get(0);
         else return list.get(1);
+    }
+
+    public boolean isMatchOver() {
+        GameManager gameManager = getGameManager();
+        if (gameManager.getState() != GameState.REPLAY && gameManager.isGameOver()) {
+            // Match is over we should add this game again to matchhub
+            return true;
+        }
+        return false;
     }
 }

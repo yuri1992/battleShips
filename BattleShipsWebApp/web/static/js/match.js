@@ -13,11 +13,6 @@ $(function ($) {
         this.previousGame = null;
         this.shouldReload = true;
 
-        this.gameId = CommonUtils.getUrlParameter('matchId');
-        if (this.gameId === null) {
-            CommonUtils.addMessage("Error, Please Join the game again.")
-            return;
-        }
         CommonUtils.getCurrentUser();
         this.init();
     }
@@ -82,14 +77,14 @@ $(function ($) {
                     self.shouldReload = false;
                 }
             }).done(function (data, text) {
-                console.log(self.game.attackBoard.board[row][col], data.result);
-                self.game.attackBoard.board[row][col] = data.result;
+                self.game.attackBoard.board[row][col] = data.result === 'HIT' ? 'SHIP_HIT' : data.result;
                 self.renderAttackBoard();
             }).fail(function (xhr, text, status) {
                 CommonUtils.clearMessages();
                 CommonUtils.addMessage("Error Processing your turn, Please Try Again.", 'error');
             }).always(function () {
                 self.shouldReload = true;
+                self.loadGame();
             })
 
         },
@@ -128,6 +123,7 @@ $(function ($) {
                     }
                 }).always(function () {
                     self.shouldReload = true;
+                    self.loadGame();
                 })
             }
         },
