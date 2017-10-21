@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -74,11 +75,13 @@ public class APIUserServlet extends JsonServlet {
     // <editor-fold defaultstate="collapsed" desc="User Response Object">
     private class UsersResponse {
 
-        final private Set<UserForJson> users = new HashSet<>();;
+        final private List<UserForJson> users = new ArrayList<>();
         final private int size;
 
         public UsersResponse(Set<User> users) {
-            for (User user: users) {
+            List<User> l = new ArrayList<User>(users);
+            l.sort((o1, o2) -> Integer.compare(o2.getId(), o1.getId()));
+            for (User user : l) {
                 this.users.add(new UserForJson(user));
             }
             this.size = this.users.size();
