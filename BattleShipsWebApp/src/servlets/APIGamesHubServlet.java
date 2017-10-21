@@ -148,7 +148,7 @@ public class APIGamesHubServlet extends JsonServlet {
 
     private void getAllGames(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println(new Gson().toJson(new GameListResponse(ServletUtils.getMatchManager().getMatchList())));
+        response.getWriter().println(new Gson().toJson(new GameListResponse(ServletUtils.getMatchManager().getActiveMatchList())));
         response.getWriter().flush();
     }
 
