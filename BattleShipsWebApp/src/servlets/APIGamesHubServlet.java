@@ -29,14 +29,12 @@ public class APIGamesHubServlet extends JsonServlet {
 
     private enum APIGamesPathTypes {
         NONE,
-        REGISTER,
-        RESIGN
+        REGISTER
     }
 
     // Accommodate several REST requests for same endpoint
     private class RouteRestRequest {
         private final String registerPath = "register";
-        private final String resignPath = "resign";
 
         private Integer id = null;
         private APIGamesPathTypes pathType = APIGamesPathTypes.NONE;
@@ -63,8 +61,6 @@ public class APIGamesHubServlet extends JsonServlet {
                     // check 2nd token
                     if (registerPath.equals(tokens[1]))
                         pathType = APIGamesPathTypes.REGISTER;
-                    else if (resignPath.equals(tokens[1]))
-                        pathType = APIGamesPathTypes.RESIGN;
                     else
                         throw new ServletException("Invalid URI");
                 } else if (tokens.length > 2) {
@@ -94,8 +90,6 @@ public class APIGamesHubServlet extends JsonServlet {
                 postNewGame(request, response);
             } else if (route.getPathType() == APIGamesPathTypes.REGISTER) {
                 postRegisterToGame(request, response, route.getId().intValue());
-            } else if (route.getPathType() == APIGamesPathTypes.RESIGN) {
-                postResignFromGame(request, response, route.getId().intValue());
             } else {
                 setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported POST request");
             }
@@ -209,27 +203,6 @@ public class APIGamesHubServlet extends JsonServlet {
         } catch (MatchNotFoundException e) {
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
-    }
-
-    /// TODO: Amir: Change to join and leave to differ from resign/forfeit
-    private void postResignFromGame(HttpServletRequest request, HttpServletResponse response, int matchId)
-            throws IOException {
-        try {
-            if (ServletUtils.getMatchManager().removeUserFromMatch(matchId, SessionUtils.getSessionUser(request))) {
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                SessionUtils.clearSessionMatch(request);
-                return;
-            } else {
-                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not leave game");
-            }
-        } catch (UserNotInMatchException e) {
-            SessionUtils.clearSessionMatch(request);
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
-        } catch (MatchNotFoundException e) {
-            SessionUtils.clearSessionMatch(request);
-            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
-        }
-
     }
 
     //<editor-fold defaultstate="collapsed" desc="Game List Response Object">

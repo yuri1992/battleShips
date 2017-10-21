@@ -2,12 +2,15 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import engine.exceptions.MatchNotFoundException;
+import engine.exceptions.UserNotInMatchException;
 import engine.managers.game.HitType;
 import engine.model.boards.GridPoint;
 import engine.model.multi.Match;
 import engine.model.multi.User;
 import models.GameStatisticsObj;
 import models.GameStatusObj;
+import utils.ServletUtils;
 import utils.SessionUtils;
 
 import javax.servlet.ServletException;
@@ -15,12 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class APIGameServlet extends JsonServlet  {
+public class APIGameServlet extends JsonServlet {
 
     private enum APIGamePathTypes {
         NONE,
         STATISTICS,
-        TURN
+        TURN,
+        RESIGN
     }
 
     private enum APIGameTurnType {
@@ -41,6 +45,7 @@ public class APIGameServlet extends JsonServlet  {
     private class RouteRestRequest {
         private final String statisticsPath = "statistics";
         private final String turnPath = "turn";
+        private final String resignPath = "resign";
 
         private APIGamePathTypes pathType = APIGamePathTypes.NONE;
 
@@ -61,6 +66,8 @@ public class APIGameServlet extends JsonServlet  {
                     pathType = APIGamePathTypes.STATISTICS;
                 else if (turnPath.equals(tokens[0]))
                     pathType = APIGamePathTypes.TURN;
+                else if (resignPath.equals(tokens[0]))
+                    pathType = APIGamePathTypes.RESIGN;
                 else
                     throw new ServletException("Invalid URI");
             } else {
@@ -150,6 +157,9 @@ public class APIGameServlet extends JsonServlet  {
             switch (route.getPathType()) {
                 case TURN:
                     postPlayTurn(request, response);
+                    break;
+                case RESIGN:
+                    postResignFromGame(request, response);
                     break;
                 default:
                     setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported GET request");
@@ -245,6 +255,24 @@ public class APIGameServlet extends JsonServlet  {
         obj.addProperty("result", turnResult.toString());
         response.getWriter().println(obj);
         response.getWriter().flush();
+    }
+
+    private void postResignFromGame(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        try {
+            Match match = SessionUtils.getSessionMatch(request);
+            if (match != null && ServletUtils.getMatchManager().removeUserFromMatch(match.getMatchId(), SessionUtils.getSessionUser(request))) {
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                SessionUtils.clearSessionMatch(request);
+                return;
+            } else {
+                setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, "Error: User could not leave game");
+            }
+        } catch (UserNotInMatchException | MatchNotFoundException e) {
+            SessionUtils.clearSessionMatch(request);
+            setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
+        }
+
     }
 
     @Override
