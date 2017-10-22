@@ -72,7 +72,7 @@ $(function ($) {
                         $form.find('.btn-success').append('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>');
                     }
                 }).done(function (data) {
-                    self.games.push(data);
+                    self.games.unshift(data);
                     self.renderGames();
                     self.$modal.modal('hide');
                     $form.get(0).reset();
@@ -152,7 +152,7 @@ $(function ($) {
                 }
             }).done(function () {
                 CommonUtils.addMessage("Redirecting you to the game...");
-                window.location = '/pages/game?matchId=' + matchId;
+                window.location = '/pages/game';
             }).fail(function (xhr, text, status) {
                 console.log(xhr, text, status);
                 CommonUtils.clearMessages();
@@ -194,20 +194,22 @@ $(function ($) {
             if (this.games.length === 0) {
                 this.$gameList.append("<tr><td colspan='7'>No Games Found.</td></tr>")
             } else {
+                var func = {};
                 for (var i in this.games) {
-
-
                     var $joinGame = $("<button href='#' class='glyphicon glyphicon-play' title='Join the game'></button>");
-                    $joinGame.click(function (e) {
+                    var onJoinGame = function (matchId, e) {
+                        console.log(matchId);
                         e.preventDefault();
-                        self.joinGame(e, self.games[i].matchId)
-                    });
+                        self.joinGame(e, matchId)
+                    };
+                    $joinGame.click(onJoinGame.bind(this, self.games[i].matchId));
 
                     var $removeGame = $("<button href='#' class='glyphicon glyphicon-remove' title='Remove the game'></button>");
-                    $removeGame.click(function (e) {
+                    var onRemoveGame = function (matchId, e) {
                         e.preventDefault();
-                        self.removeGame(e, self.games[i].matchId)
-                    });
+                        self.removeGame(e, matchId);
+                    };
+                    $removeGame.click(onRemoveGame.bind(this, self.games[i].matchId));
 
                     var isDeletable = this.games[i].matchStatus == "WAITING_FOR_FIRST_PLAYER";
                     var inProgress = this.games[i].matchStatus == "IN_PROGRESS";
