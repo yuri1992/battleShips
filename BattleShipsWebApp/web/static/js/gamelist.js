@@ -21,8 +21,7 @@ $(function ($) {
             var self = this;
 
             this._intervalGames = setInterval(function () {
-                if (!self.isLoadingGames)
-                    self.loadGames();
+                self.loadGames();
             }, 2000);
             self.renderGames();
             this.loadGames();
@@ -76,6 +75,7 @@ $(function ($) {
                     self.games.push(data);
                     self.renderGames();
                     self.$modal.modal('hide');
+                    $form.get(0).reset();
                 }).fail(function (xhr) {
                     var text = '';
                     if (xhr.responseJSON) {
@@ -93,17 +93,19 @@ $(function ($) {
 
         loadGames: function () {
             var self = this;
-            this.isLoadingGames = true;
+            if (self.isLoadingGames)
+                return;
+
             $.ajax({
                 url: "/api/games",
                 method: "GET",
                 dataType: "json",
                 beforeSend: function () {
+                    this.isLoadingGames = true;
                     self.$gamesContainer.find('h1').append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
             }).done(function (data) {
                 if (!CommonUtils.shallowEqual(self.games, data.matches)) {
-
                     self.games = data.matches;
                     self.renderGames();
                 }
@@ -162,6 +164,7 @@ $(function ($) {
         },
 
         removeGame: function (event, matchId) {
+            var self = this;
             var $btn = $(event.target);
             $.ajax({
                 url: "/api/games/" + matchId,
@@ -172,7 +175,9 @@ $(function ($) {
                     $btn.append($('<span class="glyphicon glyphicon glyphicon-refresh glyphicon-refresh-animate"/>'))
                 }
             }).done(function () {
-                CommonUtils.addMessage("Game deleted successfully");
+                self.loadGames();
+                self.CommonUtils.addMessage("Game deleted successfully");
+
             }).fail(function () {
                 CommonUtils.clearMessages();
                 CommonUtils.addMessage("Error deleting the games", 'error');
@@ -192,31 +197,32 @@ $(function ($) {
                 for (var i in this.games) {
 
 
-                    var $joinGame = $("<button href='#' class='glyphicon glyphicon-play'></button>");
+                    var $joinGame = $("<button href='#' class='glyphicon glyphicon-play' title='Join the game'></button>");
                     $joinGame.click(function (e) {
                         e.preventDefault();
                         self.joinGame(e, self.games[i].matchId)
                     });
 
-                    var $removeGame = $("<button href='#' class='glyphicon glyphicon-remove'></button>");
+                    var $removeGame = $("<button href='#' class='glyphicon glyphicon-remove' title='Remove the game'></button>");
                     $removeGame.click(function (e) {
                         e.preventDefault();
                         self.removeGame(e, self.games[i].matchId)
                     });
 
-                    var isWaitingPlayers = this.games[i].state === "LOADED";
+                    var isDeletable = this.games[i].matchStatus == "WAITING_FOR_FIRST_PLAYER";
+                    var inProgress = this.games[i].matchStatus == "IN_PROGRESS";
                     var $row = $("<tr>" +
                         "<td>" + this.games[i].matchName + " </td>" +
                         "<td>" + this.games[i].submittingUser.name + " </td>" +
                         "<td>" + this.games[i].gameMode + " </td>" +
                         "<td>" + this.games[i].boardSize + " </td>" +
                         "<td>" + this.games[i].playersCount + " </td>" +
-                        "<td>" + (isWaitingPlayers ? "<span class='label label-info'>Waiting</span>" : "<span class='label label-success'>Playing</span>") + " </td>" +
+                        "<td>" + (!inProgress ? "<span class='label label-info'>Waiting</span>" : "<span class='label label-success'>Playing</span>") + " </td>" +
                         "<td class='actions'></td>" +
                         "</tr>");
 
-                    $row.find('.actions').append(isWaitingPlayers ? $joinGame : '');
-                    $row.find('.actions').append(isWaitingPlayers && CommonUtils.getCurrentUser().id === this.games[i].submittingUser.id ? $removeGame : '');
+                    $row.find('.actions').append(!inProgress ? $joinGame : '');
+                    $row.find('.actions').append(isDeletable && CommonUtils.getCurrentUser().id === this.games[i].submittingUser.id ? $removeGame : '');
                     this.$gameList.append($row);
                 }
             }
