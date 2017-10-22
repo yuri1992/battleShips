@@ -13,6 +13,7 @@ $(function () {
 
     window.CommonUtils = {
         addMessage: function (text, level, dest) {
+            this.clearMessages(dest);
             var messageHtml = $('<div class="alert" role="alert">' +
                 '<button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
                 '  <span aria-hidden="true">&times;</span>\n' +
