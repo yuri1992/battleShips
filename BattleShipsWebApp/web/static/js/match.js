@@ -236,7 +236,11 @@ $(function ($) {
                 } else if (data[x].hitType === 'PLACE_MINE') {
                     text = "Placing mine at " + data[x].point.x + "," + data[x].point.y + " cell";
                     className = 'list-group-item-info';
+                } else if (data[x].hitType === 'HIT_MINE') {
+                    text = "Attack hit a mine at " + data[x].point.x + "," + data[x].point.y + " cell";
+                    className = 'list-group-item-danger';
                 }
+
 
                 result.append("<li class='list-group-item " + className + "'>" + text + "</li>");
             }

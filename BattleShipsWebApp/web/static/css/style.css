@@ -75,7 +75,7 @@ h1 .glyphicon-refresh-animate {
     background-size: 25px 25px;
 }
 
-.ship-table .ship_hit {
+.ship-table .ship_hit, .ship-table .mine_hit {
     background: url('/static/images/fire.png') no-repeat center;
     background-size: 35px 35px;
 }
