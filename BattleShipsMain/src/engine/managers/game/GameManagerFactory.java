@@ -71,8 +71,7 @@ public class GameManagerFactory {
     }
 
     static private List<Player> parsePlayers(List<Board> playerList, List<ShipType> types, int boardSize, int mines)
-            throws
-            GameSettingsInitializationException {
+            throws GameSettingsInitializationException {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < playerList.size(); ++i) {
             descriptor.Board descBoard = playerList.get(i);
