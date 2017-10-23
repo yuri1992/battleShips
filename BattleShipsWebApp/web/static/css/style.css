@@ -85,6 +85,48 @@ h1 .glyphicon-refresh-animate {
     background-size: 35px 35px;
 }
 
+.c-chatroom {
+    position: fixed;
+    bottom: 0;
+    height: 320px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    left: 75px;
+    padding-bottom: 20px;
+}
+
+.c-chatroom h4 {
+    text-align: center;
+}
+
+.c-chatroom-messages {
+    padding: 5px;
+    height: 239px;
+    border-bottom: 1px solid #1b6d85;
+    overflow-y: scroll;
+}
+
+.c-chatroom-form {
+    height: 37px;
+    padding: 5px;
+    position: relative;
+}
+
+.c-chatroom-form input {
+    border: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+}
+
+.c-chatroom-form input:focus {
+    outline: none;
+}
+
 .c-player {
     position: relative;
 }

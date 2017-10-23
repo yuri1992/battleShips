@@ -16,4 +16,8 @@ public class ServletUtils {
         return MatchManager.sharedInstance();
     }
 
+    public static ChatManager getChatManager() {
+        return ChatManager.sharedInstance();
+    }
+
 }

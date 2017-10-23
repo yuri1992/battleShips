@@ -259,7 +259,7 @@ $(function ($) {
             result.append("<tr><td>Hits</td><td>" + data.hits + "</td></tr>");
             result.append("<tr><td>Misses</td><td>" + data.misses + "</td></tr>");
             result.append("<tr><td>Turns</td><td>" + data.turns + "</td></tr>");
-            result.append("<tr><td>Avg. Turn Time</td><td>" + (data.avgTurnTime / 1000 / 60).toFixed(2)  + " minutes </td></tr>");
+            result.append("<tr><td>Avg. Turn Time</td><td>" + (data.avgTurnTime / 1000 / 60).toFixed(2) + " minutes </td></tr>");
 
             this.$statistics.append(result);
         },
@@ -330,4 +330,92 @@ $(function ($) {
     };
 
     (new Match());
+});
+
+$(function ($) {
+    function ChatRoom() {
+        this.$chatRoom = null;
+        this.$form = null;
+        this.$messages = null;
+
+        this.loadingMessages = false;
+        this.messages = [];
+
+        this.init();
+    }
+
+    ChatRoom.prototype = {
+        init: function () {
+            var chatRoom = $('<div class="c-chatroom">' +
+                '<h4>Chat Room</h4>' +
+                '<div class="c-chatroom-messages"></div>' +
+                '<div class="c-chatroom-form"><form><input placeholder="Enter you message" type="text" id="msg"/></form></div>' +
+                '</div>');
+
+            this.$chatRoom = $('body').append(chatRoom);
+            this.$messages = this.$chatRoom.find('.c-chatroom-messages');
+            this.$form = this.$chatRoom.find('.c-chatroom-form form');
+            this.$form.submit(this.submitMessage.bind(this));
+
+            setInterval(this.loadMessages.bind(this), 1000);
+        },
+        loadMessages: function () {
+            var self = this;
+
+            if (this.loadingMessages)
+                return;
+
+            $.ajax({
+                method: "GET",
+                url: "/api/chat",
+                dataType: "json",
+                beforeSend: function () {
+                    self.loadingMessages = true;
+                }
+            }).done(function (data, text) {
+                if (!CommonUtils.shallowEqual(self.messages, data)) {
+                    console.log(data);
+                    self.messages = data;
+                    self.renderMessages();
+                }
+            }).always(function () {
+                self.loadingMessages = false;
+            });
+        },
+        submitMessage: function (e) {
+            e.preventDefault();
+            var self = this;
+            $.ajax({
+                method: "POST",
+                url: "/api/chat",
+                dataType: "json",
+                data: {
+                    msg: this.$form.find('input').val()
+                }
+            }).done(function (data, text) {
+                self.loadMessages();
+                self.$form.get(0).reset();
+            })
+        },
+        render: function () {
+            this.renderMessages();
+            this.renderInputForm();
+        },
+        renderMessageItem: function (item) {
+            console.log(item);
+            return $("<div class=''>" + "<small>" + item.sentAt + "," + item.sentBy.name + " says:</small><br>" + item.msg + "</div>");
+        },
+        renderMessages: function () {
+            var self = this;
+            this.$messages.children().remove();
+
+            this.messages.forEach(function (item) {
+                self.$messages.append(self.renderMessageItem(item));
+            })
+
+            this.$messages.scrollTop(this.$messages[0].scrollHeight);
+        }
+    };
+
+    (new ChatRoom());
 });
