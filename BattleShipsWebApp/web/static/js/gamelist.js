@@ -83,7 +83,7 @@ $(function ($) {
                     }
                     var $modal = $('.modal-body');
                     CommonUtils.clearMessages($modal);
-                    CommonUtils.addMessage("Error Uploading Xml File: " + text, 'error', $modal)
+                    CommonUtils.addMessage(text, 'error', $modal)
                 }).always(function () {
                     $form.find('.btn-success').removeAttr('disabled');
                     $form.find('.btn-success').find('.glyphicon-refresh-animate').remove();

@@ -273,7 +273,7 @@ public class APIGameServlet extends JsonServlet {
         try {
             if (match != null) {
                 if (match.getPlayer2() == null) {
-                    ServletUtils.getMatchManager().removeUserFromMatch(match.getMatchId(), SessionUtils.getSessionUser(request));
+                    ServletUtils.getMatchManager().removeUserFromMatch(match.getMatchId(), sessionUser);
                 } else {
                     match.resignGame(sessionUser);
                     try {
@@ -291,7 +291,6 @@ public class APIGameServlet extends JsonServlet {
             SessionUtils.clearSessionMatch(request);
             setResponseError(response, HttpServletResponse.SC_BAD_REQUEST, e.toString());
         }
-
     }
 
     @Override
