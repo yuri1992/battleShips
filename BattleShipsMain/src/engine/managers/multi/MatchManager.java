@@ -80,7 +80,7 @@ public class MatchManager {
     }
 
     private boolean isMatchNameTaken(String matchName) {
-        List<Match> list = getMatchList().stream().filter(m -> m.getMatchName().equals(matchName)).collect(Collectors
+        List<Match> list = getActiveMatchList().stream().filter(m -> m.getMatchName().equals(matchName)).collect(Collectors
                 .toList());
         return list.size() > 0;
     }
