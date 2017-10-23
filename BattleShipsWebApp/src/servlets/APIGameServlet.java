@@ -165,6 +165,7 @@ public class APIGameServlet extends JsonServlet {
                 default:
                     setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Unsupported GET request");
             }
+
         } catch (ServletException e) {
             setResponseError(response, HttpServletResponse.SC_NOT_FOUND, "Invalid request");
         }
@@ -227,12 +228,12 @@ public class APIGameServlet extends JsonServlet {
             postPlayMineTurn(match, turn.getGridPoiont(), response);
         }
 
-
         // When Game is over we are creating a replica of the game to be added to game list
         if (match != null && match.isMatchOver()) {
             try {
                 ServletUtils.getMatchManager().addMatch(match);
-            } catch (BoardBuilderException ignored) {}
+            } catch (BoardBuilderException ignored) {
+            }
         }
     }
 
@@ -275,10 +276,9 @@ public class APIGameServlet extends JsonServlet {
                     ServletUtils.getMatchManager().removeUserFromMatch(match.getMatchId(), SessionUtils.getSessionUser(request));
                 } else {
                     match.resignGame(sessionUser);
-                    if (match != null && match.isMatchOver()) {
-                        try {
-                            ServletUtils.getMatchManager().addMatch(match);
-                        } catch (BoardBuilderException ignored) {}
+                    try {
+                        ServletUtils.getMatchManager().addMatch(match);
+                    } catch (BoardBuilderException ignored) {
                     }
                 }
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
