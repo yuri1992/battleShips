@@ -12,7 +12,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="/pages/logout" id="js-logout">Logout</a></li>
+                <li><a href="${pageContext.request.contextPath}/pages/logout" id="js-logout">Logout</a></li>
             </ul>
         </div><!--/.navbar-collapse -->
     </div>

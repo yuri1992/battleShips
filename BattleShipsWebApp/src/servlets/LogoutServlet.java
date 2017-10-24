@@ -27,7 +27,7 @@ public class LogoutServlet extends BaseServlet {
             }
         }
 
-        response.sendRedirect(PAGE_SIGNUP_JSP);
+        response.sendRedirect(request.getContextPath() + PAGE_SIGNUP_JSP);
     }
 
 }

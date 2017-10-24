@@ -25,13 +25,13 @@ public class MatchHubServlet extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = SessionUtils.getSessionUser(req);
         if (user == null) { // User already logged id in
-            resp.sendRedirect(PAGE_SIGNUP_JSP);
+            resp.sendRedirect(req.getContextPath() + PAGE_SIGNUP_JSP);
             return;
         }
 
         Match match = SessionUtils.getSessionMatch(req);
         if (match != null && match.getGameManager().getState() != GameState.REPLAY) {
-            resp.sendRedirect(PAGE_GAME_JSP);
+            resp.sendRedirect(req.getContextPath() + PAGE_GAME_JSP);
             return;
         }
 

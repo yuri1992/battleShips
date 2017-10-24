@@ -45,12 +45,12 @@ h1 .glyphicon-refresh-animate {
 }
 
 .ship-table .empty {
-    background: url('/static/images/sea.png') no-repeat center;
+    background: url('../images/sea.png') no-repeat center;
     background-size: 35px 35px;
 }
 
 .ship-table .ship {
-    background: url('/static/images/ship.png') no-repeat center;
+    background: url('../images/ship.png') no-repeat center;
     background-size: 35px 35px;
 }
 
@@ -66,22 +66,22 @@ h1 .glyphicon-refresh-animate {
 }
 
 .mine {
-    background: url('/static/images/mine.png') no-repeat center;
+    background: url('../images/mine.png') no-repeat center;
     background-size: 35px 35px;
 }
 
 .ship-table .miss {
-    background: url('/static/images/miss.png') no-repeat center;
+    background: url('../images/miss.png') no-repeat center;
     background-size: 25px 25px;
 }
 
 .ship-table .ship_hit, .ship-table .mine_hit {
-    background: url('/static/images/fire.png') no-repeat center;
+    background: url('../images/fire.png') no-repeat center;
     background-size: 35px 35px;
 }
 
 .ship-table .explode {
-    background: url('/static/images/explode.png') no-repeat center;
+    background: url('../images/explode.png') no-repeat center;
     background-size: 35px 35px;
 }
 

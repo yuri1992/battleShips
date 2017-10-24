@@ -15,13 +15,13 @@ import java.io.IOException;
 public class LoginServlet extends BaseServlet {
 
     private static final String SIGNUP_JSP = "signup.jsp";
-    private final String MATCH_HUB_URL = "../pages/matchhub";
+    private final String MATCH_HUB_URL = "/pages/matchhub";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = SessionUtils.getSessionUser(req);
         if (user != null) { // User already logged id in
-            resp.sendRedirect(MATCH_HUB_URL);
+            resp.sendRedirect(req.getContextPath() + MATCH_HUB_URL);
             return;
         }
         // Fowarding to signup page
