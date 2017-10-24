@@ -46,6 +46,9 @@ $(function ($) {
                     self.render();
                 }
             }).fail(function (xhr, text, status) {
+                if (xhr.status == 401) {
+                    window.location = BASE_URL + '/pages/signup';
+                }
                 CommonUtils.clearMessages();
                 CommonUtils.addMessage("Error loading game data, try again later", 'error');
             }).always(function () {

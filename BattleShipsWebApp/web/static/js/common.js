@@ -41,12 +41,6 @@ $(function () {
         shallowEqual: function (objA, objB) {
             // fastest way to achieve it.
             return JSON.stringify(objA) === JSON.stringify(objB)
-        },
-        requireLogin: function () {
-            var self = this;
-            setTimeout(function () {
-
-            })
         }
     }
 });
