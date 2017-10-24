@@ -227,20 +227,23 @@ $(function ($) {
             this.$historyList.find('.turns').remove();
 
             var result = $("<ul class='list-group turns'></ul>");
+            var turnCounter = 0;
             for (var x in data) {
                 var text = "";
                 var className = "";
+                turnCounter++;
                 if (data[x].hitType === 'HIT') {
-                    text = "Attack hit at " + data[x].point.x + "," + data[x].point.y + " cell successfully";
+                    text = turnCounter + ". Attack hit at " + data[x].point.x + "," + data[x].point.y + " cell" +
+                    " successfully";
                     className = 'list-group-item-success';
                 } else if (data[x].hitType === 'MISS') {
-                    text = "Attack miss at " + data[x].point.x + "," + data[x].point.y + " cell";
+                    text = turnCounter + ". Attack miss at " + data[x].point.x + "," + data[x].point.y + " cell";
                     className = 'list-group-item-danger';
                 } else if (data[x].hitType === 'PLACE_MINE') {
-                    text = "Placing mine at " + data[x].point.x + "," + data[x].point.y + " cell";
+                    text = turnCounter + ". Placing mine at " + data[x].point.x + "," + data[x].point.y + " cell";
                     className = 'list-group-item-info';
                 } else if (data[x].hitType === 'HIT_MINE') {
-                    text = "Attack hit a mine at " + data[x].point.x + "," + data[x].point.y + " cell";
+                    text = turnCounter + ". Attack hit a mine at " + data[x].point.x + "," + data[x].point.y + " cell";
                     className = 'list-group-item-danger';
                 }
 
