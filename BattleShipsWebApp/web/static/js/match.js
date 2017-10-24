@@ -100,7 +100,7 @@ $(function ($) {
                 return;
             }
 
-            if (this.game.shipsBoard.minesAllowance > 0) {
+            if (this.game.minesLeft > 0) {
                 $.ajax({
                     url: BASE_URL + "/api/game/turn/",
                     method: "POST",
@@ -202,15 +202,15 @@ $(function ($) {
             this.$board.append(result);
         },
         renderMines: function () {
-            var data = this.game.shipsBoard;
-            if (this.previousGame && CommonUtils.shallowEqual(this.previousGame.shipsBoard, data))
+            var data = this.game;
+            if (this.previousGame && CommonUtils.shallowEqual(this.previousGame.shipsBoard, data.shipsBoard))
                 return;
 
             this.$board.find('.mine-wrapper').remove();
-            if (data.minesAllowance > 0) {
+            if (data.minesLeft > 0) {
                 var result = $("<ul class='list-inline mine-wrapper'></ul>");
 
-                for (var i = 0; i < data.minesAllowance; i++) {
+                for (var i = 0; i < data.minesLeft; i++) {
                     var mine = $("<li class='icon mine' draggable=\"true\"></li>");
                     result.append(mine);
                 }
