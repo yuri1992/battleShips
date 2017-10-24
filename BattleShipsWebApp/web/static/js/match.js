@@ -32,7 +32,7 @@ $(function ($) {
         loadGame: function () {
             var self = this;
             $.ajax({
-                url: "/api/game/",
+                url: BASE_URL + "/api/game/",
                 method: "GET",
                 dataType: "json",
                 beforeSend: function () {
@@ -65,7 +65,7 @@ $(function ($) {
 
             var self = this;
             $.ajax({
-                url: "/api/game/turn/",
+                url: BASE_URL + "/api/game/turn/",
                 method: "POST",
                 data: {
                     type: 'attack',
@@ -99,7 +99,7 @@ $(function ($) {
 
             if (this.game.shipsBoard.minesAllowance > 0) {
                 $.ajax({
-                    url: "/api/game/turn/",
+                    url: BASE_URL + "/api/game/turn/",
                     method: "POST",
                     data: {
                         type: 'mine',
@@ -129,7 +129,7 @@ $(function ($) {
         },
         onGameResign: function () {
             $.ajax({
-                url: "/api/game/resign",
+                url: BASE_URL + "/api/game/resign",
                 method: "POST",
                 dataType: "json",
                 beforeSend: function () {
@@ -363,7 +363,7 @@ $(function ($) {
 
             $.ajax({
                 method: "GET",
-                url: "/api/chat",
+                url: BASE_URL + "/api/chat",
                 dataType: "json",
                 beforeSend: function () {
                     self.loadingMessages = true;
@@ -383,7 +383,7 @@ $(function ($) {
             var self = this;
             $.ajax({
                 method: "POST",
-                url: "/api/chat",
+                url: BASE_URL + "/api/chat",
                 dataType: "json",
                 data: {
                     msg: this.$form.find('input').val()

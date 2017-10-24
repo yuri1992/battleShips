@@ -75,7 +75,7 @@ $(function ($) {
 
                 $.ajax({
                     method: "POST",
-                    url: "/api/users",
+                    url: BASE_URL + "/api/users",
                     data: {
                         username: this.$username.val(),
                         email: this.$email.val(),

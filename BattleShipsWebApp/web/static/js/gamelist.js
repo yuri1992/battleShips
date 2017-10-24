@@ -61,7 +61,7 @@ $(function ($) {
                 formData.append("name", $form.find('#name').val());
 
                 $.ajax({
-                    url: "/api/games",
+                    url: BASE_URL + "/api/games",
                     method: "POST",
                     dataType: "json",
                     data: formData,
@@ -99,7 +99,7 @@ $(function ($) {
                 return;
 
             $.ajax({
-                url: "/api/games",
+                url: BASE_URL + "/api/games",
                 method: "GET",
                 dataType: "json",
                 beforeSend: function () {
@@ -123,7 +123,7 @@ $(function ($) {
             var self = this;
             this.isLoadingPlayers = true;
             $.ajax({
-                url: "/api/users",
+                url: BASE_URL + "/api/users",
                 method: "GET",
                 dataType: "json",
                 beforeSend: function () {
@@ -145,7 +145,7 @@ $(function ($) {
         joinGame: function (event, matchId) {
             var $btn = $(event.target);
             $.ajax({
-                url: "/api/games/" + matchId + "/register",
+                url: BASE_URL + "/api/games/" + matchId + "/register",
                 method: "POST",
                 dataType: "text",
                 beforeSend: function () {
@@ -169,7 +169,7 @@ $(function ($) {
             var self = this;
             var $btn = $(event.target);
             $.ajax({
-                url: "/api/games/" + matchId,
+                url: BASE_URL + "/api/games/" + matchId,
                 method: "DELETE",
                 dataType: "text",
                 beforeSend: function () {

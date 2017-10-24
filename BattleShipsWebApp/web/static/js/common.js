@@ -2,7 +2,7 @@ $(function () {
     var currentUser = null;
 
     $.ajax({
-        url: "/api/session",
+        url: BASE_URL + "/api/session",
         method: "GET",
         dataType: "json"
     }).done(function (data) {

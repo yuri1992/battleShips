@@ -13,8 +13,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BattleShips - By Amir Shavit and Yuri Ritvin - ${param.title}</title>
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -30,10 +30,14 @@
 <jsp:include page="/pages/footer.jsp"/>
 
 <!-- Vendor Scripts -->
-<script src="../static/js/vendor/jquery.min.js"></script>
-<script src="../static/js/vendor/bootstrap.min.js"></script>
-<script src="../static/js/common.js"></script>
-<script src="../static/js/${param.jsFile}"></script>
+<script type="text/javascript">
+    window.BASE_URL = "${pageContext.request.contextPath}";
+    console.log(window.BASE_URL);
+</script>
+<script src="${pageContext.request.contextPath}/static/js/vendor/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/vendor/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/common.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/${param.jsFile}"></script>
 
 
 </body>
