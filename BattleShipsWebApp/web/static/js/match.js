@@ -46,6 +46,9 @@ $(function ($) {
                     self.render();
                 }
             }).fail(function (xhr, text, status) {
+                if (xhr.status == 401) {
+                    window.location = BASE_URL + '/pages/signup';
+                }
                 CommonUtils.clearMessages();
                 CommonUtils.addMessage("Error loading game data, try again later", 'error');
             }).always(function () {
@@ -343,17 +346,21 @@ $(function ($) {
 
     ChatRoom.prototype = {
         init: function () {
+            var self = this;
             var chatRoom = $('<div class="c-chatroom">' +
-                '<h4>Chat Room</h4>' +
+                '<h4>Chat Room <span class="glyphicon glyphicon-minus toggle"></span></h4>' +
                 '<div class="c-chatroom-messages"></div>' +
                 '<div class="c-chatroom-form"><form><input placeholder="Enter you message" type="text" id="msg"/></form></div>' +
                 '</div>');
 
-            this.$chatRoom = $('body').append(chatRoom);
+            this.$chatRoom = $('body').append(chatRoom).find('.c-chatroom');
             this.$messages = this.$chatRoom.find('.c-chatroom-messages');
             this.$form = this.$chatRoom.find('.c-chatroom-form form');
             this.$form.submit(this.submitMessage.bind(this));
-
+            this.$chatRoom.find('.glyphicon').click(function () {
+                self.$chatRoom.toggleClass('minimize');
+                $(this).hasClass('glyphicon-minus') ? $(this).removeClass('glyphicon-minus').addClass('glyphicon-plus') : $(this).removeClass('glyphicon-plus').addClass('glyphicon-minus');
+            })
             setInterval(this.loadMessages.bind(this), 1000);
         },
         loadMessages: function () {

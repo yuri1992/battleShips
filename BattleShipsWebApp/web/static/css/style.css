@@ -94,6 +94,12 @@ h1 .glyphicon-refresh-animate {
     border-radius: 5px;
     left: 75px;
     padding-bottom: 20px;
+    z-index: 2032;
+    background: #fff;
+}
+
+.c-chatroom.minimize {
+    height: 42px;
 }
 
 .c-chatroom h4 {

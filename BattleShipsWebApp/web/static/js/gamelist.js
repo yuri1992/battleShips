@@ -40,7 +40,8 @@ $(function ($) {
             this.$modal.find('form').submit(function (e) {
                 e.preventDefault();
                 self.submitNewGame(e);
-            })
+            });
+
         },
 
         onCreateGameClick: function () {
@@ -111,7 +112,10 @@ $(function ($) {
                     self.games = data.matches;
                     self.renderGames();
                 }
-            }).fail(function (xhr) {
+            }).fail(function (xhr, data, status) {
+                if (xhr.status == 401) {
+                    window.location = BASE_URL + '/pages/signup';
+                }
                 CommonUtils.addMessage("Error fetching game list, try again later", 'error');
             }).always(function () {
                 self.$gamesContainer.find('.glyphicon-refresh-animate').remove();
@@ -135,6 +139,9 @@ $(function ($) {
                     self.renderUsers();
                 }
             }).fail(function (xhr, text, status) {
+                if (xhr.status == 401) {
+                    window.location = BASE_URL + '/pages/signup';
+                }
                 CommonUtils.addMessage("Error fetching player list, try again later", 'error');
             }).always(function () {
                 self.$playersContainer.find('.glyphicon-refresh-animate').remove();
