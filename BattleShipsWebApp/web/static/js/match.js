@@ -259,7 +259,8 @@ $(function ($) {
             result.append("<tr><td>Hits</td><td>" + data.hits + "</td></tr>");
             result.append("<tr><td>Misses</td><td>" + data.misses + "</td></tr>");
             result.append("<tr><td>Turns</td><td>" + data.turns + "</td></tr>");
-            result.append("<tr><td>Avg. Turn Time</td><td>" + (data.avgTurnTime / 1000 / 60).toFixed(2) + " minutes </td></tr>");
+            result.append("<tr><td>Avg. Turn Time</td><td>" + (data.avgTurnTime / 1000 / 60).toFixed(0) + " minutes, " +
+                 (data.avgTurnTime / 1000 % 60).toFixed(0) + " seconds </td></tr>");
 
             this.$statistics.append(result);
         },
