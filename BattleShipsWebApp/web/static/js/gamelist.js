@@ -74,6 +74,8 @@ $(function ($) {
                 }).done(function (data) {
                     self.games.unshift(data);
                     self.renderGames();
+                    var $modal = $('.modal-body');
+                    CommonUtils.clearMessages($modal);
                     self.$modal.modal('hide');
                     $form.get(0).reset();
                 }).fail(function (xhr) {
