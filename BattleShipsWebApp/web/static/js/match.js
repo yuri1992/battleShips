@@ -136,7 +136,7 @@ $(function ($) {
                     self.shouldReload = false;
                 }
             }).done(function (data, text) {
-                window.location = '/pages/matchhub';
+                window.location = window.BASE_URL + '/pages/matchhub';
             }).fail(function (xhr, text, status) {
                 CommonUtils.clearMessages();
                 CommonUtils.addMessage("Error fetching player list, try again later", 'error');
@@ -148,7 +148,7 @@ $(function ($) {
             this.$gameResign.attr('disabled', 'true');
             this.$gameResign.parent().append($('<a class="btn-success btn" id="js-back">Go Back</a>'));
             setTimeout(function () {
-                window.location = '/pages/matchhub';
+                window.location = window.BASE_URL + '/pages/matchhub';
             }, 5000)
         },
         isGameEnded: function () {

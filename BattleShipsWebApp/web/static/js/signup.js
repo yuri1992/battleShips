@@ -92,7 +92,7 @@ $(function ($) {
                 }).done(function (data, text) {
                     CommonUtils.addMessage("Welcome, you will be redirected in a few seconds...");
                     setTimeout(function () {
-                        window.location = '/pages/matchhub';
+                        window.location = window.BASE_URL + '/pages/matchhub';
                     }, 500 );
                 }).fail(function (xhr, text, status) {
                     CommonUtils.clearMessages();

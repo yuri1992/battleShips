@@ -154,7 +154,7 @@ $(function ($) {
                 }
             }).done(function () {
                 CommonUtils.addMessage("Redirecting you to the game...");
-                window.location = '/pages/game';
+                window.location = window.BASE_URL + '/pages/game';
             }).fail(function (xhr, text, status) {
                 console.log(xhr, text, status);
                 CommonUtils.clearMessages();
