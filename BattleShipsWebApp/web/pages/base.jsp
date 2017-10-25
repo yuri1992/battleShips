@@ -32,7 +32,7 @@
 <!-- Vendor Scripts -->
 <script type="text/javascript">
     window.BASE_URL = "${pageContext.request.contextPath}";
-    console.log(window.BASE_URL);
+    console.log("BASE_URL = " + window.BASE_URL);
 </script>
 <script src="${pageContext.request.contextPath}/static/js/vendor/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/js/vendor/bootstrap.min.js"></script>
