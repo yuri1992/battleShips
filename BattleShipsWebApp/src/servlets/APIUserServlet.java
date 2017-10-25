@@ -29,6 +29,7 @@ public class APIUserServlet extends JsonServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        super.doGet(request, response);
         if (!isSessionValid(request, response)) return;
 
         response.setStatus(HttpServletResponse.SC_OK);
