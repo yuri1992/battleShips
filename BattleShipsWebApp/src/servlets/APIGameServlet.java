@@ -299,6 +299,14 @@ public class APIGameServlet extends JsonServlet {
 
         // Make sure user is registered to game
         Match match = SessionUtils.getSessionMatch(request);
+        if (match == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            JsonObject obj = new JsonObject();
+            obj.addProperty("desc", "User not registered to game");
+            response.getWriter().println(obj);
+            response.getWriter().flush();
+            return false;
+        }
         User user = SessionUtils.getSessionUser(request);
         return (match.isUserRegistered(user));
     }
