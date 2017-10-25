@@ -83,11 +83,10 @@ public class Match {
         } else return false;
     }
 
-    /// TODO: Amir: verify game not started instead of able to join
     public boolean removeUserFromMatch(User user) throws UserNotInMatchException {
-        if (isMatchAvailableToJoin()) {
+        if (gameManager.getState() != GameState.IN_PROGRESS) {
             synchronized (this) { // Lock and double check
-                if (isMatchAvailableToJoin()) {
+                if (gameManager.getState() != GameState.IN_PROGRESS) {
                     if (player1 == user) {
                         player1 = null;
                         return true;
