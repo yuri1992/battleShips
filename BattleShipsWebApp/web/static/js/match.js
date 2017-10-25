@@ -100,7 +100,7 @@ $(function ($) {
                 return;
             }
 
-            if (this.game.shipsBoard.minesAllowance > 0) {
+            if (this.game.minesLeft > 0) {
                 $.ajax({
                     url: BASE_URL + "/api/game/turn/",
                     method: "POST",
@@ -202,15 +202,15 @@ $(function ($) {
             this.$board.append(result);
         },
         renderMines: function () {
-            var data = this.game.shipsBoard;
-            if (this.previousGame && CommonUtils.shallowEqual(this.previousGame.shipsBoard, data))
+            var data = this.game;
+            if (this.previousGame && CommonUtils.shallowEqual(this.previousGame.shipsBoard, data.shipsBoard))
                 return;
 
             this.$board.find('.mine-wrapper').remove();
-            if (data.minesAllowance > 0) {
+            if (data.minesLeft > 0) {
                 var result = $("<ul class='list-inline mine-wrapper'></ul>");
 
-                for (var i = 0; i < data.minesAllowance; i++) {
+                for (var i = 0; i < data.minesLeft; i++) {
                     var mine = $("<li class='icon mine' draggable=\"true\"></li>");
                     result.append(mine);
                 }
@@ -227,20 +227,23 @@ $(function ($) {
             this.$historyList.find('.turns').remove();
 
             var result = $("<ul class='list-group turns'></ul>");
+            var turnCounter = 0;
             for (var x in data) {
                 var text = "";
                 var className = "";
+                turnCounter++;
                 if (data[x].hitType === 'HIT') {
-                    text = "Attack hit at " + data[x].point.x + "," + data[x].point.y + " cell successfully";
+                    text = turnCounter + ". Attack hit at " + data[x].point.x + "," + data[x].point.y + " cell" +
+                    " successfully";
                     className = 'list-group-item-success';
                 } else if (data[x].hitType === 'MISS') {
-                    text = "Attack miss at " + data[x].point.x + "," + data[x].point.y + " cell";
+                    text = turnCounter + ". Attack miss at " + data[x].point.x + "," + data[x].point.y + " cell";
                     className = 'list-group-item-danger';
                 } else if (data[x].hitType === 'PLACE_MINE') {
-                    text = "Placing mine at " + data[x].point.x + "," + data[x].point.y + " cell";
+                    text = turnCounter + ". Placing mine at " + data[x].point.x + "," + data[x].point.y + " cell";
                     className = 'list-group-item-info';
                 } else if (data[x].hitType === 'HIT_MINE') {
-                    text = "Attack hit a mine at " + data[x].point.x + "," + data[x].point.y + " cell";
+                    text = turnCounter + ". Attack hit a mine at " + data[x].point.x + "," + data[x].point.y + " cell";
                     className = 'list-group-item-danger';
                 }
 
@@ -262,7 +265,8 @@ $(function ($) {
             result.append("<tr><td>Hits</td><td>" + data.hits + "</td></tr>");
             result.append("<tr><td>Misses</td><td>" + data.misses + "</td></tr>");
             result.append("<tr><td>Turns</td><td>" + data.turns + "</td></tr>");
-            result.append("<tr><td>Avg. Turn Time</td><td>" + (data.avgTurnTime / 1000 / 60).toFixed(2) + " minutes </td></tr>");
+            result.append("<tr><td>Avg. Turn Time</td><td>" + (data.avgTurnTime / 1000 / 60).toFixed(0) + " minutes, " +
+                 (data.avgTurnTime / 1000 % 60).toFixed(0) + " seconds </td></tr>");
 
             this.$statistics.append(result);
         },
