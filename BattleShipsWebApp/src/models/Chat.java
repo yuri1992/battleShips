@@ -1,4 +1,4 @@
-package utils;
+package models;
 
 import engine.model.multi.User;
 

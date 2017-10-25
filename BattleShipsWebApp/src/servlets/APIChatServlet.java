@@ -3,8 +3,8 @@ package servlets;
 import com.google.gson.Gson;
 import engine.model.multi.Match;
 import engine.model.multi.User;
-import utils.Chat;
-import utils.ChatMessage;
+import models.Chat;
+import models.ChatMessage;
 import utils.ServletUtils;
 import utils.SessionUtils;
 

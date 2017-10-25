@@ -1,5 +1,7 @@
 package utils;
 
+import models.Chat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
