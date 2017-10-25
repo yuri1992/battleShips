@@ -118,7 +118,6 @@ public class ShipsBoard implements Board {
             board[pt.x][pt.y] = BoardType.MINE_HIT;
             return HitType.HIT_MINE;
         } else {
-            // Todo : We should mark were the opposite player did attcked us.
             board[pt.x][pt.y] = BoardType.MISS;
         }
         return HitType.MISS;

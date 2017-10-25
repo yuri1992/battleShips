@@ -38,12 +38,10 @@ public class Player {
         Marking @pt as been attacked by the player.
      */
     public void markAttack(GridPoint pt, HitType hitType) {
-        // Todo: Figure out if hitting a mine is equaling to hitting a ship
         attackBoard.setShoot(pt, hitType);
     }
 
     public void unmarkAttack(GridPoint pt) {
-        // Todo: Figure out if hitting a mine is equaling to hitting a ship
         attackBoard.setUnShoot(pt);
     }
 

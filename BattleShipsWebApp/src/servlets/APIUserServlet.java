@@ -25,8 +25,6 @@ public class APIUserServlet extends JsonServlet {
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
 
-    /// TODO: Amir: Add GET /me instead of session servlet
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doGet(request, response);
@@ -91,7 +89,6 @@ public class APIUserServlet extends JsonServlet {
     // </editor-fold>
 
     private String validateUserName(String un) {
-        /// TODO: Amir: Consider name/char validation
         if (un != null && !un.isEmpty())
             return un.trim();
         else return null;

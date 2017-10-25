@@ -159,7 +159,6 @@ public class GameManager {
     }
 
     private void updateTurnResults(GridPoint pt, HitType hitType) {
-        // Todo: Figure out if hitting a mine is equaling to hitting a ship
         currentTurn.setHitType(hitType);
         currentTurn.setPoint(pt);
         getCurrentPlayer().markAttack(pt, hitType);
@@ -314,7 +313,7 @@ public class GameManager {
             return true;
         } else {
             /// TODO: Amir: Implement undo in the middle of the game
-            System.out.println("Not impl yet");
+            System.out.println("Not impl yet: undo in the middle of the game");
         }
         return false;
     }

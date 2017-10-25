@@ -196,8 +196,7 @@ public class PlayerScreenController extends BaseController {
             }
         } else if (event.getSource() == menuFile_Quit) {
             menuController.handleQuitGamePressed();
-        } else // TODO: Amir: throw exception??
-            System.out.println("unknown");
+        }
 
     }
 
